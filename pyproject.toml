@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "PoTSA"
+name = "DownloadMinio"
 version = "0.1.0"
 description = ""
 authors = ["Jairo Matos da Rocha <jairo@discente.ufg.br>"]
@@ -14,14 +14,12 @@ uvicorn = "^0.17.6"
 geopandas = "^0.10.2"
 rasterio = "1.3a4"
 geojson = "^2.5.0"
-pystac-client = "0.3.2"
 loguru = "^0.6.0"
 pydantic = {extras = ["email"], version = "^1.9.1"}
 python-multipart = "^0.0.5"
 pytz = "^2022.1"
 motor = "^3.0.0"
 Jinja2 = "^3.1.2"
-minio = "^7.1.12"
 
 
 
