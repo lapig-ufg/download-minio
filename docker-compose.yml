@@ -2,10 +2,10 @@ version: '3.7'
 
 services:
       
-      pgrass-server:
+      downloadmino-server:
         build: .
-        hostname: pgrass-server
-        container_name: pgrass-server
+        hostname: downloadmino-server
+        container_name: downloadmino-server
         privileged: true
         ports:
           - '127.0.0.1:8080:8080'
@@ -17,7 +17,7 @@ services:
         volumes:
           - 'downloadmino-data:/APP'
           - 'downloadmino-share:/STOREAGE'
-          - 'downloadmino-var':/var
+          - 'downloadmino-var:/var'
           - '/etc/localtime:/etc/localtime'
 
 volumes:
