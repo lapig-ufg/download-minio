@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+      
+      downloadmino-server:
+        build: .
+        hostname: downloadmino-server
+        container_name: downloadmino-server
+        privileged: true
+        ports:
+          - '127.0.0.1:8080:8080'
+        expose:
+          - '8080'    
+        restart: always
+        stdin_open: true
+        tty: true
+        volumes:
+          - 'downloadmino-data:/APP'
+          - 'downloadmino-share:/STOREAGE'
+          - 'downloadmino-var:/var'
+          - '/etc/localtime:/etc/localtime'
+
+volumes:
+  downloadmino-data:
+  downloadmino-share:
+  downloadmino-var:

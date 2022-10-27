@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "DownloadMinio"
+version = "0.1.0"
+description = ""
+authors = ["Jairo Matos da Rocha <jairo@discente.ufg.br>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.75.2"
+dynaconf = "^3.1.8"
+gunicorn = "^20.1.0"
+uvicorn = "^0.17.6"
+geopandas = "^0.10.2"
+rasterio = "1.3a4"
+geojson = "^2.5.0"
+loguru = "^0.6.0"
+pydantic = {extras = ["email"], version = "^1.9.1"}
+python-multipart = "^0.0.5"
+pytz = "^2022.1"
+motor = "^3.0.0"
+Jinja2 = "^3.1.2"
+
+
+
+[tool.poetry.dev-dependencies]
+ipdb = "^0.13.9"
+web-pdb = "^1.5.7"
+blue = "^0.9.0"
+prospector = "^1.7.7"
+pytest = "^7.1.2"
+pip-audit = "^2.3.4"
+isort = "^5.10.1"
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
