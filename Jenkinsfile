@@ -49,14 +49,14 @@ node {
 
         stage('Deploy container on PROD') {
 
-                        configFileProvider([configFile(fileId: "$File_Json_Id_APP_LAPIG_DOWNLOAD_MINIO_SERVER_PROD", targetLocation: 'container-lapig-pgrass-server-deploy-PROD.json')]) {
+                        configFileProvider([configFile(fileId: "$File_Json_Id_APP_LAPIG_DOWNLOAD_MINIO_SERVER_PROD", targetLocation: 'container-lapig-download-minio-deploy-prod.json')]) {
 
                             def url = "http://$SERVER_PROD/containers/$application_name?force=true"
                             def response = sh(script: "curl -v -X DELETE $url", returnStdout: true).trim()
                             echo response
 
                             url = "http://$SERVER_PROD/containers/create?name=$application_name"
-                            response = sh(script: "curl -v -X POST -H 'Content-Type: application/json' -d @container-lapig-pgrass-server-deploy-PROD.json -s $url", returnStdout: true).trim()
+                            response = sh(script: "curl -v -X POST -H 'Content-Type: application/json' -d @container-lapig-download-minio-deploy-prod.json -s $url", returnStdout: true).trim()
                             echo response
                         }
 
