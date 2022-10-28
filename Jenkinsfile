@@ -2,7 +2,7 @@ node {
 
     load "$JENKINS_HOME/.envvars"
     def application_name= "download-minio"
-"
+    
         stage('Checkout') {
             git branch: 'main',
             url: 'https://github.com/lapig-ufg/download-minio.git'
