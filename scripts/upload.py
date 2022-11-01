@@ -13,14 +13,17 @@ class GeoFile():
         self.limit_type = split_path[0]
         self.limit_name = split_path[1]
         self.file_type = split_path[2]
-        self.layer = split_path[4].split('_year=')[0]
-        self.year = int(split_path[4].split('_year=')[1].split('.')[0])
+        self.layer = split_path[3]
+        try:
+            self.year = f"_year={split_path[4].split('_year=')[1].split('.')[0]}"
+        except:
+            self.year = ''
         self.extension = split_path[4].split('.')[1]
         self.file_path = path_name
 
     @property
     def object_name(self):
-        return f'{self.limit_type}/{self.limit_name}/{self.file_type}/{self.layer}/{self.layer}_year={self.year}.{self.extension}'
+        return f'{self.limit_type}/{self.limit_name}/{self.file_type}/{self.layer}/{self.layer}{self.year}.{self.extension}'
     
     @property
     def to_tags(self):
@@ -29,7 +32,9 @@ class GeoFile():
         tags['limit_name'] = self.limit_name
         tags['file_type'] = self.file_type
         tags['layer'] = self.layer
-        tags['year'] = str(self.year)
+        if self.year != '':
+            
+            tags['year'] = str(self.year).replace('_year=','')
         return tags
     @property
     def content_type(self):
@@ -46,7 +51,7 @@ class GeoFile():
             return extensions[self.extension]
         except:
             return 'application/octet-stream'
-        
+                
 paths = glob(f'{settings.DOWNLOAD}/**/*.*', recursive=True)
 
 client = Minio(settings.MINIO_HOST, settings.MINIO_USER, settings.MINIO_PASSWORD, secure=True)
