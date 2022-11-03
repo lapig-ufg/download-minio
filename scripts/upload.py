@@ -2,7 +2,7 @@ from glob import glob
 from minio.commonconfig import Tags
 from minio import Minio
 from os import environ
-from app.config import settings, logger
+from ..app.config import settings, logger
 
 class GeoFile():
     def __init__(self,path_name):
@@ -33,7 +33,6 @@ class GeoFile():
         tags['file_type'] = self.file_type
         tags['layer'] = self.layer
         if self.year != '':
-            
             tags['year'] = str(self.year).replace('_year=','')
         return tags
     @property
