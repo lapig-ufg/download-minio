@@ -1,2 +1,6 @@
 [default]
 HTTPS = false
+DOWNLOAD = '/storage'
+MINIO_HOST = 'localhost'
+MINIO_USER = 'admin' 
+MINIO_PASSWORD = 'passadmin'
