@@ -19,12 +19,12 @@ if os.environ.get("LAPIG_ENV") == 'production':
     logger.add(sys.stderr,level='INFO', format=confi_format)
     
 
-logger.add('/var/log/downloadmino/downloadmino.log', rotation=rotation, level="INFO")
-logger.add('/var/log/downloadmino/downloadmino_WARNING.log', level="WARNING", rotation=rotation)
+logger.add('../log/downloadmino/downloadmino.log', rotation=rotation, level="INFO")
+logger.add('../log/downloadmino/downloadmino_WARNING.log', level="WARNING", rotation=rotation)
 
 settings = Dynaconf(
     envvar_prefix='MINIO',
-    settings_files=['settings.toml', '.secrets.toml','/var/lib/downloadmino/settings.toml'],
+    settings_files=['settings.toml', '.secrets.toml','../settings.toml'],
     environments=True,
     load_dotenv=True,
 )
