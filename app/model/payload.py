@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Union, Optional
 
 from pydantic import BaseModel
 
@@ -9,6 +9,14 @@ class Origin(BaseModel):
     typeOfTMS: str
 
 
+class DisplayMapCardAttributes(BaseModel):
+    column: str
+    label: str
+    columnType: str
+
+
+
+
 class Attribute(BaseModel):
     column: str
     label: str
@@ -16,8 +24,9 @@ class Attribute(BaseModel):
 
 
 class WfsMapCard(BaseModel):
-    show: bool
-    attributes: List[Attribute]
+    show: Optional[bool]
+    displayMapCardAttributes: Optional[DisplayMapCardAttributes]
+    attributes: Optional[List[Attribute]]
 
 
 class Download(BaseModel):
