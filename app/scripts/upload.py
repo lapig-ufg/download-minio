@@ -2,7 +2,8 @@ from glob import glob
 from minio.commonconfig import Tags
 from minio import Minio
 from os import environ
-from ..app.config import settings, logger
+from app.config import settings, logger
+
 
 class GeoFile():
     def __init__(self,path_name):
@@ -14,16 +15,27 @@ class GeoFile():
         self.limit_name = split_path[1]
         self.file_type = split_path[2]
         self.layer = split_path[3]
+        self.file_name = split_path[4]
         try:
             self.year = f"_year={split_path[4].split('_year=')[1].split('.')[0]}"
         except:
             self.year = ''
         self.extension = split_path[4].split('.')[1]
         self.file_path = path_name
+        try:
+            if (self.year == '' ):
+                self.year = f"{int(self.file_name.split('.')[0][-4:])}"
+        except:
+            self.year = ''
+                
 
+    def __repr__(self):
+        return f"object_name:{self.object_name}\ntags:{self.to_tags}"
+                
+    
     @property
     def object_name(self):
-        return f'{self.limit_type}/{self.limit_name}/{self.file_type}/{self.layer}/{self.layer}{self.year}.{self.extension}'
+        return f'{self.limit_type}/{self.limit_name}/{self.file_type}/{self.layer}/{self.file_name}'
     
     @property
     def to_tags(self):
@@ -50,6 +62,7 @@ class GeoFile():
             return extensions[self.extension]
         except:
             return 'application/octet-stream'
+        
                 
 paths = glob(f'{settings.DOWNLOAD}/**/*.*', recursive=True)
 
