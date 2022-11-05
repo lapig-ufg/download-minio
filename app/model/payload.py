@@ -61,10 +61,10 @@ class Layer(BaseModel):
     wfsMapCard: WfsMapCard
     download: Download
     regionFilter: bool
-    filters: List[Filter]
-    filterLabel: str
-    filterSelected: str
-    filterHandler: str
+    filters: Optional[List[Filter]] = None
+    filterLabel: Optional[str] = None
+    filterSelected: Optional[str] = None
+    filterHandler: Optional[str] = None
     visible: bool
     opacity: int
     metadata: List[Metadatum]
