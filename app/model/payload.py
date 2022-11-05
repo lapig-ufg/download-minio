@@ -80,5 +80,5 @@ class Region(BaseModel):
 class Payload(BaseModel):
     layer: Layer
     region: Region
-    filter: Filter
+    filter: Optional[Filter] = None
     typeDownload: str
