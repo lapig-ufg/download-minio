@@ -21,7 +21,7 @@ async def start_dowload(payload: Payload):
         layerName = payload.layer.valueType
         
     if payload.filter is None: 
-        fileParam = f"{payload.layer.valueType}_{filter.valueFilter}"
+        fileParam = f"{payload.layer.valueType}_{payload.filter.valueFilter}"
     else:
         fileParam = payload.layer.valueType
     
