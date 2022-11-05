@@ -14,7 +14,9 @@ class DisplayMapCardAttributes(BaseModel):
     label: str
     columnType: str
 
-
+class Gallery(BaseModel):
+    id_column: str
+    tableName: str
 
 
 class Attribute(BaseModel):
@@ -55,6 +57,7 @@ class Layer(BaseModel):
     typeLayer: str
     viewValueType: str
     typeLabel: str
+    gallery: Optional[Gallery] = None
     wfsMapCard: WfsMapCard
     download: Download
     regionFilter: bool
