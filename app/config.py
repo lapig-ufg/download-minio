@@ -24,7 +24,7 @@ logger.add('../log/downloadmino/downloadmino_WARNING.log', level="WARNING", rota
 
 settings = Dynaconf(
     envvar_prefix='MINIO',
-    settings_files=['settings.toml', '.secrets.toml','../settings.toml'],
+    settings_files=['settings.toml', '.secrets.toml','../settings.toml','/data/settings.toml'],
     environments=True,
     load_dotenv=True,
 )
