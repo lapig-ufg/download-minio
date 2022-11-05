@@ -4,7 +4,7 @@ def created_routes(app):
     
     app.include_router(
         download.router, 
-        prefix='api/download', 
+        prefix='/api/download', 
         tags=['Download']
         )
     
