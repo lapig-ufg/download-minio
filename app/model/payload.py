@@ -45,7 +45,7 @@ class Filter(BaseModel):
 
 class Metadatum(BaseModel):
     title: str
-    description: str
+    description: Optional[str] = None
 
 
 class Layer(BaseModel):
