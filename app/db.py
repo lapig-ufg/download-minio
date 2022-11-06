@@ -23,7 +23,7 @@ def geodb():
     pgdb = 'postgresql+psycopg2'
     
     alchemyEngine   = create_engine(
-        f'{pgdb}://{user}:{password}@{host}:5{port}/{db}',
+        f'{pgdb}://{user}:{password}@{host}:{port}/{db}',
         pool_recycle=3600
         );
     
