@@ -23,7 +23,7 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 # Builder Image
 ###############################################
 FROM python-base as builder-base
-RUN apt-get update && apt-get install --no-install-recommends -y curl build-essential libpq-dev
+RUN apt-get update && apt-get install --no-install-recommends -y curl build-essential libpq-dev libpq5
 
 # install poetry - respects $POETRY_VERSION & $POETRY_HOME
 RUN pip3 install poetry 

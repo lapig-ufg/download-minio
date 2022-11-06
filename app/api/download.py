@@ -1,14 +1,11 @@
 from glob import glob
-from typing import Dict, List
 from zipfile import ZipFile
+from app.functions import client_minio
 from app.model.creat_geofile import CreatGeoFile
 from app.model.models import GeoFile
 from fastapi import APIRouter, HTTPException
 from app.model.payload import Payload
 from app.config import settings, logger
-from minio import Minio
-import pandas as pd
-import geopandas as gpd
 
 from pydantic import BaseModel, HttpUrl
 import tempfile
@@ -61,7 +58,7 @@ async def start_dowload(payload: Payload):
                  sql_layer: {payload.layer.download.layerTypeName}
                  valueFilter: {valueFilter}
                  """)
-    client = Minio(settings.MINIO_HOST, settings.MINIO_USER, settings.MINIO_PASSWORD, secure=True)
+    client = client_minio()
     objects = client.list_objects(
             settings.BUCKET, prefix=f"{pathFile}.zip", recursive=True,
         )
@@ -90,7 +87,8 @@ async def start_dowload(payload: Payload):
         )
         df = geofile.gpd()
         with tempfile.TemporaryDirectory() as tmpdirname:
-            
+            client = client_minio()
+            logger.debug(f'tmpdirname : {tmpdirname}')
             if payload.typeDownload == 'csv':
                 df.to_csv(f'{tmpdirname}/{fileParam}.csv')
             elif payload.typeDownload == 'gpkg':

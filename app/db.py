@@ -7,7 +7,7 @@ import motor.motor_asyncio
 
 from bson import ObjectId
 import pytz
-import pandas as pd
+from app.config import logger
 
 #client = motor.motor_asyncio.AsyncIOMotorClient(settings.MONGODB_URL)
 #db = client.pgrass
@@ -21,7 +21,7 @@ def geodb():
     db=settings.DB_DATABASE
     
     pgdb = 'postgresql+psycopg2'
-    
+    logger.debug(f'{pgdb}://{user}:.....@{host}:{port}/{db}',)
     alchemyEngine   = create_engine(
         f'{pgdb}://{user}:{password}@{host}:{port}/{db}',
         pool_recycle=3600
