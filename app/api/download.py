@@ -4,7 +4,7 @@ from app.model.payload import Payload
 from app.config import settings, logger
 from minio import Minio
 import pandas as pd
-import geopans as gpd
+import geopandas as gpd
 
 from pydantic import BaseModel, HttpUrl
 
@@ -27,9 +27,9 @@ class DowloadUrl(BaseModel):
 async def start_dowload(payload: Payload):
     
     query = {
-        'city': 'cd_geocmu={region.value}',
-        'state': 'uf={region.value}',
-        'bioma':'bioma={region.value}'
+        'city': 'cd_geocmu={value}',
+        'state': 'uf={value}',
+        'bioma':'bioma={value}'
     }
     
     if payload.layer.filterHandler == 'layername':
