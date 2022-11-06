@@ -1,15 +1,33 @@
 from datetime import datetime
-from .config import logger, settings
+from .config import settings
+from sqlalchemy import create_engine
+
+from pydantic import BaseConfig, BaseModel
 import motor.motor_asyncio
 
 from bson import ObjectId
-from pydantic import BaseConfig, BaseModel
-
 import pytz
-
+import pandas as pd
 
 #client = motor.motor_asyncio.AsyncIOMotorClient(settings.MONGODB_URL)
 #db = client.pgrass
+
+
+def geodb():
+    user=settings.DB_USER
+    password=settings.DB_PASSWORD
+    host=settings.DB_HOST
+    port=settings.DB_PORT
+    db=settings.DB_DATABASE
+    
+    pgdb = 'postgresql+psycopg2'
+    
+    alchemyEngine   = create_engine(
+        f'{pgdb}://{user}:{password}@{host}:5{port}/{db}',
+        pool_recycle=3600
+        );
+    
+    return alchemyEngine.connect();
 
 
 
