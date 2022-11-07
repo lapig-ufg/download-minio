@@ -1,11 +1,14 @@
 from typing import Dict, List
-from fastapi import APIRouter, HTTPException
 
+from fastapi import APIRouter, HTTPException
 
 router = APIRouter()
 
-@router.get('/', response_description="List collections _id ", response_model=List[Dict])
+
+@router.get(
+    '/',
+    response_description='List collections _id ',
+    response_model=List[Dict],
+)
 async def get_collections():
-    return {'status':'oi'}
-
-
+    return {'status': 'oi'}

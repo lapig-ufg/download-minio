@@ -1,7 +1,6 @@
-from typing import List, Union, Optional
+from typing import List, Optional, Union
 
 from pydantic import BaseModel
-
 
 
 class Origin(BaseModel):
@@ -13,6 +12,7 @@ class DisplayMapCardAttributes(BaseModel):
     column: str
     label: str
     columnType: str
+
 
 class Gallery(BaseModel):
     id_column: str
@@ -42,7 +42,7 @@ class Download(BaseModel):
 
 class Filter(BaseModel):
     valueFilter: str
-    viewValueFilter: Union[str,int]
+    viewValueFilter: Union[str, int]
 
 
 class Metadatum(BaseModel):
@@ -74,7 +74,6 @@ class Region(BaseModel):
     type: str
     text: str
     value: str
-
 
 
 class Payload(BaseModel):

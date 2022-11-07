@@ -1,39 +1,40 @@
 from datetime import datetime
-from .config import settings
+
+import motor.motor_asyncio
+import pytz
+from bson import ObjectId
+from pydantic import BaseConfig, BaseModel
 from sqlalchemy import create_engine
 
-from pydantic import BaseConfig, BaseModel
-import motor.motor_asyncio
-
-from bson import ObjectId
-import pytz
 from app.config import logger
 
-#client = motor.motor_asyncio.AsyncIOMotorClient(settings.MONGODB_URL)
-#db = client.pgrass
+from .config import settings
+
+# client = motor.motor_asyncio.AsyncIOMotorClient(settings.MONGODB_URL)
+# db = client.pgrass
 
 
 def geodb():
-    user=settings.DB_USER
-    password=settings.DB_PASSWORD
-    host=settings.DB_HOST
-    port=settings.DB_PORT
-    db=settings.DB_DATABASE
-    
+    user = settings.DB_USER
+    password = settings.DB_PASSWORD
+    host = settings.DB_HOST
+    port = settings.DB_PORT
+    db = settings.DB_DATABASE
+
     pgdb = 'postgresql+psycopg2'
-    logger.debug(f'{pgdb}://{user}:.....@{host}:{port}/{db}',)
-    alchemyEngine   = create_engine(
-        f'{pgdb}://{user}:{password}@{host}:{port}/{db}',
-        pool_recycle=3600
-        );
-    
-    return alchemyEngine.connect();
+    logger.debug(
+        f'{pgdb}://{user}:.....@{host}:{port}/{db}',
+    )
+    alchemyEngine = create_engine(
+        f'{pgdb}://{user}:{password}@{host}:{port}/{db}', pool_recycle=3600
+    )
 
-
+    return alchemyEngine.connect()
 
 
 def get_datetime_to_mongo():
     return datetime.now().astimezone(pytz.utc).isoformat()
+
 
 class PyObjectId(ObjectId):
     @classmethod
