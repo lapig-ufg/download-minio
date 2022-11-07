@@ -15,7 +15,7 @@ services:
         stdin_open: true
         tty: true
         volumes:
-          - '../:/APP'
+          - '../:/APP/download-minio'
           - 'downloadmino-share:/STOREAGE'
           - 'downloadmino-var:/var'
           - '/etc/localtime:/etc/localtime'
