@@ -34,7 +34,7 @@ async def start_dowload(payload: Payload):
     else:
         layerName = payload.layer.valueType
 
-    logger.debug(payload.filter)
+    
     valueFilter = ''
     try:
         valueFilter = payload.filter.valueFilter
@@ -52,6 +52,7 @@ async def start_dowload(payload: Payload):
     logger.debug(
         f"""
                  file: {pathFile}.zip
+                 fileType: {payload.typeDownload}
                  regiao: {region.type}
                  value: {region.value}
                  sql_layer: {payload.layer.download.layerTypeName}
@@ -102,20 +103,20 @@ async def start_dowload(payload: Payload):
                 raise HTTPException(500, f'{e}')
 
             file_paths = glob(f'{tmpdirname}/*')
-            with ZipFile(f'{fileParam}.zip', 'w') as zip:
+            with ZipFile(f'{tmpdirname}/{fileParam}.zip', 'w') as zip:
                 # writing each file one by one
                 for file in file_paths:
                     zip.write(file, file.split('/')[-1])
 
             logger.info(
-                f'zip criado {fileParam}.zip dos arquivos {file_paths}'
+                f'zip criado {tmpdirname}/{fileParam}.zip dos arquivos {file_paths}'
             )
             geofile = GeoFile(f'{pathFile}.zip')
 
             result = client.fput_object(
                 'ows',
                 f'test/{geofile.object_name}',
-                f'{fileParam}.zip',
+                f'{tmpdirname}/{fileParam}.zip',
                 content_type=geofile.content_type,
                 tags=geofile.to_tags,
                 metadata=dict(geofile.to_tags),
@@ -141,4 +142,4 @@ async def start_dowload(payload: Payload):
             else:
                 raise HTTPException(500, 'Erro ao gerar arquivo')
 
-    return dict(payload)
+

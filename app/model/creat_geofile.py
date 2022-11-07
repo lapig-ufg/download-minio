@@ -1,6 +1,7 @@
 import geopandas as gpd
 import pandas as pd
 
+from app.config import logger
 from app.db import geodb
 
 
@@ -14,14 +15,8 @@ class CreatGeoFile:
         self.value = value
         self.sql_layer = sql_layer
         self.valueFilter = valueFilter
-
-    def where(self, msfilter):
-        return ' AND '.join(msfilter)
-
-    def get_column_name(self):
-        if self.fileType == 'csv':
-            dbConnection = geodb()
-            dataFrame = pd.read_sql(
+        dbConnection = geodb()
+        dataFrame = pd.read_sql(
                 f"""
             SELECT column_name
             FROM information_schema.columns
@@ -30,16 +25,39 @@ class CreatGeoFile:
             """,
                 dbConnection,
             )
-
-            dbConnection.close()
-            return ', '.join(
+        dbConnection.close()
+        cols = list(dataFrame.column_name)
+        logger.debug(f"Full column_name: {cols}")
+        type_geom = ['geom', 'geometry']
+        try:
+            self.geom = [name for name in cols if name in type_geom][0]
+        except:
+            raise ValueError('Geometry has not been defined')
+        try:
+            self.index = [name for name in cols if name in ['gid', 'objectid', 'index']][0]
+        except:
+            self.index = None
+            
+        if self.fileType == 'csv':
+            self.column_name = ', '.join(
                 [
                     name
-                    for name in dataFrame.column_name
-                    if not name in ['geom', 'geometry']
+                    for name in cols
+                    if not name in type_geom
                 ]
             )
-        return ' * '
+        else:
+            self.column_name = ', '.join(
+                    [
+                        name
+                        for name in dataFrame.column_name
+                    ]
+                )
+        
+
+    def where(self, msfilter):
+        return ' AND '.join(msfilter)
+
 
     def region_type(self):
         region = self.regiao.lower()
@@ -68,22 +86,18 @@ class CreatGeoFile:
         list_filter.append(self.region_type())
 
         return f"""
-    SELECT {self.get_column_name()} 
+    SELECT {self.column_name} 
     FROM {self.sql_layer} WHERE {self.where(list_filter)}"""
 
     def gpd(self):
         con = geodb()
+        query = self.querey()
+        logger.debug(query)
         if self.fileType in ['shp', 'gpkg']:
-            try:
-                df = gpd.GeoDataFrame.from_postgis(
-                    self.querey(), con, index_col='gid'
+            df = gpd.GeoDataFrame.from_postgis(
+                    query, con, index_col=self.index, geom_col=self.geom
                 )
-            except KeyError:
-                df = gpd.GeoDataFrame.from_postgis(self.querey(), con)
         elif self.fileType == 'csv':
-            try:
-                df = pd.read_sql(self.querey(), con, index_col='gid')
-            except KeyError:
-                df = pd.read_sql(self.querey(), con)
+            df = pd.read_sql(query, con, index_col=self.index)
         con.close()
         return df
