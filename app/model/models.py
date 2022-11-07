@@ -8,7 +8,7 @@ from app.config import settings, logger
 from app.db import MongoModel, PyObjectId
 
 from pydantic import BaseModel
-
+from minio.commonconfig import Tags
 
 class GeoFile():
     def __init__(self,path_name):

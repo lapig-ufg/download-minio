@@ -48,7 +48,7 @@ COPY ./entrypoint.sh /APP
 
 
 RUN apt-get update && \
-    apt-get install -y git make && \
+    apt-get install -y git make build-essential libpq-dev libpq5 && \
     mkdir -p /APP && cd /APP && \
     rm -rf /var/lib/apt/lists/* && \
     chmod +x /APP/entrypoint.sh

@@ -25,14 +25,14 @@ class CreatGeoFile():
             FROM information_schema.columns
             WHERE table_schema = 'public'
             AND table_name   = '{self.sql_layer}'
-            """, dbConnection);
+            """, dbConnection)
 
-            dbConnection.close();
+            dbConnection.close()
             return ', '.join([name for name in dataFrame.column_name if not name in ["geom","geometry"]])
         return ' * '
 
     def region_type(self):
-        region = self.region.lower()
+        region = self.regiao.lower()
         value = self.value.lower()
         query = {
             'city': f" UPPER(unaccent(cd_geocmu)) = UPPER(unaccent('{value}'))",

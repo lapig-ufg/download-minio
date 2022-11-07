@@ -89,18 +89,23 @@ async def start_dowload(payload: Payload):
         with tempfile.TemporaryDirectory() as tmpdirname:
             client = client_minio()
             logger.debug(f'tmpdirname : {tmpdirname}')
-            if payload.typeDownload == 'csv':
-                df.to_csv(f'{tmpdirname}/{fileParam}.csv')
-            elif payload.typeDownload == 'gpkg':
-                df.to_file(f'{tmpdirname}/{fileParam}.gpkg', driver="GPKG")
-            elif payload.typeDownload == 'shp':
-                df.to_file(f'{tmpdirname}/{fileParam}.shp')
+            try:
+                if payload.typeDownload == 'csv':
+                    df.to_csv(f'{tmpdirname}/{fileParam}.csv')
+                elif payload.typeDownload == 'gpkg':
+                    df.to_file(f'{tmpdirname}/{fileParam}.gpkg', driver="GPKG")
+                elif payload.typeDownload == 'shp':
+                    df.to_file(f'{tmpdirname}/{fileParam}.shp')
+            except ValueError as e:
+                raise HTTPException(400,f'{e}')
+            except Exception as e:
+                raise HTTPException(500,f'{e}')
             
             file_paths = glob(f'{tmpdirname}/*') 
             with ZipFile(f'{fileParam}.zip','w') as zip:
                 # writing each file one by one
                 for file in file_paths:
-                    zip.write(file)
+                    zip.write(file, file.split('/')[-1])
             
             logger.info(f'zip criado {fileParam}.zip dos arquivos {file_paths}')
             geofile = GeoFile(f'{pathFile}.zip')
