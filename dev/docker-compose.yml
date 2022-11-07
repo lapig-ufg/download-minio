@@ -15,10 +15,11 @@ services:
         stdin_open: true
         tty: true
         volumes:
-          - 'downloadmino-data:/APP'
+          - '../:/APP'
           - 'downloadmino-share:/STOREAGE'
           - 'downloadmino-var:/var'
           - '/etc/localtime:/etc/localtime'
+          - './.env:/APP/.env'
 
 volumes:
   downloadmino-data:
