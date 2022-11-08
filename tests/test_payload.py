@@ -1,29 +1,22 @@
 from requests import post
+from glob import glob
+import pytest
 import json
 
-URL = 'https://s3.lapig.iesa.ufg.br:9001/api/download'
+URL = 'http://localhost:8282/api/download/'
+FILES = glob('tests/payloads/*.json')
 
-def rename(newname):
-    def decorator(f):
-        f.__name__ = newname
-        return f
-    return decorator
+TESTS = []
+PAYLOAD = {}
+for file in FILES:
+    with open(file) as binfile:
+        tmp_json = json.load(binfile)
+        PAYLOAD[file] = tmp_json
+        for payload_name in tmp_json:
+            TESTS.append((file,payload_name))
 
-
-
-
-def test_payload_pasture():
-    with open('tests/payloads/pasture_col6.json') as file:
-        dataset = json.load(file)
-    
-    for payload in dataset:
-        @rename(f'teste_{payload}')
-        def validate_payload(data):
-            request = post(URL,data=data)
-            print(request.text)
-            assert request.status_code == 200
-        validate_payload(dataset[payload])
-        
-def test_pytest():
-    assert 1 == 1
-
+@pytest.mark.parametrize("file, payload_name", TESTS)
+def test_payload_pasture(file, payload_name):
+    request = post(URL,json=PAYLOAD[file][payload_name])
+    print(request.json)
+    assert request.status_code == 200

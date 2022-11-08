@@ -59,7 +59,12 @@ async def start_dowload(payload: Payload):
                  valueFilter: {valueFilter}
                  """
     )
-    client = client_minio()
+    try:
+        client = client_minio()
+    except Exception as e:
+        logger.exception('Login erro')
+        raise HTTPException(500,f'{e}')
+    
     objects = client.list_objects(
         settings.BUCKET,
         prefix=f'{pathFile}.zip',

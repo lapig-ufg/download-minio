@@ -1,12 +1,19 @@
 from minio import Minio
 
-from app.config import settings
+from app.config import settings, logger
 
+
+class MinioAuthError(Exception):
+    pass
 
 def client_minio():
-    return Minio(
-        settings.MINIO_HOST,
-        settings.MINIO_USER,
-        settings.MINIO_PASSWORD,
-        secure=True,
-    )
+    logger.debug(f'{settings.MINIO_HOST} {settings.MINIO_USER}')
+    try:
+        return Minio(
+            settings.MINIO_HOST,
+            settings.MINIO_USER,
+            settings.MINIO_PASSWORD,
+            secure=True,
+        )
+    except Exception as e:
+        raise MinioAuthError
