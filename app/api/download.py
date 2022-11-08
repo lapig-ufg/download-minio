@@ -60,7 +60,7 @@ async def start_dowload(payload: Payload):
                  """
     )
     client = client_minio()
-    objiects = client.list_objects(
+    objects = client.list_objects(
         settings.BUCKET,
         prefix=f'{pathFile}.zip',
         recursive=True,
