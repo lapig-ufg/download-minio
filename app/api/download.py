@@ -59,7 +59,7 @@ async def start_dowload(payload: Payload):
                  valueFilter: {valueFilter}
                  """
     )
-    clent = client_minio()
+    client = client_minio()
     objiects = client.list_objects(
         settings.BUCKET,
         prefix=f'{pathFile}.zip',
