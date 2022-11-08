@@ -23,7 +23,7 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 # Builder Image
 ###############################################
 FROM python-base as builder-base
-RUN apt-get update && apt-get install --no-install-recommends -y curl build-essential libpq-dev libpq5
+RUN apt-get update && apt-get install --no-install-recommends -y curl build-essential
 
 # install poetry - respects $POETRY_VERSION & $POETRY_HOME
 RUN pip3 install poetry 
@@ -48,7 +48,7 @@ ENV URL_TO_APPLICATION_GITHUB="https://github.com/lapig-ufg/download-minio.git"
 ENV BRANCH="main"
 
 RUN apt-get update && \
-    apt-get install -y git make && \
+    apt-get install -y git make libpq-dev libpq5 && \
     mkdir -p /APP && cd /APP && \
     git clone -b ${BRANCH} ${URL_TO_APPLICATION_GITHUB} && \
     rm -rf /var/lib/apt/lists/* && chmod +x /APP/download-minio/start.sh
