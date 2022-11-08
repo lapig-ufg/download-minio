@@ -1,0 +1,122 @@
+{
+    "layer": {
+        "valueType": "pa_br_unidades_conservacao_US",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "UCs - Uso Sustentável",
+        "typeLabel": "Fonte",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "nome",
+                    "label": "Nome",
+                    "columnType": "string"
+                },
+                {
+                    "column": "esfera",
+                    "label": "Esfera",
+                    "columnType": "string"
+                },
+                {
+                    "column": "grupo",
+                    "label": "Categoria",
+                    "columnType": "string"
+                },
+                {
+                    "column": "codigouc",
+                    "label": "Código UC",
+                    "columnType": "string"
+                },
+                {
+                    "column": "anocriacao",
+                    "label": "Ano de Criação",
+                    "columnType": "string"
+                },
+                {
+                    "column": "atolegal",
+                    "label": "Ato Legal",
+                    "columnType": "string"
+                },
+                {
+                    "column": "qualidade",
+                    "label": "Qualidade",
+                    "columnType": "string"
+                },
+                {
+                    "column": "origem",
+                    "label": "Fonte",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": true,
+            "gpkg": false,
+            "raster": false,
+            "layerTypeName": "pa_br_unidades_conservacao_US",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Unidades de Conservação (Uso Sustentável)"
+            },
+            {
+                "title": "Descrição",
+                "description": "Localização das unidades de conservação de uso sustentável."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região",
+                "description": "Brasil"
+            },
+            {
+                "title": "Período",
+                "description": "2019"
+            },
+            {
+                "title": "Escala",
+                "description": "ND"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "UTF-8"
+            },
+            {
+                "title": "Fonte",
+                "description": "Instituto Chico Mendes de Conservação da Biodiversidade (ICMBio)"
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/leis/L9985.htm'> http://www.planalto.gov.br/ccivil_03/leis/L9985.htm </a>"
+            }
+        ]
+    },
+    "region": {
+        "text": "Ceará",
+        "value": "CE",
+        "type": "state"
+    },
+    "typeDownload": "shp"
+}
+
