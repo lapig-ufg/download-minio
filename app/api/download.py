@@ -59,8 +59,8 @@ async def start_dowload(payload: Payload):
                  valueFilter: {valueFilter}
                  """
     )
-    client = client_minio()
-    objects = client.list_objects(
+    clent = client_minio()
+    objiects = client.list_objects(
         settings.BUCKET,
         prefix=f'{pathFile}.zip',
         recursive=True,
@@ -76,7 +76,7 @@ async def start_dowload(payload: Payload):
         raise HTTPException(500, 'Flaha ao carregar o dados')
 
     if payload.typeDownload == 'raster':
-        return NotImplemented
+        raise NotImplemented
     else:
         geofile = CreatGeoFile(
             fileType=payload.typeDownload,
@@ -140,6 +140,7 @@ async def start_dowload(payload: Payload):
                     size=objects_list[0].size,
                 )
             else:
+                logger.exception('Erro ao salvar dados')
                 raise HTTPException(500, 'Erro ao gerar arquivo')
 
 

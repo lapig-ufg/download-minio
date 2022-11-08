@@ -1,0 +1,994 @@
+{"pasture_gpkg_brasil":{
+    "layer": {
+        "valueType": "pasture_col6_s100",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Área de Pastagem",
+        "typeLabel": "Tipo",
+        "wfsMapCard": {
+            "show": false,
+            "attributes": [
+                {
+                    "column": "area_ha",
+                    "label": "Área do polígono (ha)",
+                    "columnType": "double"
+                },
+                {
+                    "column": "year",
+                    "label": "Ano",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": false,
+            "gpkg": true,
+            "raster": false,
+            "layerTypeName": "pasture_col6",
+            "loading": true
+        },
+        "regionFilter": true,
+        "filters": [
+            {
+                "valueFilter": "year=1985",
+                "viewValueFilter": 1985
+            },
+            {
+                "valueFilter": "year=1986",
+                "viewValueFilter": 1986
+            },
+            {
+                "valueFilter": "year=1987",
+                "viewValueFilter": 1987
+            },
+            {
+                "valueFilter": "year=1988",
+                "viewValueFilter": 1988
+            },
+            {
+                "valueFilter": "year=1989",
+                "viewValueFilter": 1989
+            },
+            {
+                "valueFilter": "year=1990",
+                "viewValueFilter": 1990
+            },
+            {
+                "valueFilter": "year=1991",
+                "viewValueFilter": 1991
+            },
+            {
+                "valueFilter": "year=1992",
+                "viewValueFilter": 1992
+            },
+            {
+                "valueFilter": "year=1993",
+                "viewValueFilter": 1993
+            },
+            {
+                "valueFilter": "year=1994",
+                "viewValueFilter": 1994
+            },
+            {
+                "valueFilter": "year=1995",
+                "viewValueFilter": 1995
+            },
+            {
+                "valueFilter": "year=1996",
+                "viewValueFilter": 1996
+            },
+            {
+                "valueFilter": "year=1997",
+                "viewValueFilter": 1997
+            },
+            {
+                "valueFilter": "year=1998",
+                "viewValueFilter": 1998
+            },
+            {
+                "valueFilter": "year=1999",
+                "viewValueFilter": 1999
+            },
+            {
+                "valueFilter": "year=2000",
+                "viewValueFilter": 2000
+            },
+            {
+                "valueFilter": "year=2001",
+                "viewValueFilter": 2001
+            },
+            {
+                "valueFilter": "year=2002",
+                "viewValueFilter": 2002
+            },
+            {
+                "valueFilter": "year=2003",
+                "viewValueFilter": 2003
+            },
+            {
+                "valueFilter": "year=2004",
+                "viewValueFilter": 2004
+            },
+            {
+                "valueFilter": "year=2005",
+                "viewValueFilter": 2005
+            },
+            {
+                "valueFilter": "year=2006",
+                "viewValueFilter": 2006
+            },
+            {
+                "valueFilter": "year=2007",
+                "viewValueFilter": 2007
+            },
+            {
+                "valueFilter": "year=2008",
+                "viewValueFilter": 2008
+            },
+            {
+                "valueFilter": "year=2009",
+                "viewValueFilter": 2009
+            },
+            {
+                "valueFilter": "year=2010",
+                "viewValueFilter": 2010
+            },
+            {
+                "valueFilter": "year=2011",
+                "viewValueFilter": 2011
+            },
+            {
+                "valueFilter": "year=2012",
+                "viewValueFilter": 2012
+            },
+            {
+                "valueFilter": "year=2013",
+                "viewValueFilter": 2013
+            },
+            {
+                "valueFilter": "year=2014",
+                "viewValueFilter": 2014
+            },
+            {
+                "valueFilter": "year=2015",
+                "viewValueFilter": 2015
+            },
+            {
+                "valueFilter": "year=2016",
+                "viewValueFilter": 2016
+            },
+            {
+                "valueFilter": "year=2017",
+                "viewValueFilter": 2017
+            },
+            {
+                "valueFilter": "year=2018",
+                "viewValueFilter": 2018
+            },
+            {
+                "valueFilter": "year=2019",
+                "viewValueFilter": 2019
+            },
+            {
+                "valueFilter": "year=2020",
+                "viewValueFilter": 2020
+            },
+            {
+                "valueFilter": "year=2021",
+                "viewValueFilter": 2021
+            }
+        ],
+        "filterLabel": "Ano",
+        "filterSelected": "year=2021",
+        "filterHandler": "msfilter",
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Áreas de Pastagens do Brasil"
+            },
+            {
+                "title": "Descrição",
+                "description": "Mapeamento anual das pastagens brasileiras, realizado através do uso de séries de dados Landsat de 1985 a 2020. Utilizando abordagens de classificação supervisionada (Random Forest) através da plataforma Earth Engine da Google."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região",
+                "description": "Todo o território nacional do Brasil"
+            },
+            {
+                "title": "Período",
+                "description": "1985 ~ 2021"
+            },
+            {
+                "title": "Escala",
+                "description": "30 metros"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "Latin 1"
+            },
+            {
+                "title": "Fonte",
+                "description": "Laboratório de Processamento de Imagens e Geoprocessamento - Lapig (geração do dado). Projeto de Mapeamento Anual da Cobertura e Uso do Solo do Brasil - MapBiomas (viabilizador)."
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://atlasdaspastagens.ufg.br'> https://atlasdaspastagens.ufg.br</a>"
+            }
+        ]
+    },
+    "region": {
+        "type": "country",
+        "text": "Brasil",
+        "value": "BRASIL"
+    },
+    "filter": {
+        "valueFilter": "year=2021",
+        "viewValueFilter": 2021
+    },
+    "typeDownload": "gpkg"
+},
+"pasture_csv_brasil":{
+    "layer": {
+        "valueType": "pasture_col6_s100",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Área de Pastagem",
+        "typeLabel": "Tipo",
+        "wfsMapCard": {
+            "show": false,
+            "attributes": [
+                {
+                    "column": "area_ha",
+                    "label": "Área do polígono (ha)",
+                    "columnType": "double"
+                },
+                {
+                    "column": "year",
+                    "label": "Ano",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": false,
+            "gpkg": true,
+            "raster": false,
+            "layerTypeName": "pasture_col6",
+            "loading": true
+        },
+        "regionFilter": true,
+        "filters": [
+            {
+                "valueFilter": "year=1985",
+                "viewValueFilter": 1985
+            },
+            {
+                "valueFilter": "year=1986",
+                "viewValueFilter": 1986
+            },
+            {
+                "valueFilter": "year=1987",
+                "viewValueFilter": 1987
+            },
+            {
+                "valueFilter": "year=1988",
+                "viewValueFilter": 1988
+            },
+            {
+                "valueFilter": "year=1989",
+                "viewValueFilter": 1989
+            },
+            {
+                "valueFilter": "year=1990",
+                "viewValueFilter": 1990
+            },
+            {
+                "valueFilter": "year=1991",
+                "viewValueFilter": 1991
+            },
+            {
+                "valueFilter": "year=1992",
+                "viewValueFilter": 1992
+            },
+            {
+                "valueFilter": "year=1993",
+                "viewValueFilter": 1993
+            },
+            {
+                "valueFilter": "year=1994",
+                "viewValueFilter": 1994
+            },
+            {
+                "valueFilter": "year=1995",
+                "viewValueFilter": 1995
+            },
+            {
+                "valueFilter": "year=1996",
+                "viewValueFilter": 1996
+            },
+            {
+                "valueFilter": "year=1997",
+                "viewValueFilter": 1997
+            },
+            {
+                "valueFilter": "year=1998",
+                "viewValueFilter": 1998
+            },
+            {
+                "valueFilter": "year=1999",
+                "viewValueFilter": 1999
+            },
+            {
+                "valueFilter": "year=2000",
+                "viewValueFilter": 2000
+            },
+            {
+                "valueFilter": "year=2001",
+                "viewValueFilter": 2001
+            },
+            {
+                "valueFilter": "year=2002",
+                "viewValueFilter": 2002
+            },
+            {
+                "valueFilter": "year=2003",
+                "viewValueFilter": 2003
+            },
+            {
+                "valueFilter": "year=2004",
+                "viewValueFilter": 2004
+            },
+            {
+                "valueFilter": "year=2005",
+                "viewValueFilter": 2005
+            },
+            {
+                "valueFilter": "year=2006",
+                "viewValueFilter": 2006
+            },
+            {
+                "valueFilter": "year=2007",
+                "viewValueFilter": 2007
+            },
+            {
+                "valueFilter": "year=2008",
+                "viewValueFilter": 2008
+            },
+            {
+                "valueFilter": "year=2009",
+                "viewValueFilter": 2009
+            },
+            {
+                "valueFilter": "year=2010",
+                "viewValueFilter": 2010
+            },
+            {
+                "valueFilter": "year=2011",
+                "viewValueFilter": 2011
+            },
+            {
+                "valueFilter": "year=2012",
+                "viewValueFilter": 2012
+            },
+            {
+                "valueFilter": "year=2013",
+                "viewValueFilter": 2013
+            },
+            {
+                "valueFilter": "year=2014",
+                "viewValueFilter": 2014
+            },
+            {
+                "valueFilter": "year=2015",
+                "viewValueFilter": 2015
+            },
+            {
+                "valueFilter": "year=2016",
+                "viewValueFilter": 2016
+            },
+            {
+                "valueFilter": "year=2017",
+                "viewValueFilter": 2017
+            },
+            {
+                "valueFilter": "year=2018",
+                "viewValueFilter": 2018
+            },
+            {
+                "valueFilter": "year=2019",
+                "viewValueFilter": 2019
+            },
+            {
+                "valueFilter": "year=2020",
+                "viewValueFilter": 2020
+            },
+            {
+                "valueFilter": "year=2021",
+                "viewValueFilter": 2021
+            }
+        ],
+        "filterLabel": "Ano",
+        "filterSelected": "year=2021",
+        "filterHandler": "msfilter",
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Áreas de Pastagens do Brasil"
+            },
+            {
+                "title": "Descrição",
+                "description": "Mapeamento anual das pastagens brasileiras, realizado através do uso de séries de dados Landsat de 1985 a 2020. Utilizando abordagens de classificação supervisionada (Random Forest) através da plataforma Earth Engine da Google."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região",
+                "description": "Todo o território nacional do Brasil"
+            },
+            {
+                "title": "Período",
+                "description": "1985 ~ 2021"
+            },
+            {
+                "title": "Escala",
+                "description": "30 metros"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "Latin 1"
+            },
+            {
+                "title": "Fonte",
+                "description": "Laboratório de Processamento de Imagens e Geoprocessamento - Lapig (geração do dado). Projeto de Mapeamento Anual da Cobertura e Uso do Solo do Brasil - MapBiomas (viabilizador)."
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://atlasdaspastagens.ufg.br'> https://atlasdaspastagens.ufg.br</a>"
+            }
+        ]
+    },
+    "region": {
+        "type": "country",
+        "text": "Brasil",
+        "value": "BRASIL"
+    },
+    "filter": {
+        "valueFilter": "year=2021",
+        "viewValueFilter": 2021
+    },
+    "typeDownload": "csv"
+},
+"pasture_csv_cerrado":{
+    "layer": {
+        "valueType": "pasture_col6_s100",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Área de Pastagem",
+        "typeLabel": "Tipo",
+        "wfsMapCard": {
+            "show": false,
+            "attributes": [
+                {
+                    "column": "area_ha",
+                    "label": "Área do polígono (ha)",
+                    "columnType": "double"
+                },
+                {
+                    "column": "year",
+                    "label": "Ano",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": false,
+            "gpkg": true,
+            "raster": false,
+            "layerTypeName": "pasture_col6",
+            "loading": true
+        },
+        "regionFilter": true,
+        "filters": [
+            {
+                "valueFilter": "year=1985",
+                "viewValueFilter": 1985
+            },
+            {
+                "valueFilter": "year=1986",
+                "viewValueFilter": 1986
+            },
+            {
+                "valueFilter": "year=1987",
+                "viewValueFilter": 1987
+            },
+            {
+                "valueFilter": "year=1988",
+                "viewValueFilter": 1988
+            },
+            {
+                "valueFilter": "year=1989",
+                "viewValueFilter": 1989
+            },
+            {
+                "valueFilter": "year=1990",
+                "viewValueFilter": 1990
+            },
+            {
+                "valueFilter": "year=1991",
+                "viewValueFilter": 1991
+            },
+            {
+                "valueFilter": "year=1992",
+                "viewValueFilter": 1992
+            },
+            {
+                "valueFilter": "year=1993",
+                "viewValueFilter": 1993
+            },
+            {
+                "valueFilter": "year=1994",
+                "viewValueFilter": 1994
+            },
+            {
+                "valueFilter": "year=1995",
+                "viewValueFilter": 1995
+            },
+            {
+                "valueFilter": "year=1996",
+                "viewValueFilter": 1996
+            },
+            {
+                "valueFilter": "year=1997",
+                "viewValueFilter": 1997
+            },
+            {
+                "valueFilter": "year=1998",
+                "viewValueFilter": 1998
+            },
+            {
+                "valueFilter": "year=1999",
+                "viewValueFilter": 1999
+            },
+            {
+                "valueFilter": "year=2000",
+                "viewValueFilter": 2000
+            },
+            {
+                "valueFilter": "year=2001",
+                "viewValueFilter": 2001
+            },
+            {
+                "valueFilter": "year=2002",
+                "viewValueFilter": 2002
+            },
+            {
+                "valueFilter": "year=2003",
+                "viewValueFilter": 2003
+            },
+            {
+                "valueFilter": "year=2004",
+                "viewValueFilter": 2004
+            },
+            {
+                "valueFilter": "year=2005",
+                "viewValueFilter": 2005
+            },
+            {
+                "valueFilter": "year=2006",
+                "viewValueFilter": 2006
+            },
+            {
+                "valueFilter": "year=2007",
+                "viewValueFilter": 2007
+            },
+            {
+                "valueFilter": "year=2008",
+                "viewValueFilter": 2008
+            },
+            {
+                "valueFilter": "year=2009",
+                "viewValueFilter": 2009
+            },
+            {
+                "valueFilter": "year=2010",
+                "viewValueFilter": 2010
+            },
+            {
+                "valueFilter": "year=2011",
+                "viewValueFilter": 2011
+            },
+            {
+                "valueFilter": "year=2012",
+                "viewValueFilter": 2012
+            },
+            {
+                "valueFilter": "year=2013",
+                "viewValueFilter": 2013
+            },
+            {
+                "valueFilter": "year=2014",
+                "viewValueFilter": 2014
+            },
+            {
+                "valueFilter": "year=2015",
+                "viewValueFilter": 2015
+            },
+            {
+                "valueFilter": "year=2016",
+                "viewValueFilter": 2016
+            },
+            {
+                "valueFilter": "year=2017",
+                "viewValueFilter": 2017
+            },
+            {
+                "valueFilter": "year=2018",
+                "viewValueFilter": 2018
+            },
+            {
+                "valueFilter": "year=2019",
+                "viewValueFilter": 2019
+            },
+            {
+                "valueFilter": "year=2020",
+                "viewValueFilter": 2020
+            },
+            {
+                "valueFilter": "year=2021",
+                "viewValueFilter": 2021
+            }
+        ],
+        "filterLabel": "Ano",
+        "filterSelected": "year=2021",
+        "filterHandler": "msfilter",
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Áreas de Pastagens do Brasil"
+            },
+            {
+                "title": "Descrição",
+                "description": "Mapeamento anual das pastagens brasileiras, realizado através do uso de séries de dados Landsat de 1985 a 2020. Utilizando abordagens de classificação supervisionada (Random Forest) através da plataforma Earth Engine da Google."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região",
+                "description": "Todo o território nacional do Brasil"
+            },
+            {
+                "title": "Período",
+                "description": "1985 ~ 2021"
+            },
+            {
+                "title": "Escala",
+                "description": "30 metros"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "Latin 1"
+            },
+            {
+                "title": "Fonte",
+                "description": "Laboratório de Processamento de Imagens e Geoprocessamento - Lapig (geração do dado). Projeto de Mapeamento Anual da Cobertura e Uso do Solo do Brasil - MapBiomas (viabilizador)."
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://atlasdaspastagens.ufg.br'> https://atlasdaspastagens.ufg.br</a>"
+            }
+        ]
+    },
+    "region": {
+        "text": "Cerrado",
+        "value": "CERRADO",
+        "type": "biome"
+    },
+    "filter": {
+        "valueFilter": "year=2021",
+        "viewValueFilter": 2021
+    },
+    "typeDownload": "gpkg"
+},
+"pasture_gpkg_cerrado":{
+    "layer": {
+        "valueType": "pasture_col6_s100",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Área de Pastagem",
+        "typeLabel": "Tipo",
+        "wfsMapCard": {
+            "show": false,
+            "attributes": [
+                {
+                    "column": "area_ha",
+                    "label": "Área do polígono (ha)",
+                    "columnType": "double"
+                },
+                {
+                    "column": "year",
+                    "label": "Ano",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": false,
+            "gpkg": true,
+            "raster": false,
+            "layerTypeName": "pasture_col6",
+            "loading": true
+        },
+        "regionFilter": true,
+        "filters": [
+            {
+                "valueFilter": "year=1985",
+                "viewValueFilter": 1985
+            },
+            {
+                "valueFilter": "year=1986",
+                "viewValueFilter": 1986
+            },
+            {
+                "valueFilter": "year=1987",
+                "viewValueFilter": 1987
+            },
+            {
+                "valueFilter": "year=1988",
+                "viewValueFilter": 1988
+            },
+            {
+                "valueFilter": "year=1989",
+                "viewValueFilter": 1989
+            },
+            {
+                "valueFilter": "year=1990",
+                "viewValueFilter": 1990
+            },
+            {
+                "valueFilter": "year=1991",
+                "viewValueFilter": 1991
+            },
+            {
+                "valueFilter": "year=1992",
+                "viewValueFilter": 1992
+            },
+            {
+                "valueFilter": "year=1993",
+                "viewValueFilter": 1993
+            },
+            {
+                "valueFilter": "year=1994",
+                "viewValueFilter": 1994
+            },
+            {
+                "valueFilter": "year=1995",
+                "viewValueFilter": 1995
+            },
+            {
+                "valueFilter": "year=1996",
+                "viewValueFilter": 1996
+            },
+            {
+                "valueFilter": "year=1997",
+                "viewValueFilter": 1997
+            },
+            {
+                "valueFilter": "year=1998",
+                "viewValueFilter": 1998
+            },
+            {
+                "valueFilter": "year=1999",
+                "viewValueFilter": 1999
+            },
+            {
+                "valueFilter": "year=2000",
+                "viewValueFilter": 2000
+            },
+            {
+                "valueFilter": "year=2001",
+                "viewValueFilter": 2001
+            },
+            {
+                "valueFilter": "year=2002",
+                "viewValueFilter": 2002
+            },
+            {
+                "valueFilter": "year=2003",
+                "viewValueFilter": 2003
+            },
+            {
+                "valueFilter": "year=2004",
+                "viewValueFilter": 2004
+            },
+            {
+                "valueFilter": "year=2005",
+                "viewValueFilter": 2005
+            },
+            {
+                "valueFilter": "year=2006",
+                "viewValueFilter": 2006
+            },
+            {
+                "valueFilter": "year=2007",
+                "viewValueFilter": 2007
+            },
+            {
+                "valueFilter": "year=2008",
+                "viewValueFilter": 2008
+            },
+            {
+                "valueFilter": "year=2009",
+                "viewValueFilter": 2009
+            },
+            {
+                "valueFilter": "year=2010",
+                "viewValueFilter": 2010
+            },
+            {
+                "valueFilter": "year=2011",
+                "viewValueFilter": 2011
+            },
+            {
+                "valueFilter": "year=2012",
+                "viewValueFilter": 2012
+            },
+            {
+                "valueFilter": "year=2013",
+                "viewValueFilter": 2013
+            },
+            {
+                "valueFilter": "year=2014",
+                "viewValueFilter": 2014
+            },
+            {
+                "valueFilter": "year=2015",
+                "viewValueFilter": 2015
+            },
+            {
+                "valueFilter": "year=2016",
+                "viewValueFilter": 2016
+            },
+            {
+                "valueFilter": "year=2017",
+                "viewValueFilter": 2017
+            },
+            {
+                "valueFilter": "year=2018",
+                "viewValueFilter": 2018
+            },
+            {
+                "valueFilter": "year=2019",
+                "viewValueFilter": 2019
+            },
+            {
+                "valueFilter": "year=2020",
+                "viewValueFilter": 2020
+            },
+            {
+                "valueFilter": "year=2021",
+                "viewValueFilter": 2021
+            }
+        ],
+        "filterLabel": "Ano",
+        "filterSelected": "year=2021",
+        "filterHandler": "msfilter",
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Áreas de Pastagens do Brasil"
+            },
+            {
+                "title": "Descrição",
+                "description": "Mapeamento anual das pastagens brasileiras, realizado através do uso de séries de dados Landsat de 1985 a 2020. Utilizando abordagens de classificação supervisionada (Random Forest) através da plataforma Earth Engine da Google."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região",
+                "description": "Todo o território nacional do Brasil"
+            },
+            {
+                "title": "Período",
+                "description": "1985 ~ 2021"
+            },
+            {
+                "title": "Escala",
+                "description": "30 metros"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "Latin 1"
+            },
+            {
+                "title": "Fonte",
+                "description": "Laboratório de Processamento de Imagens e Geoprocessamento - Lapig (geração do dado). Projeto de Mapeamento Anual da Cobertura e Uso do Solo do Brasil - MapBiomas (viabilizador)."
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://atlasdaspastagens.ufg.br'> https://atlasdaspastagens.ufg.br</a>"
+            }
+        ]
+    },
+    "region": {
+        "text": "Cerrado",
+        "value": "CERRADO",
+        "type": "biome"
+    },
+    "filter": {
+        "valueFilter": "year=2021",
+        "viewValueFilter": 2021
+    },
+    "typeDownload": "csv"
+}
+
+}

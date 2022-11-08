@@ -20,15 +20,26 @@ if os.environ.get('LAPIG_ENV') == 'production':
     logger.remove()
     logger.add(sys.stderr, level='INFO', format=confi_format)
 
-
-logger.add(
-    '../log/downloadmino/downloadmino.log', rotation=rotation, level='INFO'
-)
-logger.add(
-    '../log/downloadmino/downloadmino_WARNING.log',
-    level='WARNING',
-    rotation=rotation,
-)
+try:
+    logger.add(
+        '/logs/downloadmino/downloadmino.log', rotation=rotation, level='INFO'
+    )
+except:
+    logger.add(
+        '../logs/downloadmino/downloadmino.log', rotation=rotation, level='INFO'
+    )
+try:
+    logger.add(
+        '/logs/downloadmino/downloadmino_WARNING.log',
+        level='WARNING',
+        rotation=rotation,
+    )
+except:
+    logger.add(
+        '../logs/downloadmino/downloadmino_WARNING.log',
+        level='WARNING',
+        rotation=rotation,
+    )
 
 settings = Dynaconf(
     envvar_prefix='MINIO',

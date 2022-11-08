@@ -50,7 +50,7 @@ class CreatGeoFile:
             self.column_name = ', '.join(
                     [
                         name
-                        for name in dataFrame.column_name
+                        for name in cols
                     ]
                 )
         
