@@ -24,7 +24,7 @@ node {
                     }
         }
         stage('Building Image') {
-            dockerImage = docker.build registryPROD + "/$application_name:$BUILD_NUMBER", "--build-arg  --no-cache -f Dockerfile ."
+            dockerImage = docker.build registryPROD + "/$application_name:$BUILD_NUMBER", " -f Dockerfile . --no-cache"
         }
         stage('Push Image to Registry') {
 
