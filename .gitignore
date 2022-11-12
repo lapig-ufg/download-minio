@@ -8,6 +8,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 .secrets.toml
+*.lgobj
 # C extensions
 *.so
 .secrets.*

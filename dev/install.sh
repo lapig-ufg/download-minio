@@ -1,6 +1,7 @@
 #!/bin/bash
 FOLDER=~/.ssh
 FOLDER02=data/
+FOLDER03=mnt/tmpfs
 if [ -f "poetry.lock" ]; then
     rm poetry.lock
 fi
@@ -17,6 +18,13 @@ if [ -d "$FOLDER02" ]; then
 else
     echo "Directory data/ does not exist!"
     mkdir data/
+fi
+if [ -d "$FOLDER03" ]; then
+    echo "Directory mnt/tmpfs exist!"
+else
+    echo "Directory mnt/tmpfs does not exist!"
+    mkdir mnt/tmpfs
+    echo "" > mnt/tmpfs/ows_runtime.map
 fi
 cp -rvp ../poetry.lock .
 

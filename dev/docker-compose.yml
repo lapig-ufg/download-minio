@@ -19,6 +19,7 @@ services:
           - 'downloadmino-share:/STOREAGE'
           - 'downloadmino-var:/var'
           - '/etc/localtime:/etc/localtime'
+          - './mnt/tmpfs/ows_runtime.map:/mnt/tmpfs/ows_runtime.map'
           - './.env:/APP/.env'
 
 volumes:

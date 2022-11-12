@@ -6,6 +6,8 @@ MINIO_USER = 'admin'
 MINIO_PASSWORD = 'passadmin'
 BUCKET = 'ows'
 
+MAPFILE = '/mnt/tmpfs/ows_runtime.map'
+
 DB_USER = 'user'
 DB_PASSWORD = '123456'
 DB_HOST = 'localhost'
