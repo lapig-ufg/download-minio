@@ -28,10 +28,10 @@ def geodb(database = ''):
 
     pgdb = 'postgresql+psycopg2'
     logger.debug(
-        f'{pgdb}://{user}:.....@{host}:{port}/{db}',
+        f'{pgdb}://{user}:{password}@{host}:{port}/{db}'.replace("'",""),
     )
     alchemyEngine = create_engine(
-        f'{pgdb}://{user}:{password}@{host}:{port}/{db}', pool_recycle=3600
+        f'{pgdb}://{user}:{password}@{host}:{port}/{db}'.replace("'",""), pool_recycle=3600
     )
 
     return alchemyEngine.connect()

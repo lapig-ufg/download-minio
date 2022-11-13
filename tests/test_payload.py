@@ -4,6 +4,7 @@ import pytest
 import json
 
 URL = 'https://download.lapig.iesa.ufg.br//api/download/'
+URL = 'http://localhost:8282/api/download/'
 FILES = glob('tests/payloads/*.json')
 
 TESTS = []
@@ -18,5 +19,6 @@ for file in FILES:
 @pytest.mark.parametrize("file, payload_name", TESTS)
 def test_payload_pasture(file, payload_name):
     request = post(URL,json=PAYLOAD[file][payload_name])
-    print(request.json)
+    print(request.json())
     assert request.status_code == 200
+    assert request.text == 200
