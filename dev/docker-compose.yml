@@ -16,10 +16,6 @@ services:
         tty: true
         volumes:
           - '../:/APP/download-minio'
-          - 'downloadmino-share:/STOREAGE'
           - '/etc/localtime:/etc/localtime'
           - './mnt/tmpfs:/mnt/tmpfs'
           - './.env:/APP/.env'
-
-volumes:
-  downloadmino-data:
