@@ -59,14 +59,18 @@ for n, i in enumerate(file,1):
         logger.exception(f'Error {i}')
     
 
-file_ows = '/APP/download-minio/app/data/ows.map.cache.lgobj'
-
+path_cach_ows = 'app/data/'
+file_ows = f'{path_cach_ows}ows.map.cache.lgobj'
 if os.path.exists(file_ows):
   os.remove(file_ows)
 else:
   logger.debug("The file does not exist")
 
-
+if not os.path.exists(path_cach_ows):
+    os.mkdir(path_cach_ows)
+else:
+    logger.debug("Folder already exists")
+    
 with open(file_ows, 'wb') as f:
     pickle.dump(map, f)
 
