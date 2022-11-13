@@ -51,7 +51,12 @@ for n, i in enumerate(file,1):
             map[name]["connectiontype"][d["connectiontype"]] = d["connection"]
         else:
             map[name]['data'] = data
-            map[name]['table'] = re.sub(regex, '',data)
+            table = re.sub(regex, '',data).split(')')[0].split(' ')
+            if table[0] == '':
+                map[name]['table'] = table[1]
+            else:
+                map[name]['table'] = table[0]
+            
             map[name]["connectiontype"] =  {d["connectiontype"]:{}}
             for key, value in [tuple(connection.split('=')) for connection in  d["connection"].split(' ')]:
                 map[name]["connectiontype"][d["connectiontype"]][key] = value
@@ -59,19 +64,17 @@ for n, i in enumerate(file,1):
         logger.exception(f'Error {i}')
     
 
-path_cach_ows = 'app/data/'
-file_ows = f'{path_cach_ows}ows.map.cache.lgobj'
+
+file_ows = f'{settings.CACHE_MAP}{settings.FILE_MAP_CACH}'
 if os.path.exists(file_ows):
   os.remove(file_ows)
 else:
   logger.debug("The file does not exist")
 
-if not os.path.exists(path_cach_ows):
-    os.mkdir(path_cach_ows)
+if not os.path.exists(settings.CACHE_MAP):
+    os.mkdir(settings.CACHE_MAP)
 else:
     logger.debug("Folder already exists")
     
 with open(file_ows, 'wb') as f:
     pickle.dump(map, f)
-
-os.system("gunicorn -k  uvicorn.workers.UvicornWorker --bind 0.0.0.0:8080 -w 4 -t 0 app.server:app")

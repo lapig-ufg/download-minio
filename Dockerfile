@@ -53,4 +53,4 @@ RUN apt-get update && \
     git clone -b ${BRANCH} ${URL_TO_APPLICATION_GITHUB} && \
     rm -rf /var/lib/apt/lists/* && chmod +x /APP/download-minio/start.sh
 
-CMD sh -c "cd /APP/download-minio && python creat_cach_mapfile.py"
+CMD sh -c "cd /APP/download-minio && python creat_cach_mapfile.py && gunicorn -k  uvicorn.workers.UvicornWorker --bind 0.0.0.0:8080 -w 8 -t 0 app.server:app"
