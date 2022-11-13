@@ -1,6 +1,6 @@
 from pickle import load
 from json import dumps
-from config import settings
+from app.config import settings
 
 
     
