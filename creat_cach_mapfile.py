@@ -59,7 +59,7 @@ for n, i in enumerate(file,1):
         logger.exception(f'Error {i}')
     
 
-file_ows = 'app/data/ows.map.cache.lgobj'
+file_ows = '/APP/download-minio/app/data/ows.map.cache.lgobj'
 
 if os.path.exists(file_ows):
   os.remove(file_ows)
