@@ -1,5 +1,6 @@
 import mappyfile
 import pathlib
+import os
 
 from app.config import settings, logger
 import re
@@ -60,8 +61,11 @@ for n, i in enumerate(file,1):
 
 file_ows = 'app/data/ows.map.cache.lgobj'
 
-path = pathlib.Path(file_ows)
-path.unlink()
+if os.path.exists(file_ows):
+  os.remove(file_ows)
+else:
+  logger.debug("The file does not exist")
+
 
 with open(file_ows, 'wb') as f:
     pickle.dump(map, f)
