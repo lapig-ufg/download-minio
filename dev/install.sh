@@ -24,7 +24,7 @@ if [ -d "$FOLDER03" ]; then
 else
     echo "Directory mnt/tmpfs does not exist!"
     mkdir mnt/tmpfs
-    echo "" > mnt/tmpfs/ows_runtime.map
+    echo "nonono" > mnt/tmpfs/ows_runtime.map
 fi
 cp -rvp ../poetry.lock .
 
