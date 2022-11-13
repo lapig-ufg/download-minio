@@ -2,10 +2,11 @@ from pickle import load
 from json import dumps
 from config import settings
 
-with open(file_ows = f'{settings.CACHE_MAP}{settings.FILE_MAP_CACH}', 'rb') as f:
-    lpmap = load(f)
+
     
 def get_layer(name):
+    with open(f'{settings.CACHE_MAP}{settings.FILE_MAP_CACH}', 'rb') as f:
+        lpmap = load(f)
     layer = lpmap[name]
     try:
         return (layer['file'],layer['type'], 'file')

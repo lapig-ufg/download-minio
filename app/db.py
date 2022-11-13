@@ -14,12 +14,17 @@ from .config import settings
 # db = client.pgrass
 
 
-def geodb():
+def geodb(database = ''):
     user = settings.DB_USER
     password = settings.DB_PASSWORD
     host = settings.DB_HOST
     port = settings.DB_PORT
     db = settings.DB_DATABASE
+    if isinstance(database,dict):
+        user = database['user']
+        password = database['password']
+        db = database['dbname']
+       
 
     pgdb = 'postgresql+psycopg2'
     logger.debug(

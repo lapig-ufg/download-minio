@@ -5,17 +5,19 @@ from app.config import logger
 from app.db import geodb
 
 
+
 class CreatGeoFile:
     def __init__(
-        self, fileType, file, regiao, value, sql_layer, valueFilter
+        self, fileType, file, regiao, value, sql_layer, valueFilter, db =''
     ) -> None:
         self.fileType = fileType
         self.file = file
         self.regiao = regiao
         self.value = value
-        self.sql_layer = sql_layer
         self.valueFilter = valueFilter
-        dbConnection = geodb()
+        self.sql_layer = sql_layer
+        self.db = db
+        dbConnection = geodb(self.db)
         dataFrame = pd.read_sql(
                 f"""
             SELECT column_name
@@ -90,7 +92,7 @@ class CreatGeoFile:
     FROM {self.sql_layer} WHERE {self.where(list_filter)}"""
 
     def gpd(self):
-        con = geodb()
+        con = geodb(self.db)
         query = self.querey()
         logger.debug(query)
         if self.fileType in ['shp', 'gpkg']:

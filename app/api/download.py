@@ -10,6 +10,7 @@ from app.functions import client_minio
 from app.model.creat_geofile import CreatGeoFile
 from app.model.models import GeoFile
 from app.model.payload import Payload
+from app.util.mapfile import get_layer
 
 router = APIRouter()
 
@@ -80,16 +81,37 @@ async def start_dowload(payload: Payload):
         logger.exception('ERROR TEM MAIS DE UM OBJECT')
         raise HTTPException(500, 'Flaha ao carregar o dados')
 
-    if payload.typeDownload == 'raster':
-        raise NotImplemented
-    else:
+    try:
+        map_layer, map_type, map_conect = get_layer(payload.layer.download.layerTypeName)
+        sql_layer = map_layer
+        if not 'sqlite' == map_conect:
+            db  = map_conect
+        else:
+            ...
+    except:
+        sql_layer = payload.layer.download.layerTypeName
+        db = ''
+        
+    if isinstance(map_conect,dict):
+        creat_file_postgre(
+            payload, 
+             pathFile, 
+            region, 
+            sql_layer, 
+            valueFilter,
+            fileParam,
+            db)   
+            
+            
+def creat_file_postgre(payload, pathFile, region, sql_layer, valueFilter,fileParam,db):
         geofile = CreatGeoFile(
             fileType=payload.typeDownload,
             file=f'{pathFile}.zip',
             regiao=region.type,
             value=region.value,
-            sql_layer=payload.layer.download.layerTypeName,
+            sql_layer=sql_layer,
             valueFilter=valueFilter,
+            db = db
         )
         df = geofile.gpd()
         with tempfile.TemporaryDirectory() as tmpdirname:
