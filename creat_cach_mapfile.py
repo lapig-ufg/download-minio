@@ -69,3 +69,5 @@ else:
 
 with open(file_ows, 'wb') as f:
     pickle.dump(map, f)
+
+os.system("gunicorn -k  uvicorn.workers.UvicornWorker --bind 0.0.0.0:8080 -w 4 -t 0 app.server:app")
