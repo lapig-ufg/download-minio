@@ -1,10 +1,11 @@
 from minio import Minio
 
-from app.config import settings, logger
+from app.config import logger, settings
 
 
 class MinioAuthError(Exception):
     pass
+
 
 def client_minio():
     logger.debug(f'{settings.MINIO_HOST} {settings.MINIO_USER}')

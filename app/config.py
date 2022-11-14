@@ -26,7 +26,9 @@ try:
     )
 except:
     logger.add(
-        '../logs/downloadmino/downloadmino.log', rotation=rotation, level='INFO'
+        '../logs/downloadmino/downloadmino.log',
+        rotation=rotation,
+        level='INFO',
     )
 try:
     logger.add(

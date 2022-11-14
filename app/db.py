@@ -14,24 +14,24 @@ from .config import settings
 # db = client.pgrass
 
 
-def geodb(database = ''):
+def geodb(database=''):
     user = settings.DB_USER
     password = settings.DB_PASSWORD
     host = settings.DB_HOST
     port = settings.DB_PORT
     db = settings.DB_DATABASE
-    if isinstance(database,dict):
+    if isinstance(database, dict):
         user = database['user']
         password = database['password']
         db = database['dbname']
-       
 
     pgdb = 'postgresql+psycopg2'
     logger.debug(
-        f'{pgdb}://{user}:{password}@{host}:{port}/{db}'.replace("'",""),
+        f'{pgdb}://{user}:{password}@{host}:{port}/{db}'.replace("'", ''),
     )
     alchemyEngine = create_engine(
-        f'{pgdb}://{user}:{password}@{host}:{port}/{db}'.replace("'",""), pool_recycle=3600
+        f'{pgdb}://{user}:{password}@{host}:{port}/{db}'.replace("'", ''),
+        pool_recycle=3600,
     )
 
     return alchemyEngine.connect()

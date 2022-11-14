@@ -6,10 +6,17 @@ from app.db import geodb
 from app.util.mapfile import get_schema
 
 
-
 class CreatGeoFile:
     def __init__(
-        self, fileType, file, regiao, value, sql_layer, valueFilter, db ='',crs="epsg:4326"
+        self,
+        fileType,
+        file,
+        regiao,
+        value,
+        sql_layer,
+        valueFilter,
+        db='',
+        crs='epsg:4326',
     ) -> None:
         self.fileType = fileType
         self.file = file
@@ -21,50 +28,41 @@ class CreatGeoFile:
         self.crs = crs
         dbConnection = geodb(self.db)
         dataFrame = pd.read_sql(
-                f"""
+            f"""
             SELECT column_name,data_type 
             FROM information_schema.columns
             WHERE table_schema = 'public'
             AND table_name   = '{self.sql_layer}'
             """,
-                dbConnection,
-            )
+            dbConnection,
+        )
         dbConnection.close()
         cols = list(dataFrame.column_name)
-        
+
         self.schema = get_schema(dataFrame)
-        
-        logger.debug(f"Full column_name: {cols}")
+
+        logger.debug(f'Full column_name: {cols}')
         type_geom = ['geom', 'geometry']
         try:
             self.geom = [name for name in cols if name in type_geom][0]
         except:
             raise ValueError('Geometry has not been defined')
         try:
-            self.index = [name for name in cols if name in ['gid', 'objectid', 'index']][0]
+            self.index = [
+                name for name in cols if name in ['gid', 'objectid', 'index']
+            ][0]
         except:
             self.index = None
-            
+
         if self.fileType == 'csv':
             self.column_name = ', '.join(
-                [
-                    name
-                    for name in cols
-                    if not name in type_geom
-                ]
+                [name for name in cols if not name in type_geom]
             )
         else:
-            self.column_name = ', '.join(
-                    [
-                        name
-                        for name in cols
-                    ]
-                )
-        
+            self.column_name = ', '.join([name for name in cols])
 
     def where(self, msfilter):
         return ' AND '.join(msfilter)
-
 
     def region_type(self):
         region = self.regiao.lower()
@@ -102,16 +100,18 @@ class CreatGeoFile:
         logger.debug(query)
         if self.fileType in ['shp', 'gpkg']:
             df = gpd.GeoDataFrame.from_postgis(
-                    query, con, index_col=self.index, geom_col=self.geom
-                )
+                query, con, index_col=self.index, geom_col=self.geom
+            )
             schema_df = gpd.io.file.infer_schema(df)
             for i in self.schema:
                 if self.schema[i] in ['date']:
                     schema_df['properties'][i] = 'str'
-                    df[i] = pd.to_datetime(df[i]).dt.strftime('%Y-%m-%d') 
+                    df[i] = pd.to_datetime(df[i]).dt.strftime('%Y-%m-%d')
                 if self.schema[i] in ['datetime']:
                     schema_df['properties'][i] = 'str'
-                    df[i] = pd.to_datetime(df[i]).dt.strftime('%Y-%m-%d %H:%M:%S') 
+                    df[i] = pd.to_datetime(df[i]).dt.strftime(
+                        '%Y-%m-%d %H:%M:%S'
+                    )
                 if self.schema[i] in ['integer']:
                     schema_df['properties'][i] = 'int'
                 if self.schema[i] in ['numeric']:
@@ -119,7 +119,7 @@ class CreatGeoFile:
                 if self.schema[i] in ['character varying']:
                     schema_df['properties'][i] = 'str'
                 logger.debug(schema_df)
-            df.crs = self.crs 
+            df.crs = self.crs
         elif self.fileType == 'csv':
             df = pd.read_sql(query, con, index_col=self.index)
             schema_df = ''
