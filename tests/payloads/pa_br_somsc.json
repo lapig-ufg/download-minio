@@ -1,0 +1,476 @@
+{"pa_br_somsc_2020":{
+    "layer": {
+        "valueType": "pasture_carbon_somsc",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "raster",
+        "viewValueType": "Matéria orgânica do solo - 0-20cm (MgC.ha)",
+        "typeLabel": "Fonte",
+        "wfsMapCard": {
+            "show": false,
+            "displayMapCardAttributes": {
+                "column": "",
+                "label": "",
+                "columnType": ""
+            }
+        },
+        "download": {
+            "csv": false,
+            "shp": false,
+            "gpkg": false,
+            "raster": true,
+            "layerTypeName": "pasture_carbon_somsc",
+            "loading": true
+        },
+        "regionFilter": false,
+        "filters": [
+            {
+                "valueFilter": "pa_br_somsc_1985",
+                "viewValueFilter": "1985"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1986",
+                "viewValueFilter": "1986"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1987",
+                "viewValueFilter": "1987"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1988",
+                "viewValueFilter": "1988"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1989",
+                "viewValueFilter": "1989"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1990",
+                "viewValueFilter": "1990"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1991",
+                "viewValueFilter": "1991"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1992",
+                "viewValueFilter": "1992"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1993",
+                "viewValueFilter": "1993"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1994",
+                "viewValueFilter": "1994"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1995",
+                "viewValueFilter": "1995"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1996",
+                "viewValueFilter": "1996"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1997",
+                "viewValueFilter": "1997"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1998",
+                "viewValueFilter": "1998"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1999",
+                "viewValueFilter": "1999"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2000",
+                "viewValueFilter": "2000"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2001",
+                "viewValueFilter": "2001"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2002",
+                "viewValueFilter": "2002"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2003",
+                "viewValueFilter": "2003"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2004",
+                "viewValueFilter": "2004"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2005",
+                "viewValueFilter": "2005"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2006",
+                "viewValueFilter": "2006"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2007",
+                "viewValueFilter": "2007"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2008",
+                "viewValueFilter": "2008"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2009",
+                "viewValueFilter": "2009"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2010",
+                "viewValueFilter": "2010"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2011",
+                "viewValueFilter": "2011"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2012",
+                "viewValueFilter": "2012"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2013",
+                "viewValueFilter": "2013"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2014",
+                "viewValueFilter": "2014"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2015",
+                "viewValueFilter": "2015"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2016",
+                "viewValueFilter": "2016"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2017",
+                "viewValueFilter": "2017"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2018",
+                "viewValueFilter": "2018"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2019",
+                "viewValueFilter": "2019"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2020",
+                "viewValueFilter": "2020"
+            }
+        ],
+        "filterLabel": "Ano",
+        "filterSelected": "pa_br_somsc_2020",
+        "filterHandler": "layername",
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Estoque de carbono nos solos das pastagens brasileiras"
+            },
+            {
+                "title": "Descrição",
+                "description": "Estimativas de estoques de carbono na matéria orgânica do solo – camada superficial 0 a 20 cm - nas áreas ocupadas por pastagens no Brasil.."
+            },
+            {
+                "title": "Formato",
+                "description": "Raster (*.TIF)."
+            },
+            {
+                "title": "Região",
+                "description": "Bioma Cerrado, permitindo analisar as classes de uso do solo por outras regiões de interesse como: estados e municípios."
+            },
+            {
+                "title": "Período",
+                "description": "1985 - 2020"
+            },
+            {
+                "title": "Escala",
+                "description": "1000 m x 1000 m"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "Latin 1"
+            },
+            {
+                "title": "Fonte",
+                "description": "Laboratório de Processamento de Imagens e Geoprocessamento - LAPIG."
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://atlasdaspastagens.ufg.br'> https://atlasdaspastagens.ufg.br</a>"
+            }
+        ]
+    },
+    "region": {
+        "type": "country",
+        "text": "Brasil",
+        "value": "BRASIL"
+    },
+    "filter": {
+        "valueFilter": "pa_br_somsc_2020",
+        "viewValueFilter": "2020"
+    },
+    "typeDownload": "raster"
+},
+
+"pa_br_somsc_2015":{
+    "layer": {
+        "valueType": "pasture_carbon_somsc",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "raster",
+        "viewValueType": "Matéria orgânica do solo - 0-20cm (MgC.ha)",
+        "typeLabel": "Fonte",
+        "wfsMapCard": {
+            "show": false,
+            "displayMapCardAttributes": {
+                "column": "",
+                "label": "",
+                "columnType": ""
+            }
+        },
+        "download": {
+            "csv": false,
+            "shp": false,
+            "gpkg": false,
+            "raster": true,
+            "layerTypeName": "pasture_carbon_somsc",
+            "loading": true
+        },
+        "regionFilter": false,
+        "filters": [
+            {
+                "valueFilter": "pa_br_somsc_1985",
+                "viewValueFilter": "1985"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1986",
+                "viewValueFilter": "1986"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1987",
+                "viewValueFilter": "1987"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1988",
+                "viewValueFilter": "1988"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1989",
+                "viewValueFilter": "1989"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1990",
+                "viewValueFilter": "1990"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1991",
+                "viewValueFilter": "1991"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1992",
+                "viewValueFilter": "1992"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1993",
+                "viewValueFilter": "1993"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1994",
+                "viewValueFilter": "1994"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1995",
+                "viewValueFilter": "1995"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1996",
+                "viewValueFilter": "1996"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1997",
+                "viewValueFilter": "1997"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1998",
+                "viewValueFilter": "1998"
+            },
+            {
+                "valueFilter": "pa_br_somsc_1999",
+                "viewValueFilter": "1999"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2000",
+                "viewValueFilter": "2000"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2001",
+                "viewValueFilter": "2001"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2002",
+                "viewValueFilter": "2002"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2003",
+                "viewValueFilter": "2003"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2004",
+                "viewValueFilter": "2004"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2005",
+                "viewValueFilter": "2005"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2006",
+                "viewValueFilter": "2006"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2007",
+                "viewValueFilter": "2007"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2008",
+                "viewValueFilter": "2008"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2009",
+                "viewValueFilter": "2009"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2010",
+                "viewValueFilter": "2010"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2011",
+                "viewValueFilter": "2011"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2012",
+                "viewValueFilter": "2012"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2013",
+                "viewValueFilter": "2013"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2014",
+                "viewValueFilter": "2014"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2015",
+                "viewValueFilter": "2015"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2016",
+                "viewValueFilter": "2016"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2017",
+                "viewValueFilter": "2017"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2018",
+                "viewValueFilter": "2018"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2019",
+                "viewValueFilter": "2019"
+            },
+            {
+                "valueFilter": "pa_br_somsc_2020",
+                "viewValueFilter": "2020"
+            }
+        ],
+        "filterLabel": "Ano",
+        "filterSelected": "pa_br_somsc_2015",
+        "filterHandler": "layername",
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Estoque de carbono nos solos das pastagens brasileiras"
+            },
+            {
+                "title": "Descrição",
+                "description": "Estimativas de estoques de carbono na matéria orgânica do solo – camada superficial 0 a 20 cm - nas áreas ocupadas por pastagens no Brasil.."
+            },
+            {
+                "title": "Formato",
+                "description": "Raster (*.TIF)."
+            },
+            {
+                "title": "Região",
+                "description": "Bioma Cerrado, permitindo analisar as classes de uso do solo por outras regiões de interesse como: estados e municípios."
+            },
+            {
+                "title": "Período",
+                "description": "1985 - 2020"
+            },
+            {
+                "title": "Escala",
+                "description": "1000 m x 1000 m"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "Latin 1"
+            },
+            {
+                "title": "Fonte",
+                "description": "Laboratório de Processamento de Imagens e Geoprocessamento - LAPIG."
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://atlasdaspastagens.ufg.br'> https://atlasdaspastagens.ufg.br</a>"
+            }
+        ]
+    },
+    "region": {
+        "type": "country",
+        "text": "Brasil",
+        "value": "BRASIL"
+    },
+    "filter": {
+        "valueFilter": "pa_br_somsc_2015",
+        "viewValueFilter": "2015"
+    },
+    "typeDownload": "raster"
+}
+}
