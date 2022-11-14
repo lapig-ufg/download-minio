@@ -57,10 +57,12 @@ async def start_dowload(payload: Payload):
     
     if payload.typeDownload == 'raster':
         if not valueFilter == '':
-            rater_file, map_type, map_conect,crs = get_layer(valueFilter).replace('/STORAGE/catalog/','')
+            raster_file, map_type, map_conect,crs = get_layer(valueFilter)
         else:
-            rater_file, map_type, map_conect,crs = get_layer(payload.layer.download.layerTypeName).replace('/STORAGE/catalog/','')
-        pathFile = f"rater/{rater_file}"
+            raster_file, map_type, map_conect,crs = get_layer(payload.layer.download.layerTypeName)
+        
+        raster_file = raster_file.replace('/STORAGE/catalog/','')
+        pathFile = f"rater/{raster_file}"
         objects = client.list_objects(
             settings.BUCKET,
             prefix=f'{pathFile}',

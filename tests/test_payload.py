@@ -4,7 +4,7 @@ import pytest
 import json
 from app.config import logger
 URL = 'https://download.lapig.iesa.ufg.br//api/download/'
-URL = 'http://localhost:8282/api/download/'
+#URL = 'http://localhost:8282/api/download/'
 FILES = glob('tests/payloads/*.json')
 
 TESTS = []
