@@ -6,6 +6,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.config import logger, settings, start_logger
@@ -15,6 +16,26 @@ from .routers import created_routes
 start_logger()
 
 app = FastAPI()
+
+origins = [
+    "*",
+    "http://127.0.0.1:8000",
+    "http://localhost:4200",
+    "http://localhost:8000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+
+
+
 app = created_routes(app)
 
 

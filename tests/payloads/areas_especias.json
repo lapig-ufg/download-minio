@@ -1,0 +1,194 @@
+{
+    "limites_terras_indigenas_basil":{
+        "layer": {
+            "valueType": "limites_terras_indigenas",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Limites Terras Indígenas",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "nome",
+                        "label": "Nome",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "etnia",
+                        "label": "Etnia",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "fase",
+                        "label": "Fase",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": false,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "limites_terras_indigenas",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Terras Indígenas (TI)"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Limite das terras indígenas brasileiras."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2017"
+                },
+                {
+                    "title": "Escala",
+                    "description": "ND"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Fundação Nacional do Índio (FUNAI)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm'> http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm</a>"
+                }
+            ]
+        },
+        "region": {
+            "type": "country",
+            "text": "Brasil",
+            "value": "BRASIL"
+        },
+        "typeDownload": "shp"
+    },
+    "limites_terras_indigenas_Cuiaba":{
+        "layer": {
+            "valueType": "limites_terras_indigenas",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Limites Terras Indígenas",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "nome",
+                        "label": "Nome",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "etnia",
+                        "label": "Etnia",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "fase",
+                        "label": "Fase",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": false,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "limites_terras_indigenas",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Terras Indígenas (TI)"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Limite das terras indígenas brasileiras."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2017"
+                },
+                {
+                    "title": "Escala",
+                    "description": "ND"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Fundação Nacional do Índio (FUNAI)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm'> http://www.planalto.gov.br/ccivil_03/LEIS/L6001.htm</a>"
+                }
+            ]
+        },
+        "region": {
+            "text": "Cuiabá - MT",
+            "value": "5103403",
+            "type": "city"
+        },
+        "typeDownload": "shp"
+    }
+}

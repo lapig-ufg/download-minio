@@ -6,7 +6,7 @@ from requests import post
 
 from app.config import logger
 
-URL = 'https://download.lapig.iesa.ufg.br//api/download/'
+URL = 'https://download.lapig.iesa.ufg.br/api/download/'
 # URL = 'http://localhost:8282/api/download/'
 FILES = glob('tests/payloads/*.json')
 
