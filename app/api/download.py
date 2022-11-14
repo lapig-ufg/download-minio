@@ -101,7 +101,7 @@ async def start_dowload(payload: Payload):
         result = client.fput_object(
             'ows',
             f'test/{pathFile}',
-            f'/storage/catalog/{pathFile}',
+            f'/storage/catalog/{raster_file}',
             content_type='application/x-geotiff',
         )
         logger.info(
