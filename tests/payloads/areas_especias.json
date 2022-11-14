@@ -1,5 +1,5 @@
 {
-    "limites_terras_indigenas_basil":{
+    "limites_terras_indigenas_brasil":{
         "layer": {
             "valueType": "limites_terras_indigenas",
             "type": "layertype",
@@ -190,6 +190,6 @@
             "type": "city"
         },
         "typeDownload": "shp"
-        
+
     }
 }
