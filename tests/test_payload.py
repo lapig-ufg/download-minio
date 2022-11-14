@@ -2,7 +2,7 @@ from requests import post
 from glob import glob
 import pytest
 import json
-
+from app.config import logger
 URL = 'https://download.lapig.iesa.ufg.br//api/download/'
 URL = 'http://localhost:8282/api/download/'
 FILES = glob('tests/payloads/*.json')
@@ -19,6 +19,9 @@ for file in FILES:
 @pytest.mark.parametrize("file, payload_name", TESTS)
 def test_payload_pasture(file, payload_name):
     request = post(URL,json=PAYLOAD[file][payload_name])
-    print(request.json())
-    assert request.status_code == 200
-    assert request.text == 200
+    if not request.status_code == 200:
+        print(request.text)
+        assert request.text == 'lapig'
+    else:
+        assert request.status_code == 200
+    

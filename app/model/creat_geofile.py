@@ -3,12 +3,13 @@ import pandas as pd
 
 from app.config import logger
 from app.db import geodb
+from app.util.mapfile import get_schema
 
 
 
 class CreatGeoFile:
     def __init__(
-        self, fileType, file, regiao, value, sql_layer, valueFilter, db =''
+        self, fileType, file, regiao, value, sql_layer, valueFilter, db ='',crs="epsg:4326"
     ) -> None:
         self.fileType = fileType
         self.file = file
@@ -17,10 +18,11 @@ class CreatGeoFile:
         self.valueFilter = valueFilter
         self.sql_layer = sql_layer
         self.db = db
+        self.crs = crs
         dbConnection = geodb(self.db)
         dataFrame = pd.read_sql(
                 f"""
-            SELECT column_name
+            SELECT column_name,data_type 
             FROM information_schema.columns
             WHERE table_schema = 'public'
             AND table_name   = '{self.sql_layer}'
@@ -29,6 +31,9 @@ class CreatGeoFile:
             )
         dbConnection.close()
         cols = list(dataFrame.column_name)
+        
+        self.schema = get_schema(dataFrame)
+        
         logger.debug(f"Full column_name: {cols}")
         type_geom = ['geom', 'geometry']
         try:
@@ -99,7 +104,24 @@ class CreatGeoFile:
             df = gpd.GeoDataFrame.from_postgis(
                     query, con, index_col=self.index, geom_col=self.geom
                 )
+            schema_df = gpd.io.file.infer_schema(df)
+            for i in self.schema:
+                if self.schema[i] in ['date']:
+                    schema_df['properties'][i] = 'str'
+                    df[i] = pd.to_datetime(df[i]).dt.strftime('%Y-%m-%d') 
+                if self.schema[i] in ['datetime']:
+                    schema_df['properties'][i] = 'str'
+                    df[i] = pd.to_datetime(df[i]).dt.strftime('%Y-%m-%d %H:%M:%S') 
+                if self.schema[i] in ['integer']:
+                    schema_df['properties'][i] = 'int'
+                if self.schema[i] in ['numeric']:
+                    schema_df['properties'][i] = 'float'
+                if self.schema[i] in ['character varying']:
+                    schema_df['properties'][i] = 'str'
+                logger.debug(schema_df)
+            df.crs = self.crs 
         elif self.fileType == 'csv':
             df = pd.read_sql(query, con, index_col=self.index)
+            schema_df = ''
         con.close()
-        return df
+        return (df, schema_df)

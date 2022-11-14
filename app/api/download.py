@@ -47,8 +47,31 @@ async def start_dowload(payload: Payload):
         return HTTPException(500, f'e')
 
     region = payload.region
-
-    pathFile = f'{region.type}/{region.value}/{payload.typeDownload}/{payload.layer.valueType}/{fileParam}'
+    try:
+        client = client_minio()
+    except Exception as e:
+        logger.exception('Login erro')
+        raise HTTPException(500,f'{e}')
+    
+    
+    
+    if payload.typeDownload == 'raster':
+        rater_file, map_type, map_conect,crs = get_layer(payload.layer.download.layerTypeName).replace('/STORAGE/catalog/','')
+        pathFile = f"rater/{rater_file}"
+        objects = client.list_objects(
+            settings.BUCKET,
+            prefix=f'{pathFile}',
+            recursive=True,
+        )
+    
+    else:
+        pathFile = f'{region.type}/{region.value}/{payload.typeDownload}/{payload.layer.valueType}/{fileParam}'
+        objects = client.list_objects(
+            settings.BUCKET,
+            prefix=f'{pathFile}.zip',
+            recursive=True,
+        )
+        
 
     logger.debug(
         f"""
@@ -60,17 +83,7 @@ async def start_dowload(payload: Payload):
                  valueFilter: {valueFilter}
                  """
     )
-    try:
-        client = client_minio()
-    except Exception as e:
-        logger.exception('Login erro')
-        raise HTTPException(500,f'{e}')
     
-    objects = client.list_objects(
-        settings.BUCKET,
-        prefix=f'{pathFile}.zip',
-        recursive=True,
-    )
     objects_list = list(objects)
     if len(objects_list) == 1:
         return DowloadUrl(
@@ -80,30 +93,60 @@ async def start_dowload(payload: Payload):
     elif len(objects_list) > 1:
         logger.exception('ERROR TEM MAIS DE UM OBJECT')
         raise HTTPException(500, 'Flaha ao carregar o dados')
-
-    try:
-        map_layer, map_type, map_conect = get_layer(payload.layer.download.layerTypeName)
-        sql_layer = map_layer
-        if not 'sqlite' == map_conect:
-            db  = map_conect
+    if payload.typeDownload == 'raster':
+        client = client_minio()
+        result = client.fput_object(
+            'ows',
+            f'test/{pathFile}',
+            f'/storage/catalog/{pathFile}',
+            content_type='application/x-geotiff'
+        )
+        logger.info(
+            'created {0} object; etag: {1}, version-id: {2}'.format(
+                result.object_name,
+                result.etag,
+                result.version_id,
+            ),
+            )
+        objects = client.list_objects(
+            settings.BUCKET,
+            prefix=f'test/{pathFile}',
+            recursive=True,
+        )
+        objects_list = list(objects)
+        if len(objects_list) == 1:
+            return DowloadUrl(
+            object_name=objects_list[0].object_name,
+            size=objects_list[0].size,
+            )
         else:
-            ...
-    except:
-        sql_layer = payload.layer.download.layerTypeName
-        db = ''
-        
-    if isinstance(map_conect,dict):
-        creat_file_postgre(
-            payload, 
-             pathFile, 
-            region, 
-            sql_layer, 
-            valueFilter,
-            fileParam,
-            db)   
+            logger.exception('Erro ao salvar dados')
+            raise HTTPException(500, 'Erro ao gerar arquivo')
+    else:
+        try:
+            map_layer, map_type, map_conect,crs = get_layer(payload.layer.download.layerTypeName)
+            sql_layer = map_layer
+            if not 'sqlite' == map_conect:
+                db  = map_conect
+            else:
+                ...
+        except:
+            sql_layer = payload.layer.download.layerTypeName
+            db = ''
             
+        if isinstance(map_conect,dict):
+            creat_file_postgre(
+                payload, 
+                pathFile, 
+                region, 
+                sql_layer, 
+                valueFilter,
+                fileParam,
+                db,
+                crs)   
+                
             
-def creat_file_postgre(payload, pathFile, region, sql_layer, valueFilter,fileParam,db):
+def creat_file_postgre(payload, pathFile, region, sql_layer, valueFilter,fileParam,db,crs):
         geofile = CreatGeoFile(
             fileType=payload.typeDownload,
             file=f'{pathFile}.zip',
@@ -111,23 +154,29 @@ def creat_file_postgre(payload, pathFile, region, sql_layer, valueFilter,filePar
             value=region.value,
             sql_layer=sql_layer,
             valueFilter=valueFilter,
-            db = db
+            db = db,
+            crs=crs
         )
-        df = geofile.gpd()
+        df, schema = geofile.gpd()
         with tempfile.TemporaryDirectory() as tmpdirname:
             client = client_minio()
             logger.debug(f'tmpdirname : {tmpdirname}')
             try:
                 if payload.typeDownload == 'csv':
+                    logger.debug(f'{tmpdirname}/{fileParam}.csv')
                     df.to_csv(f'{tmpdirname}/{fileParam}.csv')
                 elif payload.typeDownload == 'gpkg':
-                    df.to_file(f'{tmpdirname}/{fileParam}.gpkg', driver='GPKG')
+                    logger.debug(f'{tmpdirname}/{fileParam}.gpkg')
+                    df.to_file(f'{tmpdirname}/{fileParam}.gpkg', driver='GPKG', schema=schema)
                 elif payload.typeDownload == 'shp':
-                    df.to_file(f'{tmpdirname}/{fileParam}.shp')
+                    logger.debug(f'{tmpdirname}/{fileParam}.shp')
+                    df.to_file(f'{tmpdirname}/{fileParam}.shp', schema=schema)
             except ValueError as e:
-                raise HTTPException(400, f'{e}')
+                logger.exception(f'Erro ao Criar arquivo ValueError: {e}\n{df.columns}\n{df.dtypes}')
+                raise HTTPException(400, f'Erro ao Criar arquivo ValueError: {e}\n{df.columns}\n{df.dtypes}')
             except Exception as e:
-                raise HTTPException(500, f'{e}')
+                logger.exception('Erro ao Criar arquivo ValueError: {e}')
+                raise HTTPException(500, f'Erro ao Criar arquivo: {e}\n{df.columns}\n{df.dtypes}')
 
             file_paths = glob(f'{tmpdirname}/*')
             with ZipFile(f'{tmpdirname}/{fileParam}.zip', 'w') as zip:
