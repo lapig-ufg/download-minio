@@ -99,9 +99,14 @@ class CreatGeoFile:
         query = self.querey()
         logger.debug(query)
         if self.fileType in ['shp', 'gpkg']:
-            df = gpd.GeoDataFrame.from_postgis(
-                query, con, index_col=self.index, geom_col=self.geom
-            )
+            try:
+                df = gpd.GeoDataFrame.from_postgis(
+                    query, con, index_col=self.index, geom_col=self.geom
+                )
+            except Exception:
+                df = gpd.GeoDataFrame.from_postgis(
+                    f"""SELECT {self.column_name} FROM {self.sql_layer}""", con, index_col=self.index, geom_col=self.geom
+                )
             schema_df = gpd.io.file.infer_schema(df)
             for i in self.schema:
                 if self.schema[i] in ['date']:
