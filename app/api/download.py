@@ -100,7 +100,7 @@ async def start_dowload(payload: Payload):
         client = client_minio()
         result = client.fput_object(
             'ows',
-            f'test/{pathFile}',
+            f'{pathFile}',
             f'/storage/catalog/{raster_file}',
             content_type='application/x-geotiff',
         )
@@ -113,7 +113,7 @@ async def start_dowload(payload: Payload):
         )
         objects = client.list_objects(
             settings.BUCKET,
-            prefix=f'test/{pathFile}',
+            prefix=f'{pathFile}',
             recursive=True,
         )
         objects_list = list(objects)
@@ -140,7 +140,7 @@ async def start_dowload(payload: Payload):
             db = ''
 
         if isinstance(map_conect, dict):
-            creat_file_postgre(
+            return creat_file_postgre(
                 payload,
                 pathFile,
                 region,
@@ -150,6 +150,8 @@ async def start_dowload(payload: Payload):
                 db,
                 crs,
             )
+        else:
+            return HTTPException(500,'PayLoad')
 
 
 def creat_file_postgre(
@@ -165,7 +167,27 @@ def creat_file_postgre(
         db=db,
         crs=crs,
     )
-    df, schema = geofile.gpd()
+    try:
+        df, schema = geofile.gpd()
+    except ValueError as e:
+        if str(e) == "Cannot write empty DataFrame to file.":
+            logger.info(f"{e}")
+            raise HTTPException(
+                    400,
+                'file_empty',
+                )
+        raise HTTPException(
+                    400,
+                f'{e}',
+                )
+    except Exception as e:
+        raise HTTPException(
+                400,
+                f"{e}",
+            )
+        
+        
+
     with tempfile.TemporaryDirectory() as tmpdirname:
         client = client_minio()
         logger.debug(f'tmpdirname : {tmpdirname}')
@@ -189,7 +211,7 @@ def creat_file_postgre(
             )
             raise HTTPException(
                 400,
-                f'Erro ao Criar arquivo ValueError: {e}\n{df.columns}\n{df.dtypes}',
+                f'Erro ao Criar arquivo ValueError: {e}',
             )
         except Exception as e:
             logger.exception('Erro ao Criar arquivo ValueError: {e}')
@@ -210,7 +232,7 @@ def creat_file_postgre(
 
         result = client.fput_object(
             'ows',
-            f'test/{geofile.object_name}',
+            f'{geofile.object_name}',
             f'{tmpdirname}/{fileParam}.zip',
             content_type=geofile.content_type,
             tags=geofile.to_tags,
@@ -225,7 +247,7 @@ def creat_file_postgre(
         )
         objects = client.list_objects(
             settings.BUCKET,
-            prefix=f'test/{pathFile}.zip',
+            prefix=f'{pathFile}.zip',
             recursive=True,
         )
         objects_list = list(objects)
