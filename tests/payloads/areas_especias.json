@@ -191,5 +191,2068 @@
         },
         "typeDownload": "shp"
 
+    },
+    "Assentamentos_Brasil_SHP":{
+        "layer": {
+            "valueType": "assentamentos",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Assentamentos",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "cd_sipra",
+                        "label": "Código SIPRA",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "nome_proje",
+                        "label": "Nome do Projeto",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "capacidade",
+                        "label": "Capacidade",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "num_famili",
+                        "label": "Número de Famílias",
+                        "columnType": "integer"
+                    },
+                    {
+                        "column": "data_obten",
+                        "label": "Data de Obtenção",
+                        "columnType": "date"
+                    },
+                    {
+                        "column": "forma_obte",
+                        "label": "Forma de Obtenção",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "descricao_",
+                        "label": "Descrição",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": false,
+                "shp": true,
+                "gpkg": true,
+                "raster": false,
+                "layerTypeName": "assentamentos",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Assentamentos"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "O assentamento de reforma agrária é um conjunto de unidades agrícolas, instaladas pelo Incra em um imóvel rural."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2016"
+                },
+                {
+                    "title": "Escala",
+                    "description": "1:5.000"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Instituto Nacional de Colonização e Reforma Agrária (INCRA)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='https://www.gov.br/incra/pt-br/assuntos/reforma-agraria/assentamentos'> https://www.gov.br/incra/pt-br/assuntos/reforma-agraria/assentamentos </a>"
+                }
+            ]
+        },
+        "region": {
+            "type": "country",
+            "text": "Brasil",
+            "value": "BRASIL"
+        },
+        "typeDownload": "shp"
+    },
+    "Assentamentos_Goiania_SHP":{
+        "layer": {
+            "valueType": "assentamentos",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Assentamentos",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "cd_sipra",
+                        "label": "Código SIPRA",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "nome_proje",
+                        "label": "Nome do Projeto",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "capacidade",
+                        "label": "Capacidade",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "num_famili",
+                        "label": "Número de Famílias",
+                        "columnType": "integer"
+                    },
+                    {
+                        "column": "data_obten",
+                        "label": "Data de Obtenção",
+                        "columnType": "date"
+                    },
+                    {
+                        "column": "forma_obte",
+                        "label": "Forma de Obtenção",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "descricao_",
+                        "label": "Descrição",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": false,
+                "shp": true,
+                "gpkg": true,
+                "raster": false,
+                "layerTypeName": "assentamentos",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Assentamentos"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "O assentamento de reforma agrária é um conjunto de unidades agrícolas, instaladas pelo Incra em um imóvel rural."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2016"
+                },
+                {
+                    "title": "Escala",
+                    "description": "1:5.000"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Instituto Nacional de Colonização e Reforma Agrária (INCRA)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='https://www.gov.br/incra/pt-br/assuntos/reforma-agraria/assentamentos'> https://www.gov.br/incra/pt-br/assuntos/reforma-agraria/assentamentos </a>"
+                }
+            ]
+        },
+        "region": {
+            "text": "Goiânia - GO",
+            "value": "5208707",
+            "type": "city"
+        },
+        "typeDownload": "shp"
+    },
+    "Assentamentos_Brasil_GPKG":{
+        "layer": {
+            "valueType": "assentamentos",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Assentamentos",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "cd_sipra",
+                        "label": "Código SIPRA",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "nome_proje",
+                        "label": "Nome do Projeto",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "capacidade",
+                        "label": "Capacidade",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "num_famili",
+                        "label": "Número de Famílias",
+                        "columnType": "integer"
+                    },
+                    {
+                        "column": "data_obten",
+                        "label": "Data de Obtenção",
+                        "columnType": "date"
+                    },
+                    {
+                        "column": "forma_obte",
+                        "label": "Forma de Obtenção",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "descricao_",
+                        "label": "Descrição",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": false,
+                "shp": true,
+                "gpkg": true,
+                "raster": false,
+                "layerTypeName": "assentamentos",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Assentamentos"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "O assentamento de reforma agrária é um conjunto de unidades agrícolas, instaladas pelo Incra em um imóvel rural."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2016"
+                },
+                {
+                    "title": "Escala",
+                    "description": "1:5.000"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Instituto Nacional de Colonização e Reforma Agrária (INCRA)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='https://www.gov.br/incra/pt-br/assuntos/reforma-agraria/assentamentos'> https://www.gov.br/incra/pt-br/assuntos/reforma-agraria/assentamentos </a>"
+                }
+            ]
+        },
+        "region": {
+            "type": "country",
+            "text": "BRASIL",
+            "value": "BRASIL"
+        },
+        "typeDownload": "gpkg"
+    },
+    "assentamentos_goiania_GPKG":{
+        "layer": {
+            "valueType": "assentamentos",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Assentamentos",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "cd_sipra",
+                        "label": "Código SIPRA",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "nome_proje",
+                        "label": "Nome do Projeto",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "capacidade",
+                        "label": "Capacidade",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "num_famili",
+                        "label": "Número de Famílias",
+                        "columnType": "integer"
+                    },
+                    {
+                        "column": "data_obten",
+                        "label": "Data de Obtenção",
+                        "columnType": "date"
+                    },
+                    {
+                        "column": "forma_obte",
+                        "label": "Forma de Obtenção",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "descricao_",
+                        "label": "Descrição",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": false,
+                "shp": true,
+                "gpkg": true,
+                "raster": false,
+                "layerTypeName": "assentamentos",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Assentamentos"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "O assentamento de reforma agrária é um conjunto de unidades agrícolas, instaladas pelo Incra em um imóvel rural."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2016"
+                },
+                {
+                    "title": "Escala",
+                    "description": "1:5.000"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Instituto Nacional de Colonização e Reforma Agrária (INCRA)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='https://www.gov.br/incra/pt-br/assuntos/reforma-agraria/assentamentos'> https://www.gov.br/incra/pt-br/assuntos/reforma-agraria/assentamentos </a>"
+                }
+            ]
+        },
+        "region": {
+            "text": "Goiânia - GO",
+            "value": "5208707",
+            "type": "city"
+        },
+        "typeDownload": "gpkg"
+    },
+    "Comunidade_Quilomabola_Brasil_SHP":{
+        "layer": {
+            "valueType": "areas_quilombolas",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Comunidades Quilombolas",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "nr_process",
+                        "label": "Nº do Processo",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "esfera",
+                        "label": "Esfera",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "nm_comunid",
+                        "label": "Nome da Comunidade",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "dt_publica",
+                        "label": "Data Pública",
+                        "columnType": "date"
+                    },
+                    {
+                        "column": "status",
+                        "label": "Status",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": true,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "areas_quilombolas",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Comunidades Quilombolas"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Limite das terras de Comunidades Quilombolas."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2021"
+                },
+                {
+                    "title": "Escala",
+                    "description": "ND"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Fundação Nacional do Índio (FUNAI)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='https://www.gov.br/incra/pt-br/assuntos/governanca-fundiaria/quilombolas'> https://www.gov.br/incra/pt-br/assuntos/governanca-fundiaria/quilombolas </a>"
+                }
+            ]
+        },
+        "region": {
+            "type": "country",
+            "text": "Brasil",
+            "value": "BRASIL"
+        },
+        "typeDownload": "shp"
+    },
+    "Comunidade_Quilombolas_Goiania_SHP":{
+        "layer": {
+            "valueType": "areas_quilombolas",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Comunidades Quilombolas",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "nr_process",
+                        "label": "Nº do Processo",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "esfera",
+                        "label": "Esfera",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "nm_comunid",
+                        "label": "Nome da Comunidade",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "dt_publica",
+                        "label": "Data Pública",
+                        "columnType": "date"
+                    },
+                    {
+                        "column": "status",
+                        "label": "Status",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": true,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "areas_quilombolas",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Comunidades Quilombolas"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Limite das terras de Comunidades Quilombolas."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2021"
+                },
+                {
+                    "title": "Escala",
+                    "description": "ND"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Fundação Nacional do Índio (FUNAI)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='https://www.gov.br/incra/pt-br/assuntos/governanca-fundiaria/quilombolas'> https://www.gov.br/incra/pt-br/assuntos/governanca-fundiaria/quilombolas </a>"
+                }
+            ]
+        },
+        "region": {
+            "text": "Goiânia - GO",
+            "value": "5208707",
+            "type": "city"
+        },
+        "typeDownload": "shp"
+    },
+    "Comunidades_Quilombolas_Brasil_CSV":{
+        "layer": {
+            "valueType": "areas_quilombolas",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Comunidades Quilombolas",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "nr_process",
+                        "label": "Nº do Processo",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "esfera",
+                        "label": "Esfera",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "nm_comunid",
+                        "label": "Nome da Comunidade",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "dt_publica",
+                        "label": "Data Pública",
+                        "columnType": "date"
+                    },
+                    {
+                        "column": "status",
+                        "label": "Status",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": true,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "areas_quilombolas",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Comunidades Quilombolas"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Limite das terras de Comunidades Quilombolas."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2021"
+                },
+                {
+                    "title": "Escala",
+                    "description": "ND"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Fundação Nacional do Índio (FUNAI)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='https://www.gov.br/incra/pt-br/assuntos/governanca-fundiaria/quilombolas'> https://www.gov.br/incra/pt-br/assuntos/governanca-fundiaria/quilombolas </a>"
+                }
+            ]
+        },
+        "region": {
+            "type": "country",
+            "text": "BRASIL",
+            "value": "BRASIL"
+        },
+        "typeDownload": "csv"
+    },
+    "Unidades_Conservação_Brasil_SHP":{
+        "layer": {
+            "valueType": "pa_br_unidades_conservacao_PI",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "UCs - Proteção Integral",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "nome",
+                        "label": "Nome",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "esfera",
+                        "label": "Esfera",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "grupo",
+                        "label": "Categoria",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "codigouc",
+                        "label": "Código UC",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "anocriacao",
+                        "label": "Ano de Criação",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "atolegal",
+                        "label": "Ato Legal",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "qualidade",
+                        "label": "Qualidade",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "origem",
+                        "label": "Fonte",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": true,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "pa_br_unidades_conservacao_PI",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Unidades de Conservação (Proteção Integral)"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Localização das unidades de conservação de proteção integral."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2019"
+                },
+                {
+                    "title": "Escala",
+                    "description": "ND"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Instituto Chico Mendes de Conservação da Biodiversidade (ICMBio)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/leis/L9985.htm'> http://www.planalto.gov.br/ccivil_03/leis/L9985.htm </a>"
+                }
+            ]
+        },
+        "region": {
+            "type": "country",
+            "text": "Brasil",
+            "value": "BRASIL"
+        },
+        "typeDownload": "shp"
+    },
+    "Unidades_Conservação_Goiania_SHP":{
+        "layer": {
+            "valueType": "pa_br_unidades_conservacao_PI",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "UCs - Proteção Integral",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "nome",
+                        "label": "Nome",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "esfera",
+                        "label": "Esfera",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "grupo",
+                        "label": "Categoria",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "codigouc",
+                        "label": "Código UC",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "anocriacao",
+                        "label": "Ano de Criação",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "atolegal",
+                        "label": "Ato Legal",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "qualidade",
+                        "label": "Qualidade",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "origem",
+                        "label": "Fonte",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": true,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "pa_br_unidades_conservacao_PI",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Unidades de Conservação (Proteção Integral)"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Localização das unidades de conservação de proteção integral."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2019"
+                },
+                {
+                    "title": "Escala",
+                    "description": "ND"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Instituto Chico Mendes de Conservação da Biodiversidade (ICMBio)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/leis/L9985.htm'> http://www.planalto.gov.br/ccivil_03/leis/L9985.htm </a>"
+                }
+            ]
+        },
+        "region": {
+            "text": "Goiânia - GO",
+            "value": "5208707",
+            "type": "city"
+        },
+        "typeDownload": "shp"
+    },
+    "Unidade_Conservação_Brasil_CSV":{
+        "layer": {
+            "valueType": "pa_br_unidades_conservacao_PI",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "UCs - Proteção Integral",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "nome",
+                        "label": "Nome",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "esfera",
+                        "label": "Esfera",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "grupo",
+                        "label": "Categoria",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "codigouc",
+                        "label": "Código UC",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "anocriacao",
+                        "label": "Ano de Criação",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "atolegal",
+                        "label": "Ato Legal",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "qualidade",
+                        "label": "Qualidade",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "origem",
+                        "label": "Fonte",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": true,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "pa_br_unidades_conservacao_PI",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Unidades de Conservação (Proteção Integral)"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Localização das unidades de conservação de proteção integral."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2019"
+                },
+                {
+                    "title": "Escala",
+                    "description": "ND"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Instituto Chico Mendes de Conservação da Biodiversidade (ICMBio)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/leis/L9985.htm'> http://www.planalto.gov.br/ccivil_03/leis/L9985.htm </a>"
+                }
+            ]
+        },
+        "region": {
+            "type": "country",
+            "text": "BRASIL",
+            "value": "BRASIL"
+        },
+        "typeDownload": "csv"
+    },
+    "Unidade_Conservação_Goiania_CSV":{
+        "layer": {
+            "valueType": "pa_br_unidades_conservacao_PI",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "UCs - Proteção Integral",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "nome",
+                        "label": "Nome",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "esfera",
+                        "label": "Esfera",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "grupo",
+                        "label": "Categoria",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "codigouc",
+                        "label": "Código UC",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "anocriacao",
+                        "label": "Ano de Criação",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "atolegal",
+                        "label": "Ato Legal",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "qualidade",
+                        "label": "Qualidade",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "origem",
+                        "label": "Fonte",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": true,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "pa_br_unidades_conservacao_PI",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Unidades de Conservação (Proteção Integral)"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Localização das unidades de conservação de proteção integral."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2019"
+                },
+                {
+                    "title": "Escala",
+                    "description": "ND"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Instituto Chico Mendes de Conservação da Biodiversidade (ICMBio)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='http://www.planalto.gov.br/ccivil_03/leis/L9985.htm'> http://www.planalto.gov.br/ccivil_03/leis/L9985.htm </a>"
+                }
+            ]
+        },
+        "region": {
+            "text": "Goiânia - GO",
+            "value": "5208707",
+            "type": "city"
+        },
+        "typeDownload": "csv"
+    },
+    "Areas_Militares_Brasil_SHP":{
+        "layer": {
+            "valueType": "areas_militares_br",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Áreas Militares",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "nome",
+                        "label": "Nome",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "type",
+                        "label": "Tipo",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "category",
+                        "label": "Categoria",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "agency_man",
+                        "label": "Agência",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "year_created",
+                        "label": "Ano de Criação",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "origem",
+                        "label": "Fonte",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": true,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "areas_militares_br",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Áreas Militares"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Área reservada com exclusividade para as atividades militares."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Todo o território nacional do Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2017"
+                },
+                {
+                    "title": "Escala",
+                    "description": "ND"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "IBGE"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='ftp://geoftp.ibge.gov.br/cartas_e_mapas/bases_cartograficas_continuas/bc250/versao2017/shapefile/'> ftp://geoftp.ibge.gov.br/cartas_e_mapas/bases_cartograficas_continuas/bc250/versao2017/shapefile/ </a>"
+                }
+            ]
+        },
+        "region": {
+            "type": "country",
+            "text": "Brasil",
+            "value": "BRASIL"
+        },
+        "typeDownload": "shp"
+    },
+    "Areas_Militares_Goiania_SHP":{
+        "layer": {
+            "valueType": "areas_militares_br",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Áreas Militares",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "nome",
+                        "label": "Nome",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "type",
+                        "label": "Tipo",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "category",
+                        "label": "Categoria",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "agency_man",
+                        "label": "Agência",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "year_created",
+                        "label": "Ano de Criação",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "origem",
+                        "label": "Fonte",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": true,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "areas_militares_br",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Áreas Militares"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Área reservada com exclusividade para as atividades militares."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Todo o território nacional do Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2017"
+                },
+                {
+                    "title": "Escala",
+                    "description": "ND"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "IBGE"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='ftp://geoftp.ibge.gov.br/cartas_e_mapas/bases_cartograficas_continuas/bc250/versao2017/shapefile/'> ftp://geoftp.ibge.gov.br/cartas_e_mapas/bases_cartograficas_continuas/bc250/versao2017/shapefile/ </a>"
+                }
+            ]
+        },
+        "region": {
+            "text": "Goiânia - GO",
+            "value": "5208707",
+            "type": "city"
+        },
+        "typeDownload": "shp"
+    },
+    "Areas_Militares_Brasil_CSV":{
+        "layer": {
+            "valueType": "areas_militares_br",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Áreas Militares",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "nome",
+                        "label": "Nome",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "type",
+                        "label": "Tipo",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "category",
+                        "label": "Categoria",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "agency_man",
+                        "label": "Agência",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "year_created",
+                        "label": "Ano de Criação",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "origem",
+                        "label": "Fonte",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": true,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "areas_militares_br",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Áreas Militares"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Área reservada com exclusividade para as atividades militares."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Todo o território nacional do Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2017"
+                },
+                {
+                    "title": "Escala",
+                    "description": "ND"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "IBGE"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='ftp://geoftp.ibge.gov.br/cartas_e_mapas/bases_cartograficas_continuas/bc250/versao2017/shapefile/'> ftp://geoftp.ibge.gov.br/cartas_e_mapas/bases_cartograficas_continuas/bc250/versao2017/shapefile/ </a>"
+                }
+            ]
+        },
+        "region": {
+            "type": "country",
+            "text": "BRASIL",
+            "value": "BRASIL"
+        },
+        "typeDownload": "csv"
+    },
+    "Areas_Publicas_Brasil_SHP":{
+        "layer": {
+            "valueType": "areas_publicas_nao_destinadas_br",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Áreas Públicas Não-Destinadas",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "nome",
+                        "label": "Nome",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "esfera",
+                        "label": "Esfera",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "year",
+                        "label": "Ano",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "codigo",
+                        "label": "Código",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "status",
+                        "label": "Status",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "origem",
+                        "label": "Fonte",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "paof_fase",
+                        "label": "Plano Anual de Outorga Florestal (PAOF)",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": true,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "areas_publicas_nao_destinadas_br",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Áreas Públicas Não Destinadas"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Áreas provenientes do Cadastro Nacional de Florestas Públicas (CNFP), pertencentes aos governos estaduais ou federal e sem uso decretado."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Todo o território nacional do Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2017"
+                },
+                {
+                    "title": "Escala",
+                    "description": "ND"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Serviço Florestal Brasileiro (SFB)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='https://www.florestal.gov.br/cadastro-nacional-de-florestas-publicas/127-informacoes-florestais/cadastro-nacional-de-florestas-publicas-cnfp/2050-cadastro-nacional-de-florestas-publicas-atualizacao-2021'> https://www.florestal.gov.br/cadastro-nacional-de-florestas-publicas/127-informacoes-florestais/cadastro-nacional-de-florestas-publicas-cnfp/2050-cadastro-nacional-de-florestas-publicas-atualizacao-2021 </a>"
+                }
+            ]
+        },
+        "region": {
+            "type": "country",
+            "text": "Brasil",
+            "value": "BRASIL"
+        },
+        "typeDownload": "shp"
+    },
+    "Areas_Publicas_Goiania_SHP":{
+        "layer": {
+            "valueType": "areas_publicas_nao_destinadas_br",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Áreas Públicas Não-Destinadas",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "nome",
+                        "label": "Nome",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "esfera",
+                        "label": "Esfera",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "year",
+                        "label": "Ano",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "codigo",
+                        "label": "Código",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "status",
+                        "label": "Status",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "origem",
+                        "label": "Fonte",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "paof_fase",
+                        "label": "Plano Anual de Outorga Florestal (PAOF)",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": true,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "areas_publicas_nao_destinadas_br",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Áreas Públicas Não Destinadas"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Áreas provenientes do Cadastro Nacional de Florestas Públicas (CNFP), pertencentes aos governos estaduais ou federal e sem uso decretado."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Todo o território nacional do Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2017"
+                },
+                {
+                    "title": "Escala",
+                    "description": "ND"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Serviço Florestal Brasileiro (SFB)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='https://www.florestal.gov.br/cadastro-nacional-de-florestas-publicas/127-informacoes-florestais/cadastro-nacional-de-florestas-publicas-cnfp/2050-cadastro-nacional-de-florestas-publicas-atualizacao-2021'> https://www.florestal.gov.br/cadastro-nacional-de-florestas-publicas/127-informacoes-florestais/cadastro-nacional-de-florestas-publicas-cnfp/2050-cadastro-nacional-de-florestas-publicas-atualizacao-2021 </a>"
+                }
+            ]
+        },
+        "region": {
+            "text": "Goiânia - GO",
+            "value": "5208707",
+            "type": "city"
+        },
+        "typeDownload": "shp"
+    },
+    "Areas_Publicas_Brasil_CSV":{
+        "layer": {
+            "valueType": "areas_publicas_nao_destinadas_br",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Áreas Públicas Não-Destinadas",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "nome",
+                        "label": "Nome",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "esfera",
+                        "label": "Esfera",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "year",
+                        "label": "Ano",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "codigo",
+                        "label": "Código",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "status",
+                        "label": "Status",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "origem",
+                        "label": "Fonte",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "paof_fase",
+                        "label": "Plano Anual de Outorga Florestal (PAOF)",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": true,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "areas_publicas_nao_destinadas_br",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Áreas Públicas Não Destinadas"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Áreas provenientes do Cadastro Nacional de Florestas Públicas (CNFP), pertencentes aos governos estaduais ou federal e sem uso decretado."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Todo o território nacional do Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2017"
+                },
+                {
+                    "title": "Escala",
+                    "description": "ND"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Serviço Florestal Brasileiro (SFB)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='https://www.florestal.gov.br/cadastro-nacional-de-florestas-publicas/127-informacoes-florestais/cadastro-nacional-de-florestas-publicas-cnfp/2050-cadastro-nacional-de-florestas-publicas-atualizacao-2021'> https://www.florestal.gov.br/cadastro-nacional-de-florestas-publicas/127-informacoes-florestais/cadastro-nacional-de-florestas-publicas-cnfp/2050-cadastro-nacional-de-florestas-publicas-atualizacao-2021 </a>"
+                }
+            ]
+        },
+        "region": {
+            "type": "country",
+            "text": "BRASIL",
+            "value": "BRASIL"
+        },
+        "typeDownload": "csv"
+    },
+    "Areas_Publicas_Goiania_CSV":{
+        "layer": {
+            "valueType": "areas_publicas_nao_destinadas_br",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Áreas Públicas Não-Destinadas",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "nome",
+                        "label": "Nome",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "esfera",
+                        "label": "Esfera",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "year",
+                        "label": "Ano",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "codigo",
+                        "label": "Código",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "status",
+                        "label": "Status",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "origem",
+                        "label": "Fonte",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "paof_fase",
+                        "label": "Plano Anual de Outorga Florestal (PAOF)",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": true,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "areas_publicas_nao_destinadas_br",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Áreas Públicas Não Destinadas"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Áreas provenientes do Cadastro Nacional de Florestas Públicas (CNFP), pertencentes aos governos estaduais ou federal e sem uso decretado."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Todo o território nacional do Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2017"
+                },
+                {
+                    "title": "Escala",
+                    "description": "ND"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Serviço Florestal Brasileiro (SFB)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='https://www.florestal.gov.br/cadastro-nacional-de-florestas-publicas/127-informacoes-florestais/cadastro-nacional-de-florestas-publicas-cnfp/2050-cadastro-nacional-de-florestas-publicas-atualizacao-2021'> https://www.florestal.gov.br/cadastro-nacional-de-florestas-publicas/127-informacoes-florestais/cadastro-nacional-de-florestas-publicas-cnfp/2050-cadastro-nacional-de-florestas-publicas-atualizacao-2021 </a>"
+                }
+            ]
+        },
+        "region": {
+            "type": "country",
+            "text": "BRASIL",
+            "value": "BRASIL"
+        },
+        "typeDownload": "csv"
     }
 }
