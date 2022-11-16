@@ -4,7 +4,7 @@ from glob import glob
 import pytest
 from requests import post
 
-from app.config import logger
+#from app.config import logger
 
 URL = 'https://download.lapig.iesa.ufg.br/api/download/'
 #URL = 'http://localhost:8282/api/download/'
