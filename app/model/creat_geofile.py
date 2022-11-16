@@ -93,7 +93,7 @@ class CreatGeoFile:
         except FilterException as e:
             raise FilterException(e)
         except Exception as e:
-            logger.exception.('Error filter')
+            logger.exception('Error filter')
             raise Exception(e)
 
     def querey(self):
