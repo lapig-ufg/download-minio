@@ -11,6 +11,7 @@ from app.model.creat_geofile import CreatGeoFile
 from app.model.models import GeoFile
 from app.model.payload import Payload
 from app.util.mapfile import get_layer
+from app.util.exceptions import FilterException
 
 router = APIRouter()
 
@@ -157,17 +158,18 @@ async def start_dowload(payload: Payload):
 def creat_file_postgre(
     payload, pathFile, region, sql_layer, valueFilter, fileParam, db, crs
 ):
-    geofile = CreatGeoFile(
-        fileType=payload.typeDownload,
-        file=f'{pathFile}.zip',
-        regiao=region.type,
-        value=region.value,
-        sql_layer=sql_layer,
-        valueFilter=valueFilter,
-        db=db,
-        crs=crs,
-    )
     try:
+        geofile = CreatGeoFile(
+            fileType=payload.typeDownload,
+            file=f'{pathFile}.zip',
+            regiao=region.type,
+            value=region.value,
+            sql_layer=sql_layer,
+            valueFilter=valueFilter,
+            db=db,
+            crs=crs,
+        )
+
         df, schema = geofile.gpd()
     except ValueError as e:
         if str(e) == "Cannot write empty DataFrame to file.":
@@ -180,6 +182,12 @@ def creat_file_postgre(
                     400,
                 f'{e}',
                 )
+    except FilterException as e:
+        raise HTTPException(
+                400,
+                f"{e}",
+            )
+
     except Exception as e:
         raise HTTPException(
                 400,

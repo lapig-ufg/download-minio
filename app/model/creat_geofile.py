@@ -4,6 +4,9 @@ import pandas as pd
 from app.config import logger
 from app.db import geodb
 from app.util.mapfile import get_schema
+from app.util.exceptions import FilterException
+
+
 
 
 class CreatGeoFile:
@@ -38,7 +41,7 @@ class CreatGeoFile:
         )
         dbConnection.close()
         cols = list(dataFrame.column_name)
-
+        self.cols = cols
         self.schema = get_schema(dataFrame)
 
         logger.debug(f'Full column_name: {cols}')
@@ -68,21 +71,30 @@ class CreatGeoFile:
         region = self.regiao.lower()
         value = self.value.lower()
         query = {
-            'city': f" UPPER(unaccent(cd_geocmu)) = UPPER(unaccent('{value}'))",
-            'state': f" UPPER(unaccent(uf)) = UPPER(unaccent('{value}'))",
-            'bioma': f" UPPER(unaccent(bioma)) = UPPER(unaccent('{value}'))",
+            'city':{'col':'cd_geocmu' ,'query':f" UPPER(unaccent(cd_geocmu)) = UPPER(unaccent('{value}'))"},
+            'state': {'col':'uf' ,'query':f" UPPER(unaccent(uf)) = UPPER(unaccent('{value}'))"},
+            'bioma': {'col':'bioma' ,'query':f" UPPER(unaccent(bioma)) = UPPER(unaccent('{value}'))"},
             'fronteira': {
                 'amaz_legal': 'amaz_legal = 1',
                 'matopiba': 'matopiba = 1',
             },
-            'region': f" UPPER(unaccent(regiao)) = UPPER(unaccent('{value}'))",
+            'region': {'col':'regiao' ,'query':f" UPPER(unaccent(regiao)) = UPPER(unaccent('{value}'))"},
         }
         try:
             if region == 'fronteira':
+                if not value in self.cols:
+                    raise FilterException('unable_filter_layer')
                 return query[region][value]
-            return query[region]
-        except:
-            ...
+
+            if not query[region]['col'] in self.cols:
+                raise FilterException('unable_filter_layer')
+            return query[region]['query']
+
+        except FilterException as e:
+            raise FilterException(e)
+        except Exception as e:
+            logger.exception.('Error filter')
+            raise Exception(e)
 
     def querey(self):
         list_filter = []
