@@ -1,9 +1,11 @@
 [default]
 HTTPS = false
 DOWNLOAD = '/storage'
+DOWNLOAD_URL = 's3.lapig.iesa.ufg.br'
 MINIO_HOST = 'localhost'
 MINIO_USER = 'admin' 
 MINIO_PASSWORD = 'passadmin'
+MINIO_PORT = 9000
 BUCKET = 'ows'
 
 MAPFILE = '/mnt/tmpfs/ows_runtime.map'

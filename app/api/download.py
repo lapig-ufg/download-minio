@@ -19,7 +19,7 @@ router = APIRouter()
 class DowloadUrl(BaseModel):
     object_name: str
     size: int
-    host: str = settings.MINIO_HOST
+    host: str = settings.DOWNLOAD_URL
     buckt: str = settings.BUCKET
     url: HttpUrl = ''
 
