@@ -7,7 +7,7 @@ from requests import post
 from app.config import logger
 
 URL = 'https://download.lapig.iesa.ufg.br/api/download/'
-# URL = 'http://localhost:8282/api/download/'
+#URL = 'http://localhost:8282/api/download/'
 FILES = glob('tests/payloads/*.json')
 
 TESTS = []
@@ -24,7 +24,12 @@ for file in FILES:
 def test_payload_pasture(file, payload_name):
     request = post(URL, json=PAYLOAD[file][payload_name])
     if not request.status_code == 200:
-        print(request.text)
-        assert request.text == 'lapig'
+        try:
+            text = request.json()['message']
+            assert text in ["unable_filter_layer", 'file_empty']
+        except:
+            print(request.status_code, request.text)
+            assert False
+
     else:
         assert request.status_code == 200
