@@ -5,8 +5,8 @@ import pytest
 from requests import post
 
 
-URL = 'https://download.lapig.iesa.ufg.br/api/download/'
-#URL = 'http://localhost:8282/api/download/'
+#URL = 'https://download.lapig.iesa.ufg.br/api/download/'
+URL = 'http://localhost:8282/api/download/'
 FILES = glob('tests/payloads/*.json')
 
 TESTS = []
@@ -17,7 +17,8 @@ for file in FILES:
         PAYLOAD[file] = tmp_json
         for payload_name in tmp_json:
             TESTS.append((file, payload_name))
-#TESTS = [('tests/payloads/agropecuaria.json','lotacao_bovina_regions_MATOPIBA')]
+TESTS = [('tests/payloads/Malha Vi\xe1ria.json','armazens_conab_br_Goi\xe2nia - GO')]
+
 
 
 @pytest.mark.parametrize('file, payload_name', TESTS)

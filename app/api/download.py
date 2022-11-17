@@ -77,15 +77,15 @@ async def start_dowload(payload: Payload):
             recursive=True,
         )
 
-    logger.debug(
-        f"""
-                 file: {pathFile}.zip
-                 fileType: {payload.typeDownload}
-                 regiao: {region.type}
-                 value: {region.value}
-                 sql_layer: {payload.layer.download.layerTypeName}
-                 valueFilter: {valueFilter}
-                 """
+    logger.info(
+        "file: {}.zip fileType: {} regiao: {} value: {} sql_layer: {} valueFilter: {}".format(
+            pathFile,
+            payload.typeDownload,
+            region.type,
+            region.value,
+            payload.layer.download.layerTypeName,
+            valueFilter
+        )
     )
 
     objects_list = list(objects)

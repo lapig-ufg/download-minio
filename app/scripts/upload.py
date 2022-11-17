@@ -17,6 +17,7 @@ def upload():
         settings.MINIO_PASSWORD,
         secure=True,
     )
+    logger.debug(f"host:{settings.MINIO_HOST} user:{settings.MINIO_USER} password:{settings.MINIO_PASSWORD}")
     update = False
     for path in paths:
         file = GeoFile(path)

@@ -10,6 +10,7 @@ class MinioAuthError(Exception):
 def client_minio():
     logger.debug(f'{settings.MINIO_HOST} {settings.MINIO_USER}')
     try:
+        logger.debug(f"host:{settings.MINIO_HOST} user:{settings.MINIO_USER} password:{settings.MINIO_PASSWORD}")
         return Minio(
             settings.MINIO_HOST,
             settings.MINIO_USER,
