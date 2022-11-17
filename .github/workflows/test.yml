@@ -1,0 +1,108 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+ 
+@jairomr 
+lapig-ufg
+/
+pgrass-jobs
+Public
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+pgrass-jobs/.github/workflows/python-test.yml
+@jairomr
+jairomr discrod
+Latest commit 4e4c99d on Jul 11
+ History
+ 1 contributor
+63 lines (61 sloc)  1.91 KB
+
+name: Push
+on: [push]
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.10.4]
+        poetry-version: [1.1.2]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+      - name: Create folder
+        run: sudo mkdir -p /data/logs && sudo chown -R 1001:1001 /data/logs
+      - name: Install dependencies
+        run: poetry install
+      - name: Run tests
+        run: poetry run pytest --cov=./ --cov-report=xml --discord-verbose=1
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+      - name: Cover
+        run: poetry run coverage run -m pytest && poetry run coverage xml
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@master
+        env:
+          PYTEST_DISCORD_WEBHOOK: ${{ secrets.PYTEST_DISCORD_WEBHOOK }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      
+  code-quality:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.10.4]
+        poetry-version: [1.1.2]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+      - name: Install dependencies
+        run: poetry install
+      - name: Run blue
+        run: poetry run blue . --check
+      - name: Run isort
+        run: poetry run isort . --check-only
+      - name: Run bandit
+        run: poetry run bandit .
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+pgrass-jobs/python-test.yml at main · lapig-ufg/pgrass-jobs
