@@ -1,0 +1,367 @@
+{
+    "geo_car_imovel_brasil":{
+        "layer": {
+            "valueType": "geo_car_imovel",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "SICAR",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "cod_car",
+                        "label": "Código do CAR",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "data_ref",
+                        "label": "Data de Referência",
+                        "columnType": "date"
+                    }
+                ]
+            },
+            "download": {
+                "csv": false,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "geo_car_imovel",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Propriedades Rurais"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Propriedades inscritas no Cadastro Ambiental Rural (CAR) - Lei nº 12.651, de 25 de maio de 2012."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2012~"
+                },
+                {
+                    "title": "Escala",
+                    "description": "1:5.000"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Cadastro Ambiental Rural (CAR) / Serviço Florestal Brasileiro (SFB)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='http://www.car.gov.br/#/sobre'> http://www.car.gov.br/#/sobre </a>"
+                }
+            ]
+        },
+        "region": {
+            "type": "country",
+            "text": "Brasil",
+            "value": "BRASIL"
+        },
+        "typeDownload": "shp"
+    },
+    "geo_car_imovel_city_1600105":{
+        "layer": {
+            "valueType": "geo_car_imovel",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "SICAR",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "cod_car",
+                        "label": "Código do CAR",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "data_ref",
+                        "label": "Data de Referência",
+                        "columnType": "date"
+                    }
+                ]
+            },
+            "download": {
+                "csv": false,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "geo_car_imovel",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Propriedades Rurais"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "Propriedades inscritas no Cadastro Ambiental Rural (CAR) - Lei nº 12.651, de 25 de maio de 2012."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2012~"
+                },
+                {
+                    "title": "Escala",
+                    "description": "1:5.000"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "UTF-8"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Cadastro Ambiental Rural (CAR) / Serviço Florestal Brasileiro (SFB)"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='http://www.car.gov.br/#/sobre'> http://www.car.gov.br/#/sobre </a>"
+                }
+            ]
+        },
+        "region": {
+            "text": "Amapá - AP",
+            "value": "1600105",
+            "type": "city"
+        },
+        "typeDownload": "shp"
+    },
+    "unidades_planejamento_hidrico_brasil":{
+        "layer": {
+            "valueType": "unidades_planejamento_hidrico",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Unidades",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "uph_nm",
+                        "label": "Nome da Unidade de Plan. Hídrico",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "uph_cd",
+                        "label": "Código da Unidade de Plan. Hídrico",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": false,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "unidades_planejamento_hidrico",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Unidades de Planejamento Hídrico"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "A unidade de planejamento hídrico pretende subsidiar a definição da mínima área de abrangência para o desenvolvimento de um plano, consideradas as necessidades de integração da Política Nacional com as Políticas Estaduais e Municipais."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2016"
+                },
+                {
+                    "title": "Escala",
+                    "description": "1:5.000"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "Latin 1"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Agência Nacional de Águas - Superintendência de Planejamento de Recursos Hídricos"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='https://metadados.snirh.gov.br/geonetwork/srv/api/records/df48de18-753b-4789-964d-7f0967c53d08'> https://metadados.snirh.gov.br/geonetwork/srv/api/records/df48de18-753b-4789-964d-7f0967c53d08 </a>"
+                }
+            ]
+        },
+        "region": {
+            "type": "country",
+            "text": "BRASIL",
+            "value": "BRASIL"
+        },
+        "typeDownload": "shp"
+    },
+    "unidades_planejamento_hidrico_cerrado":{
+        "layer": {
+            "valueType": "unidades_planejamento_hidrico",
+            "type": "layertype",
+            "origin": {
+                "sourceService": "internal",
+                "typeOfTMS": "xyz"
+            },
+            "typeLayer": "vectorial",
+            "viewValueType": "Unidades",
+            "typeLabel": "Fonte",
+            "wfsMapCard": {
+                "show": true,
+                "attributes": [
+                    {
+                        "column": "uph_nm",
+                        "label": "Nome da Unidade de Plan. Hídrico",
+                        "columnType": "string"
+                    },
+                    {
+                        "column": "uph_cd",
+                        "label": "Código da Unidade de Plan. Hídrico",
+                        "columnType": "string"
+                    }
+                ]
+            },
+            "download": {
+                "csv": false,
+                "shp": true,
+                "gpkg": false,
+                "raster": false,
+                "layerTypeName": "unidades_planejamento_hidrico",
+                "loading": true
+            },
+            "regionFilter": true,
+            "visible": true,
+            "opacity": 1,
+            "metadata": [
+                {
+                    "title": "Metadados",
+                    "description": "Unidades de Planejamento Hídrico"
+                },
+                {
+                    "title": "Descrição",
+                    "description": "A unidade de planejamento hídrico pretende subsidiar a definição da mínima área de abrangência para o desenvolvimento de um plano, consideradas as necessidades de integração da Política Nacional com as Políticas Estaduais e Municipais."
+                },
+                {
+                    "title": "Formato",
+                    "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+                },
+                {
+                    "title": "Região",
+                    "description": "Brasil"
+                },
+                {
+                    "title": "Período",
+                    "description": "2016"
+                },
+                {
+                    "title": "Escala",
+                    "description": "1:5.000"
+                },
+                {
+                    "title": "Sistemas de Referência e Coordenadas",
+                    "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+                },
+                {
+                    "title": "Projeção cartográfica",
+                    "description": "Universal Transversa de Mercator (UTM)."
+                },
+                {
+                    "title": "Codificação de caractere",
+                    "description": "Latin 1"
+                },
+                {
+                    "title": "Fonte",
+                    "description": "Agência Nacional de Águas - Superintendência de Planejamento de Recursos Hídricos"
+                },
+                {
+                    "title": "URL",
+                    "description": "<a target='_blank' class='link-details' href='https://metadados.snirh.gov.br/geonetwork/srv/api/records/df48de18-753b-4789-964d-7f0967c53d08'> https://metadados.snirh.gov.br/geonetwork/srv/api/records/df48de18-753b-4789-964d-7f0967c53d08 </a>"
+                }
+            ]
+        },
+        "region": {
+            "text": "Cerrado",
+            "value": "CERRADO",
+            "type": "biome"
+        },
+        "typeDownload": "shp"
+    }
+
+}

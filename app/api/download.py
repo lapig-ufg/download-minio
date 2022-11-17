@@ -178,6 +178,7 @@ def creat_file_postgre(
                     400,
                 'file_empty',
                 )
+        logger.exception('Valor Error not empty')
         raise HTTPException(
                     400,
                 f'{e}',

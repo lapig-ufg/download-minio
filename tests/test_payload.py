@@ -4,10 +4,9 @@ from glob import glob
 import pytest
 from requests import post
 
-#from app.config import logger
 
-URL = 'https://download.lapig.iesa.ufg.br/api/download/'
-#URL = 'http://localhost:8282/api/download/'
+#URL = 'https://download.lapig.iesa.ufg.br/api/download/'
+URL = 'http://localhost:8282/api/download/'
 FILES = glob('tests/payloads/*.json')
 
 TESTS = []
@@ -18,7 +17,7 @@ for file in FILES:
         PAYLOAD[file] = tmp_json
         for payload_name in tmp_json:
             TESTS.append((file, payload_name))
-
+#TESTS = [('tests/payloads/areas_especias.json','Areas_Militares_Goiania_SHP')]
 
 @pytest.mark.parametrize('file, payload_name', TESTS)
 def test_payload_pasture(file, payload_name):
@@ -33,3 +32,5 @@ def test_payload_pasture(file, payload_name):
 
     else:
         assert request.status_code == 200
+
+

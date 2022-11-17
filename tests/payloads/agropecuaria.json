@@ -1,0 +1,740 @@
+{
+"lotacao_bovina_regions_MATOPIBA":{
+    "layer": {
+        "valueType": "lotacao_bovina_regions",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Rebanho Bovino em Unidades Animal (UA)",
+        "typeLabel": "Tipo",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "year",
+                    "label": "Ano",
+                    "columnType": "string"
+                },
+                {
+                    "column": "n_kbcs",
+                    "label": "Nº de Cabeças",
+                    "columnType": "integer"
+                },
+                {
+                    "column": "ua",
+                    "label": "Unidades Animal",
+                    "columnType": "integer"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": false,
+            "gpkg": true,
+            "raster": false,
+            "layerTypeName": "lotacao_bovina_regions",
+            "loading": true
+        },
+        "regionFilter": true,
+        "filters": [
+            {
+                "valueFilter": "year=1985",
+                "viewValueFilter": 1985
+            },
+            {
+                "valueFilter": "year=1986",
+                "viewValueFilter": 1986
+            },
+            {
+                "valueFilter": "year=1987",
+                "viewValueFilter": 1987
+            },
+            {
+                "valueFilter": "year=1988",
+                "viewValueFilter": 1988
+            },
+            {
+                "valueFilter": "year=1989",
+                "viewValueFilter": 1989
+            },
+            {
+                "valueFilter": "year=1990",
+                "viewValueFilter": 1990
+            },
+            {
+                "valueFilter": "year=1991",
+                "viewValueFilter": 1991
+            },
+            {
+                "valueFilter": "year=1992",
+                "viewValueFilter": 1992
+            },
+            {
+                "valueFilter": "year=1993",
+                "viewValueFilter": 1993
+            },
+            {
+                "valueFilter": "year=1994",
+                "viewValueFilter": 1994
+            },
+            {
+                "valueFilter": "year=1995",
+                "viewValueFilter": 1995
+            },
+            {
+                "valueFilter": "year=1996",
+                "viewValueFilter": 1996
+            },
+            {
+                "valueFilter": "year=1997",
+                "viewValueFilter": 1997
+            },
+            {
+                "valueFilter": "year=1998",
+                "viewValueFilter": 1998
+            },
+            {
+                "valueFilter": "year=1999",
+                "viewValueFilter": 1999
+            },
+            {
+                "valueFilter": "year=2000",
+                "viewValueFilter": 2000
+            },
+            {
+                "valueFilter": "year=2001",
+                "viewValueFilter": 2001
+            },
+            {
+                "valueFilter": "year=2002",
+                "viewValueFilter": 2002
+            },
+            {
+                "valueFilter": "year=2003",
+                "viewValueFilter": 2003
+            },
+            {
+                "valueFilter": "year=2004",
+                "viewValueFilter": 2004
+            },
+            {
+                "valueFilter": "year=2005",
+                "viewValueFilter": 2005
+            },
+            {
+                "valueFilter": "year=2006",
+                "viewValueFilter": 2006
+            },
+            {
+                "valueFilter": "year=2007",
+                "viewValueFilter": 2007
+            },
+            {
+                "valueFilter": "year=2008",
+                "viewValueFilter": 2008
+            },
+            {
+                "valueFilter": "year=2009",
+                "viewValueFilter": 2009
+            },
+            {
+                "valueFilter": "year=2010",
+                "viewValueFilter": 2010
+            },
+            {
+                "valueFilter": "year=2011",
+                "viewValueFilter": 2011
+            },
+            {
+                "valueFilter": "year=2012",
+                "viewValueFilter": 2012
+            },
+            {
+                "valueFilter": "year=2013",
+                "viewValueFilter": 2013
+            },
+            {
+                "valueFilter": "year=2014",
+                "viewValueFilter": 2014
+            },
+            {
+                "valueFilter": "year=2015",
+                "viewValueFilter": 2015
+            },
+            {
+                "valueFilter": "year=2016",
+                "viewValueFilter": 2016
+            },
+            {
+                "valueFilter": "year=2017",
+                "viewValueFilter": 2017
+            },
+            {
+                "valueFilter": "year=2018",
+                "viewValueFilter": 2018
+            },
+            {
+                "valueFilter": "year=2019",
+                "viewValueFilter": 2019
+            },
+            {
+                "valueFilter": "year=2020",
+                "viewValueFilter": 2020
+            }
+        ],
+        "filterLabel": "Ano",
+        "filterSelected": "year=2020",
+        "filterHandler": "msfilter",
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Rebanho Bovino em Unidades Animal (UA)"
+            },
+            {
+                "title": "Descrição",
+                "description": "Cálculo realizado considerando a composição do rebanho para o censo agropecuário. Para os anos de 1986 a 1999, utilizou-se os dados do censo agropecuário de 1996. Para os anos de 2000 a 2018. utilizou-se os dados do censo agropecuário de 2006. Sendo que uma Unidade Animal (UA), equivale a um animal de 450 kg vivo."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região",
+                "description": "Todo o território nacional do Brasil"
+            },
+            {
+                "title": "Período",
+                "description": "1985 ~ 2020"
+            },
+            {
+                "title": "Escala",
+                "description": "1:250.000"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "Latin 1"
+            },
+            {
+                "title": "Fonte",
+                "description": "Laboratório de Processamento de Imagens e Geoprocessamento - LAPIG."
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://atlasdaspastagens.ufg.br'> https://atlasdaspastagens.ufg.br</a>"
+            }
+        ]
+    },
+    "region": {
+        "text": "Matopiba",
+        "value": "MATOPIBA",
+        "type": "fronteira"
+    },
+    "filter": {
+        "valueFilter": "year=2020",
+        "viewValueFilter": 2020
+    },
+    "typeDownload": "gpkg"
+},
+
+"n_kbcs_regions_amz_legal":{
+    "layer": {
+        "valueType": "n_kbcs_regions",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Rebanho Bovino em Nº de Cabeças (Kbcs)",
+        "typeLabel": "Tipo",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "year",
+                    "label": "Ano",
+                    "columnType": "string"
+                },
+                {
+                    "column": "n_kbcs",
+                    "label": "Nº de Cabeças",
+                    "columnType": "integer"
+                },
+                {
+                    "column": "ua",
+                    "label": "Unidades Animal",
+                    "columnType": "integer"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": false,
+            "gpkg": true,
+            "raster": false,
+            "layerTypeName": "n_kbcs_regions",
+            "loading": true
+        },
+        "regionFilter": true,
+        "filters": [
+            {
+                "valueFilter": "year=1985",
+                "viewValueFilter": 1985
+            },
+            {
+                "valueFilter": "year=1986",
+                "viewValueFilter": 1986
+            },
+            {
+                "valueFilter": "year=1987",
+                "viewValueFilter": 1987
+            },
+            {
+                "valueFilter": "year=1988",
+                "viewValueFilter": 1988
+            },
+            {
+                "valueFilter": "year=1989",
+                "viewValueFilter": 1989
+            },
+            {
+                "valueFilter": "year=1990",
+                "viewValueFilter": 1990
+            },
+            {
+                "valueFilter": "year=1991",
+                "viewValueFilter": 1991
+            },
+            {
+                "valueFilter": "year=1992",
+                "viewValueFilter": 1992
+            },
+            {
+                "valueFilter": "year=1993",
+                "viewValueFilter": 1993
+            },
+            {
+                "valueFilter": "year=1994",
+                "viewValueFilter": 1994
+            },
+            {
+                "valueFilter": "year=1995",
+                "viewValueFilter": 1995
+            },
+            {
+                "valueFilter": "year=1996",
+                "viewValueFilter": 1996
+            },
+            {
+                "valueFilter": "year=1997",
+                "viewValueFilter": 1997
+            },
+            {
+                "valueFilter": "year=1998",
+                "viewValueFilter": 1998
+            },
+            {
+                "valueFilter": "year=1999",
+                "viewValueFilter": 1999
+            },
+            {
+                "valueFilter": "year=2000",
+                "viewValueFilter": 2000
+            },
+            {
+                "valueFilter": "year=2001",
+                "viewValueFilter": 2001
+            },
+            {
+                "valueFilter": "year=2002",
+                "viewValueFilter": 2002
+            },
+            {
+                "valueFilter": "year=2003",
+                "viewValueFilter": 2003
+            },
+            {
+                "valueFilter": "year=2004",
+                "viewValueFilter": 2004
+            },
+            {
+                "valueFilter": "year=2005",
+                "viewValueFilter": 2005
+            },
+            {
+                "valueFilter": "year=2006",
+                "viewValueFilter": 2006
+            },
+            {
+                "valueFilter": "year=2007",
+                "viewValueFilter": 2007
+            },
+            {
+                "valueFilter": "year=2008",
+                "viewValueFilter": 2008
+            },
+            {
+                "valueFilter": "year=2009",
+                "viewValueFilter": 2009
+            },
+            {
+                "valueFilter": "year=2010",
+                "viewValueFilter": 2010
+            },
+            {
+                "valueFilter": "year=2011",
+                "viewValueFilter": 2011
+            },
+            {
+                "valueFilter": "year=2012",
+                "viewValueFilter": 2012
+            },
+            {
+                "valueFilter": "year=2013",
+                "viewValueFilter": 2013
+            },
+            {
+                "valueFilter": "year=2014",
+                "viewValueFilter": 2014
+            },
+            {
+                "valueFilter": "year=2015",
+                "viewValueFilter": 2015
+            },
+            {
+                "valueFilter": "year=2016",
+                "viewValueFilter": 2016
+            },
+            {
+                "valueFilter": "year=2017",
+                "viewValueFilter": 2017
+            },
+            {
+                "valueFilter": "year=2018",
+                "viewValueFilter": 2018
+            },
+            {
+                "valueFilter": "year=2019",
+                "viewValueFilter": 2019
+            },
+            {
+                "valueFilter": "year=2020",
+                "viewValueFilter": 2020
+            }
+        ],
+        "filterLabel": "Ano",
+        "filterSelected": "year=2011",
+        "filterHandler": "msfilter",
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Rebanho Bovino em Nº de Cabeças (Kbcs)"
+            },
+            {
+                "title": "Descrição",
+                "description": "Cálculo realizado considerando a composição do rebanho para o censo agropecuário. Para os anos de 1986 a 1999, utilizou-se os dados do censo agropecuário de 1996. Para os anos de 2000 a 2018. utilizou-se os dados do censo agropecuário de 2006."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região",
+                "description": "Todo o território nacional do Brasil"
+            },
+            {
+                "title": "Período",
+                "description": "1985 ~ 2020"
+            },
+            {
+                "title": "Escala",
+                "description": "1:250.000"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "Latin 1"
+            },
+            {
+                "title": "Fonte",
+                "description": "Laboratório de Processamento de Imagens e Geoprocessamento - LAPIG."
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://atlasdaspastagens.ufg.br'> https://atlasdaspastagens.ufg.br</a>"
+            }
+        ]
+    },
+    "region": {
+        "text": "Amazônia Legal",
+        "value": "amz_legal",
+        "type": "fronteira"
+    },
+    "filter": {
+        "valueFilter": "year=2011",
+        "viewValueFilter": 2011
+    },
+    "typeDownload": "gpkg"
+},
+
+"br_mapbiomas_floresta_plantada_2016":{
+    "layer": {
+        "valueType": "floresta_plantada_mapbiomas",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "raster",
+        "viewValueType": "Floresta Plantada",
+        "typeLabel": "Fonte",
+        "wfsMapCard": {
+            "show": false,
+            "displayMapCardAttributes": {
+                "column": "",
+                "label": "",
+                "columnType": ""
+            }
+        },
+        "download": {
+            "csv": false,
+            "shp": false,
+            "gpkg": false,
+            "raster": true,
+            "layerTypeName": "floresta_plantada_mapbiomas",
+            "loading": true
+        },
+        "regionFilter": false,
+        "filters": [
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_1985",
+                "viewValueFilter": "1985"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_1986",
+                "viewValueFilter": "1986"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_1987",
+                "viewValueFilter": "1987"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_1988",
+                "viewValueFilter": "1988"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_1989",
+                "viewValueFilter": "1989"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_1990",
+                "viewValueFilter": "1990"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_1991",
+                "viewValueFilter": "1991"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_1992",
+                "viewValueFilter": "1992"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_1993",
+                "viewValueFilter": "1993"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_1994",
+                "viewValueFilter": "1994"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_1995",
+                "viewValueFilter": "1995"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_1996",
+                "viewValueFilter": "1996"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_1997",
+                "viewValueFilter": "1997"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_1998",
+                "viewValueFilter": "1998"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_1999",
+                "viewValueFilter": "1999"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2000",
+                "viewValueFilter": "2000"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2001",
+                "viewValueFilter": "2001"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2002",
+                "viewValueFilter": "2002"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2003",
+                "viewValueFilter": "2003"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2004",
+                "viewValueFilter": "2004"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2005",
+                "viewValueFilter": "2005"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2006",
+                "viewValueFilter": "2006"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2007",
+                "viewValueFilter": "2007"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2008",
+                "viewValueFilter": "2008"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2009",
+                "viewValueFilter": "2009"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2010",
+                "viewValueFilter": "2010"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2011",
+                "viewValueFilter": "2011"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2012",
+                "viewValueFilter": "2012"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2013",
+                "viewValueFilter": "2013"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2014",
+                "viewValueFilter": "2014"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2015",
+                "viewValueFilter": "2015"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2016",
+                "viewValueFilter": "2016"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2017",
+                "viewValueFilter": "2017"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2018",
+                "viewValueFilter": "2018"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2019",
+                "viewValueFilter": "2019"
+            },
+            {
+                "valueFilter": "br_mapbiomas_floresta_plantada_2020",
+                "viewValueFilter": "2020"
+            }
+        ],
+        "filterLabel": "Ano",
+        "filterSelected": "br_mapbiomas_floresta_plantada_2016",
+        "filterHandler": "layername",
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Floresta Plantada (MapBiomas Coleção 6)"
+            },
+            {
+                "title": "Descrição",
+                "description": "Espécies arbóreas plantadas para fins comerciais (e.g., pinus, eucalipto, araucária). "
+            },
+            {
+                "title": "Formato",
+                "description": "Raster (*.TIF)."
+            },
+            {
+                "title": "Região",
+                "description": "Todo o território nacional do Brasil"
+            },
+            {
+                "title": "Período",
+                "description": "1985-2020"
+            },
+            {
+                "title": "Escala",
+                "description": "30m"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Sistema Geodésico Mundial (WGS84)"
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "UTF-8"
+            },
+            {
+                "title": "Fonte"
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://mapbiomas.org/'> https://mapbiomas.org/</a>"
+            }
+        ]
+    },
+    "region": {
+        "type": "country",
+        "text": "BRASIL",
+        "value": "BRASIL"
+    },
+    "filter": {
+        "valueFilter": "br_mapbiomas_floresta_plantada_2016",
+        "viewValueFilter": "2016"
+    },
+    "typeDownload": "raster"
+}
+
+
+}

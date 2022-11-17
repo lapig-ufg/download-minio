@@ -1,0 +1,300 @@
+{"pontos_campo_parada_BRASIL":{
+    "layer": {
+        "valueType": "pontos_campo_parada",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Com Parada",
+        "typeLabel": "Tipo",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "cobertura",
+                    "label": "Cobertura",
+                    "columnType": "string"
+                },
+                {
+                    "column": "data",
+                    "label": "Data",
+                    "columnType": "date"
+                },
+                {
+                    "column": "periodo",
+                    "label": "Período",
+                    "columnType": "string"
+                },
+                {
+                    "column": "horario",
+                    "label": "Horário",
+                    "columnType": "string"
+                },
+                {
+                    "column": "latitude",
+                    "label": "Latitude",
+                    "columnType": "string"
+                },
+                {
+                    "column": "longitude",
+                    "label": "Longitude",
+                    "columnType": "string"
+                },
+                {
+                    "column": "altura",
+                    "label": "Altura",
+                    "columnType": "string"
+                },
+                {
+                    "column": "invasoras",
+                    "label": "Invasoras?",
+                    "columnType": "string"
+                },
+                {
+                    "column": "gado",
+                    "label": "Gado?",
+                    "columnType": "string"
+                },
+                {
+                    "column": "qtd_cupins",
+                    "label": "Qtd. de Cupins",
+                    "columnType": "string"
+                },
+                {
+                    "column": "forrageira",
+                    "label": "Forrageira",
+                    "columnType": "string"
+                },
+                {
+                    "column": "solo_exp",
+                    "label": "Solo Exposto",
+                    "columnType": "string"
+                },
+                {
+                    "column": "condicao",
+                    "label": "Condição",
+                    "columnType": "string"
+                },
+                {
+                    "column": "obs",
+                    "label": "Observações",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "gallery": {
+            "id_column": "id",
+            "tableName": "pontos_campo_parada"
+        },
+        "download": {
+            "csv": true,
+            "shp": true,
+            "gpkg": false,
+            "raster": false,
+            "layerTypeName": "pontos_campo_parada",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Pontos de Campo com Parada"
+            },
+            {
+                "title": "Descrição",
+                "description": "Com o propósito de validar mapas produzidos pelo LAPIG-UFG no âmbito do MapBiomas e de subsidiar pesquisas voltadas à qualificação das pastagens brasileiras, seis atividades de campo foram realizadas durante os anos de 2017 e 2018. Um grande conjunto de pontos georreferenciados foi formado e organizado com dados de uso/cobertura do solo e indicativos de qualidade das pastagens."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região",
+                "description": "Todo o território nacional do Brasil"
+            },
+            {
+                "title": "Período",
+                "description": "2017"
+            },
+            {
+                "title": "Escala",
+                "description": "1:250.000"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "Latin 1"
+            },
+            {
+                "title": "Fonte",
+                "description": "Laboratório de Processamento de Imagens e Geoprocessamento - LAPIG."
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://atlasdaspastagens.ufg.br'> https://atlasdaspastagens.ufg.br</a>"
+            }
+        ]
+    },
+    "region": {
+        "type": "country",
+        "text": "BRASIL",
+        "value": "BRASIL"
+    },
+    "typeDownload": "shp"
+},
+
+"pontos_campo_sem_paradacity_nx":{
+    "layer": {
+        "valueType": "pontos_campo_sem_parada",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Sem Parada",
+        "typeLabel": "Tipo",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "cobertura",
+                    "label": "Cobertura",
+                    "columnType": "string"
+                },
+                {
+                    "column": "data",
+                    "label": "Data",
+                    "columnType": "date"
+                },
+                {
+                    "column": "periodo",
+                    "label": "Período",
+                    "columnType": "string"
+                },
+                {
+                    "column": "horario",
+                    "label": "Horário",
+                    "columnType": "string"
+                },
+                {
+                    "column": "altura",
+                    "label": "Altura",
+                    "columnType": "string"
+                },
+                {
+                    "column": "gado",
+                    "label": "Gado?",
+                    "columnType": "string"
+                },
+                {
+                    "column": "qtd_cupins",
+                    "label": "Qtd. de Cupins",
+                    "columnType": "string"
+                },
+                {
+                    "column": "forrageira",
+                    "label": "Forrageira",
+                    "columnType": "string"
+                },
+                {
+                    "column": "solo_exp",
+                    "label": "Solo Exposto",
+                    "columnType": "string"
+                },
+                {
+                    "column": "obs",
+                    "label": "Observações",
+                    "columnType": "string"
+                },
+                {
+                    "column": "condicao",
+                    "label": "Condição",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cultivo",
+                    "label": "Cultivo",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": true,
+            "gpkg": false,
+            "raster": false,
+            "layerTypeName": "pontos_campo_sem_parada",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Pontos de Campo Sem Parada"
+            },
+            {
+                "title": "Descrição",
+                "description": "Com o propósito de validar mapas produzidos pelo LAPIG-UFG no âmbito do MapBiomas e de subsidiar pesquisas voltadas à qualificação das pastagens brasileiras, seis atividades de campo foram realizadas durante os anos de 2017 e 2018. Um grande conjunto de pontos georreferenciados foi formado e organizado com dados de uso/cobertura do solo e indicativos de qualidade das pastagens."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região",
+                "description": "Todo o território nacional do Brasil"
+            },
+            {
+                "title": "Período",
+                "description": "2017"
+            },
+            {
+                "title": "Escala",
+                "description": "1:250.000"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "Latin 1"
+            },
+            {
+                "title": "Fonte",
+                "description": "Laboratório de Processamento de Imagens e Geoprocessamento - LAPIG."
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://atlasdaspastagens.ufg.br'> https://atlasdaspastagens.ufg.br</a>"
+            }
+        ]
+    },
+    "region": {
+        "text": "Nova Xavantina - MT",
+        "value": "5106257",
+        "type": "city"
+    },
+    "typeDownload": "shp"
+}
+
+
+}
