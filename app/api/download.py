@@ -99,12 +99,20 @@ async def start_dowload(payload: Payload):
         raise HTTPException(500, 'Flaha ao carregar o dados')
     if payload.typeDownload == 'raster':
         client = client_minio()
-        result = client.fput_object(
-            'ows',
-            f'{pathFile}',
-            f'/storage/catalog/{raster_file}',
-            content_type='application/x-geotiff',
-        )
+        try:
+            result = client.fput_object(
+                settings.BUCKET,
+                f'{pathFile}',
+                f'/storage/catalog/{raster_file}',
+                content_type='application/x-geotiff',
+            )
+            
+        except FileNotFoundError:
+            raise HTTPException(400,'file_not_found')
+        except Exception as e:
+            logger.exception(e)
+            raise HTTPException(500, e)
+        
         logger.info(
             'created {0} object; etag: {1}, version-id: {2}'.format(
                 result.object_name,
@@ -238,15 +246,21 @@ def creat_file_postgre(
             f'zip criado {tmpdirname}/{fileParam}.zip dos arquivos {file_paths}'
         )
         geofile = GeoFile(f'{pathFile}.zip')
-
-        result = client.fput_object(
-            'ows',
-            f'{geofile.object_name}',
-            f'{tmpdirname}/{fileParam}.zip',
-            content_type=geofile.content_type,
-            tags=geofile.to_tags,
-            metadata=dict(geofile.to_tags),
-        )
+        try:
+            result = client.fput_object(
+                settings.BUCKET,
+                f'{geofile.object_name}',
+                f'{tmpdirname}/{fileParam}.zip',
+                content_type=geofile.content_type,
+                tags=geofile.to_tags,
+                metadata=dict(geofile.to_tags),
+            )
+        except FileNotFoundError:
+            raise HTTPException(400,'file_not_found')
+        except Exception as e:
+            logger.exception(e)
+            raise HTTPException(500, e)
+            
         logger.info(
             'created {0} object; etag: {1}, version-id: {2}'.format(
                 result.object_name,

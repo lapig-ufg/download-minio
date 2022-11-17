@@ -7,6 +7,14 @@ from app.util.mapfile import get_schema
 from app.util.exceptions import FilterException
 
 
+def normalize_col(col):
+    SQL = ['group']
+    if col in SQL or ' ' in col:
+        return f"'{col}'"
+    return col
+
+
+
 class CreatGeoFile:
     def __init__(
         self,
@@ -57,10 +65,10 @@ class CreatGeoFile:
 
         if self.fileType == 'csv':
             self.column_name = ', '.join(
-                [f"'{name}'" for name in cols if not name in type_geom]
+                [normalize_col(name) for name in cols if not name in type_geom]
             )
         else:
-            self.column_name = ', '.join([f"'{name}'" for name in cols])
+            self.column_name = ', '.join([normalize_col(name) for name in cols])
 
     def where(self, msfilter):
         return ' AND '.join(msfilter)
@@ -112,23 +120,14 @@ class CreatGeoFile:
             schema_df = gpd.io.file.infer_schema(df)
             for i in self.schema:
                 if self.schema[i] in ['date']:
-                    schema_df['properties'][i] = 'str'
                     df[i] = pd.to_datetime(df[i]).dt.strftime('%Y-%m-%d')
                 if self.schema[i] in ['datetime']:
-                    schema_df['properties'][i] = 'str'
                     df[i] = pd.to_datetime(df[i]).dt.strftime(
                         '%Y-%m-%d %H:%M:%S'
                     )
-                if self.schema[i] in ['integer']:
-                    schema_df['properties'][i] = 'int'
-                if self.schema[i] in ['numeric']:
-                    schema_df['properties'][i] = 'float'
-                if self.schema[i] in ['character varying']:
-                    schema_df['properties'][i] = 'str'
-                logger.debug(schema_df)
             df.crs = self.crs
         elif self.fileType == 'csv':
             df = pd.read_sql(query, con, index_col=self.index)
             schema_df = ''
         con.close()
-        return (df, schema_df)
+        return (df, None)

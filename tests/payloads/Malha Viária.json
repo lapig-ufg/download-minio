@@ -1,0 +1,922 @@
+{"pa_br_rodovias_dnit_BRASIL":{
+    "layer": {
+        "valueType": "pa_br_rodovias_dnit",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Rodovias - DNIT",
+        "typeLabel": "Fonte",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "codigo",
+                    "label": "Código",
+                    "columnType": "string"
+                },
+                {
+                    "column": "nm_tipo_tr",
+                    "label": "Tipo do Trecho",
+                    "columnType": "string"
+                },
+                {
+                    "column": "ds_local_i",
+                    "label": "Rodovia Início",
+                    "columnType": "string"
+                },
+                {
+                    "column": "ds_local_f",
+                    "label": "Rodovia Final",
+                    "columnType": "string"
+                },
+                {
+                    "column": "ds_tipo_ad",
+                    "label": "Tipo de Administração",
+                    "columnType": "string"
+                },
+                {
+                    "column": "ds_legenda",
+                    "label": "Tipo Rodovia",
+                    "columnType": "string"
+                },
+                {
+                    "column": "leg_multim",
+                    "label": "Detalhes",
+                    "columnType": "string"
+                },
+                {
+                    "column": "comprimento_km",
+                    "label": "Comprimento em KMs.",
+                    "columnType": "string"
+                },
+                {
+                    "column": "versao",
+                    "label": "Versão",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": true,
+            "gpkg": false,
+            "raster": false,
+            "layerTypeName": "pa_br_rodovias_dnit",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Malha Viária (DNIT)"
+            },
+            {
+                "title": "Descrição",
+                "description": "Malha viária brasileira detalhada fornecida pelo Departamento Nacional de Infraestrutura e Transporte brasileiro (DNIT)."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região"
+            },
+            {
+                "title": "Período",
+                "description": "2021"
+            },
+            {
+                "title": "Escala",
+                "description": "1:2.500 ~ 1:25.000"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "UTF-8"
+            },
+            {
+                "title": "Fonte"
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://www.gov.br/infraestrutura/pt-br/assuntos/dados-de-transportes/bit/bitmodosmapas#maprodo'> https://www.gov.br/infraestrutura/pt-br/assuntos/dados-de-transportes/bit/bitmodosmapas#maprodo </a>"
+            }
+        ]
+    },
+    "region": {
+        "type": "country",
+        "text": "Brasil",
+        "value": "BRASIL"
+    },
+    "typeDownload": "shp"
+},
+"pa_br_estradas_osm_BRASIL":{
+    "layer": {
+        "valueType": "pa_br_estradas_osm",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Vias Detalhadas - OSM",
+        "typeLabel": "Fonte",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "codigo",
+                    "label": "Código",
+                    "columnType": "string"
+                },
+                {
+                    "column": "nome",
+                    "label": "Nome",
+                    "columnType": "string"
+                },
+                {
+                    "column": "comprimento_km",
+                    "label": "Comprimento em KMs.",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": false,
+            "shp": false,
+            "gpkg": true,
+            "raster": false,
+            "layerTypeName": "pa_br_estradas_osm",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Malha Viária detalhada (OSM)"
+            },
+            {
+                "title": "Descrição",
+                "description": "Malha viária brasileira detalhada fornecida pelo OpenStreet Map (OSM)."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região"
+            },
+            {
+                "title": "Período",
+                "description": "2021"
+            },
+            {
+                "title": "Escala",
+                "description": "1:25.000"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "UTF-8"
+            },
+            {
+                "title": "Fonte"
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='http://download.geofabrik.de/south-america/brazil.html'> http://download.geofabrik.de/south-america/brazil.html </a>"
+            }
+        ]
+    },
+    "region": {
+        "type": "country",
+        "text": "Brasil",
+        "value": "BRASIL"
+    },
+    "typeDownload": "gpkg"
+},
+
+"pa_br_rodovias_dnit_Cocalinho - MT":{
+    "layer": {
+        "valueType": "pa_br_rodovias_dnit",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Rodovias - DNIT",
+        "typeLabel": "Fonte",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "codigo",
+                    "label": "Código",
+                    "columnType": "string"
+                },
+                {
+                    "column": "nm_tipo_tr",
+                    "label": "Tipo do Trecho",
+                    "columnType": "string"
+                },
+                {
+                    "column": "ds_local_i",
+                    "label": "Rodovia Início",
+                    "columnType": "string"
+                },
+                {
+                    "column": "ds_local_f",
+                    "label": "Rodovia Final",
+                    "columnType": "string"
+                },
+                {
+                    "column": "ds_tipo_ad",
+                    "label": "Tipo de Administração",
+                    "columnType": "string"
+                },
+                {
+                    "column": "ds_legenda",
+                    "label": "Tipo Rodovia",
+                    "columnType": "string"
+                },
+                {
+                    "column": "leg_multim",
+                    "label": "Detalhes",
+                    "columnType": "string"
+                },
+                {
+                    "column": "comprimento_km",
+                    "label": "Comprimento em KMs.",
+                    "columnType": "string"
+                },
+                {
+                    "column": "versao",
+                    "label": "Versão",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": true,
+            "gpkg": false,
+            "raster": false,
+            "layerTypeName": "pa_br_rodovias_dnit",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Malha Viária (DNIT)"
+            },
+            {
+                "title": "Descrição",
+                "description": "Malha viária brasileira detalhada fornecida pelo Departamento Nacional de Infraestrutura e Transporte brasileiro (DNIT)."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região"
+            },
+            {
+                "title": "Período",
+                "description": "2021"
+            },
+            {
+                "title": "Escala",
+                "description": "1:2.500 ~ 1:25.000"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "UTF-8"
+            },
+            {
+                "title": "Fonte"
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://www.gov.br/infraestrutura/pt-br/assuntos/dados-de-transportes/bit/bitmodosmapas#maprodo'> https://www.gov.br/infraestrutura/pt-br/assuntos/dados-de-transportes/bit/bitmodosmapas#maprodo </a>"
+            }
+        ]
+    },
+    "region": {
+        "text": "Cocalinho - MT",
+        "value": "5103106",
+        "type": "city"
+    },
+    "typeDownload": "shp"
+},
+
+"pa_br_estradas_osm_Cocalinho - MT":{
+    "layer": {
+        "valueType": "pa_br_estradas_osm",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Vias Detalhadas - OSM",
+        "typeLabel": "Fonte",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "codigo",
+                    "label": "Código",
+                    "columnType": "string"
+                },
+                {
+                    "column": "nome",
+                    "label": "Nome",
+                    "columnType": "string"
+                },
+                {
+                    "column": "comprimento_km",
+                    "label": "Comprimento em KMs.",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": false,
+            "shp": false,
+            "gpkg": true,
+            "raster": false,
+            "layerTypeName": "pa_br_estradas_osm",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Malha Viária detalhada (OSM)"
+            },
+            {
+                "title": "Descrição",
+                "description": "Malha viária brasileira detalhada fornecida pelo OpenStreet Map (OSM)."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região"
+            },
+            {
+                "title": "Período",
+                "description": "2021"
+            },
+            {
+                "title": "Escala",
+                "description": "1:25.000"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "UTF-8"
+            },
+            {
+                "title": "Fonte"
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='http://download.geofabrik.de/south-america/brazil.html'> http://download.geofabrik.de/south-america/brazil.html </a>"
+            }
+        ]
+    },
+    "region": {
+        "text": "Cocalinho - MT",
+        "value": "5103106",
+        "type": "city"
+    },
+    "typeDownload": "gpkg"
+},
+
+
+"armazens_conab_br_Goiânia - GO":{
+    "layer": {
+        "valueType": "armazens_conab_br",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Armazéns",
+        "typeLabel": "Fonte",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "codigo",
+                    "label": "Código",
+                    "columnType": "string"
+                },
+                {
+                    "column": "armazenado",
+                    "label": "Nome do Armazém",
+                    "columnType": "string"
+                },
+                {
+                    "column": "type",
+                    "label": "Tipo",
+                    "columnType": "string"
+                },
+                {
+                    "column": "endereco",
+                    "label": "Endereço",
+                    "columnType": "string"
+                },
+                {
+                    "column": "capacidade",
+                    "label": "Capacidade",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": true,
+            "gpkg": false,
+            "raster": false,
+            "layerTypeName": "armazens_conab_br",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Armazéns"
+            },
+            {
+                "title": "Descrição",
+                "description": "Número de armazéns destinados a armazenamento e controle de produção no Brasil."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região"
+            },
+            {
+                "title": "Período",
+                "description": "2021"
+            },
+            {
+                "title": "Escala",
+                "description": "Pontual"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "UTF-8"
+            },
+            {
+                "title": "Fonte",
+                "description": "Companhia Nacional de Abastecimento (CONAB) (Revisado pelo LAPIG-UFG)"
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://portaldeinformacoes.conab.gov.br/armazem'> https://portaldeinformacoes.conab.gov.br/armazem </a>"
+            }
+        ]
+    },
+    "region": {
+        "text": "Goiânia - GO",
+        "value": "5208707",
+        "type": "city"
+    },
+    "typeDownload": "shp"
+},
+"armazens_conab_br_BRASIL":{
+    "layer": {
+        "valueType": "armazens_conab_br",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Armazéns",
+        "typeLabel": "Fonte",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "codigo",
+                    "label": "Código",
+                    "columnType": "string"
+                },
+                {
+                    "column": "armazenado",
+                    "label": "Nome do Armazém",
+                    "columnType": "string"
+                },
+                {
+                    "column": "type",
+                    "label": "Tipo",
+                    "columnType": "string"
+                },
+                {
+                    "column": "endereco",
+                    "label": "Endereço",
+                    "columnType": "string"
+                },
+                {
+                    "column": "capacidade",
+                    "label": "Capacidade",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": true,
+            "gpkg": false,
+            "raster": false,
+            "layerTypeName": "armazens_conab_br",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Armazéns"
+            },
+            {
+                "title": "Descrição",
+                "description": "Número de armazéns destinados a armazenamento e controle de produção no Brasil."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região"
+            },
+            {
+                "title": "Período",
+                "description": "2021"
+            },
+            {
+                "title": "Escala",
+                "description": "Pontual"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "UTF-8"
+            },
+            {
+                "title": "Fonte",
+                "description": "Companhia Nacional de Abastecimento (CONAB) (Revisado pelo LAPIG-UFG)"
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://portaldeinformacoes.conab.gov.br/armazem'> https://portaldeinformacoes.conab.gov.br/armazem </a>"
+            }
+        ]
+    },
+    "region": {
+        "type": "country",
+        "text": "BRASIL",
+        "value": "BRASIL"
+    },
+    "typeDownload": "csv"
+},
+
+"limites_frigorificos_2021_BRASIL":{
+    "layer": {
+        "valueType": "limites_frigorificos_2021",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Limites Frigoríficos",
+        "typeLabel": "Fonte",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "cnpj",
+                    "label": "CNPJ",
+                    "columnType": "string"
+                },
+                {
+                    "column": "razao_social",
+                    "label": "Razão Social",
+                    "columnType": "string"
+                },
+                {
+                    "column": "sif",
+                    "label": "Nº do SIF",
+                    "columnType": "string"
+                },
+                {
+                    "column": "nr_process",
+                    "label": "Nº do Processo",
+                    "columnType": "string"
+                },
+                {
+                    "column": "data_regis",
+                    "label": "Data de Registro",
+                    "columnType": "date"
+                },
+                {
+                    "column": "situacao",
+                    "label": "Situação",
+                    "columnType": "string"
+                },
+                {
+                    "column": "area",
+                    "label": "Área de Atuação",
+                    "columnType": "string"
+                },
+                {
+                    "column": "classe_1",
+                    "label": "Classe 01",
+                    "columnType": "string"
+                },
+                {
+                    "column": "classe_2",
+                    "label": "Classe 02",
+                    "columnType": "string"
+                },
+                {
+                    "column": "classe_3",
+                    "label": "Classe 03",
+                    "columnType": "string"
+                },
+                {
+                    "column": "classe_4",
+                    "label": "Classe 04",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": true,
+            "gpkg": false,
+            "raster": false,
+            "layerTypeName": "limites_frigorificos_2021",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Limites Frigoríficos"
+            },
+            {
+                "title": "Descrição",
+                "description": "Dado produzido a partir de informações de Matadouros e/ou Frigoríficos Bovinos do Brasil aptos à exportação (SIF-MAPA), com localização revisada pelo LAPIG."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região"
+            },
+            {
+                "title": "Período",
+                "description": "2022"
+            },
+            {
+                "title": "Escala",
+                "description": "NA"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "UTF-8"
+            },
+            {
+                "title": "Fonte"
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://www.gov.br/agricultura/pt-br/assuntos/inspecao/produtos-animal/sif'> https://www.gov.br/agricultura/pt-br/assuntos/inspecao/produtos-animal/sif </a>"
+            }
+        ]
+    },
+    "region": {
+        "type": "country",
+        "text": "BRASIL",
+        "value": "BRASIL"
+    },
+    "typeDownload": "shp"
+},
+
+"limites_frigorificos_2021_CAATINGA":{
+    "layer": {
+        "valueType": "limites_frigorificos_2021",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Limites Frigoríficos",
+        "typeLabel": "Fonte",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "cnpj",
+                    "label": "CNPJ",
+                    "columnType": "string"
+                },
+                {
+                    "column": "razao_social",
+                    "label": "Razão Social",
+                    "columnType": "string"
+                },
+                {
+                    "column": "sif",
+                    "label": "Nº do SIF",
+                    "columnType": "string"
+                },
+                {
+                    "column": "nr_process",
+                    "label": "Nº do Processo",
+                    "columnType": "string"
+                },
+                {
+                    "column": "data_regis",
+                    "label": "Data de Registro",
+                    "columnType": "date"
+                },
+                {
+                    "column": "situacao",
+                    "label": "Situação",
+                    "columnType": "string"
+                },
+                {
+                    "column": "area",
+                    "label": "Área de Atuação",
+                    "columnType": "string"
+                },
+                {
+                    "column": "classe_1",
+                    "label": "Classe 01",
+                    "columnType": "string"
+                },
+                {
+                    "column": "classe_2",
+                    "label": "Classe 02",
+                    "columnType": "string"
+                },
+                {
+                    "column": "classe_3",
+                    "label": "Classe 03",
+                    "columnType": "string"
+                },
+                {
+                    "column": "classe_4",
+                    "label": "Classe 04",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": true,
+            "gpkg": false,
+            "raster": false,
+            "layerTypeName": "limites_frigorificos_2021",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Limites Frigoríficos"
+            },
+            {
+                "title": "Descrição",
+                "description": "Dado produzido a partir de informações de Matadouros e/ou Frigoríficos Bovinos do Brasil aptos à exportação (SIF-MAPA), com localização revisada pelo LAPIG."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região"
+            },
+            {
+                "title": "Período",
+                "description": "2022"
+            },
+            {
+                "title": "Escala",
+                "description": "NA"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "UTF-8"
+            },
+            {
+                "title": "Fonte"
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://www.gov.br/agricultura/pt-br/assuntos/inspecao/produtos-animal/sif'> https://www.gov.br/agricultura/pt-br/assuntos/inspecao/produtos-animal/sif </a>"
+            }
+        ]
+    },
+    "region": {
+        "text": "Caatinga",
+        "value": "CAATINGA",
+        "type": "biome"
+    },
+    "typeDownload": "shp"
+}
+
+}
