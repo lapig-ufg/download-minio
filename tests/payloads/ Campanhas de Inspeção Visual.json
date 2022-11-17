@@ -1,0 +1,728 @@
+{"v_union_tvi_validacao_1985_2017B_RASIL":{
+    "layer": {
+        "valueType": "v_union_tvi_validacao_1985_2017",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Pontos (1985-2017)",
+        "typeLabel": "Tipo",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "cons_1985",
+                    "label": "Classe em 1985",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_1990",
+                    "label": "Classe em 1990",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_1995",
+                    "label": "Classe em 1995",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2000",
+                    "label": "Classe em 2000",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2005",
+                    "label": "Classe em 2005",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2010",
+                    "label": "Classe em 2010",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2015",
+                    "label": "Classe em 2015",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2017",
+                    "label": "Classe em 2017",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": true,
+            "gpkg": false,
+            "raster": false,
+            "layerTypeName": "v_union_tvi_validacao_1985_2017",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Pontos Visualmente Inspecionados"
+            },
+            {
+                "title": "Descrição",
+                "description": "Conjunto georreferenciado de pontos para todo o território brasileiro, sendo atribuídas classes de uso e cobertura do solo referente a cada ano no período de 1985 a 2017. Foram utilizadas imagens Landsat provenientes dos sensores TM, ETM+ e OLI. Buscou-se também abordar os critérios adotados, dificuldades e especificidades encontradas quanto a interpretação de imagens em cada um dos 6 biomas brasileiros."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região",
+                "description": "Todo o território nacional do Brasil"
+            },
+            {
+                "title": "Período",
+                "description": "1985 ~ 2017"
+            },
+            {
+                "title": "Escala",
+                "description": "1:250.000"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "Latin 1"
+            },
+            {
+                "title": "Fonte",
+                "description": "Laboratório de Processamento de Imagens e Geoprocessamento - LAPIG."
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://atlasdaspastagens.ufg.br'> https://atlasdaspastagens.ufg.br</a>"
+            }
+        ]
+    },
+    "region": {
+        "type": "country",
+        "text": "BRASIL",
+        "value": "BRASIL"
+    },
+    "typeDownload": "shp"
+},
+
+"v_union_tvi_validacao_1985_2017_CERRADO":{
+    "layer": {
+        "valueType": "v_union_tvi_validacao_1985_2017",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Pontos (1985-2017)",
+        "typeLabel": "Tipo",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "cons_1985",
+                    "label": "Classe em 1985",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_1990",
+                    "label": "Classe em 1990",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_1995",
+                    "label": "Classe em 1995",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2000",
+                    "label": "Classe em 2000",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2005",
+                    "label": "Classe em 2005",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2010",
+                    "label": "Classe em 2010",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2015",
+                    "label": "Classe em 2015",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2017",
+                    "label": "Classe em 2017",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": true,
+            "gpkg": false,
+            "raster": false,
+            "layerTypeName": "v_union_tvi_validacao_1985_2017",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Pontos Visualmente Inspecionados"
+            },
+            {
+                "title": "Descrição",
+                "description": "Conjunto georreferenciado de pontos para todo o território brasileiro, sendo atribuídas classes de uso e cobertura do solo referente a cada ano no período de 1985 a 2017. Foram utilizadas imagens Landsat provenientes dos sensores TM, ETM+ e OLI. Buscou-se também abordar os critérios adotados, dificuldades e especificidades encontradas quanto a interpretação de imagens em cada um dos 6 biomas brasileiros."
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região",
+                "description": "Todo o território nacional do Brasil"
+            },
+            {
+                "title": "Período",
+                "description": "1985 ~ 2017"
+            },
+            {
+                "title": "Escala",
+                "description": "1:250.000"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "Latin 1"
+            },
+            {
+                "title": "Fonte",
+                "description": "Laboratório de Processamento de Imagens e Geoprocessamento - LAPIG."
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://atlasdaspastagens.ufg.br'> https://atlasdaspastagens.ufg.br</a>"
+            }
+        ]
+    },
+    "region": {
+        "text": "Cerrado",
+        "value": "CERRADO",
+        "type": "biome"
+    },
+    "typeDownload": "csv"
+},
+
+
+"pontos_classes_raras_85k_mapbiomas_CERRADO":{
+    "layer": {
+        "valueType": "pontos_classes_raras_85k_mapbiomas",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Pontos (1985-2019)",
+        "typeLabel": "Tipo",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "cons_1985",
+                    "label": "Classe em 1985",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_1990",
+                    "label": "Classe em 1990",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_1995",
+                    "label": "Classe em 1995",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2000",
+                    "label": "Classe em 2000",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2005",
+                    "label": "Classe em 2005",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2010",
+                    "label": "Classe em 2010",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2015",
+                    "label": "Classe em 2015",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2016",
+                    "label": "Classe em 2016",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2017",
+                    "label": "Classe em 2017",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2018",
+                    "label": "Classe em 2018",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2019",
+                    "label": "Classe em 2019",
+                    "columnType": "string"
+                },
+                {
+                    "column": "carta",
+                    "label": "Carta",
+                    "columnType": "string"
+                },
+                {
+                    "column": "declividade",
+                    "label": "Declividade",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": true,
+            "gpkg": false,
+            "raster": false,
+            "layerTypeName": "pontos_classes_raras_85k_mapbiomas",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Pontos Visualmente Inspecionados"
+            },
+            {
+                "title": "Descrição",
+                "description": "Conjunto georreferenciado de pontos para todo o território brasileiro utilizado para validação dos mapeamentos do mapbiomas, sendo atribuídas classes de uso e cobertura da terra conforme a legenda mapbiomas referente aos anos de 1985 a 2018. Foram utilizadas series temporais de imagens Landsat e utilizando a ferramenta TVI. Período: 1985 a 2019"
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região",
+                "description": "Todo o território nacional do Brasil"
+            },
+            {
+                "title": "Período",
+                "description": "1985 ~ 2019"
+            },
+            {
+                "title": "Escala",
+                "description": "1:250.000"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "UTF-8"
+            },
+            {
+                "title": "Fonte",
+                "description": "Laboratório de Processamento de Imagens e Geoprocessamento - LAPIG."
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://atlasdaspastagens.ufg.br'> https://atlasdaspastagens.ufg.br</a>"
+            }
+        ]
+    },
+    "region": {
+        "text": "Cerrado",
+        "value": "CERRADO",
+        "type": "biome"
+    },
+    "typeDownload": "shp"
+},
+
+"pontos_classes_raras_85k_mapbiomas_BRASIL":{
+    "layer": {
+        "valueType": "pontos_classes_raras_85k_mapbiomas",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Pontos (1985-2019)",
+        "typeLabel": "Tipo",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "cons_1985",
+                    "label": "Classe em 1985",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_1990",
+                    "label": "Classe em 1990",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_1995",
+                    "label": "Classe em 1995",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2000",
+                    "label": "Classe em 2000",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2005",
+                    "label": "Classe em 2005",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2010",
+                    "label": "Classe em 2010",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2015",
+                    "label": "Classe em 2015",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2016",
+                    "label": "Classe em 2016",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2017",
+                    "label": "Classe em 2017",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2018",
+                    "label": "Classe em 2018",
+                    "columnType": "string"
+                },
+                {
+                    "column": "cons_2019",
+                    "label": "Classe em 2019",
+                    "columnType": "string"
+                },
+                {
+                    "column": "carta",
+                    "label": "Carta",
+                    "columnType": "string"
+                },
+                {
+                    "column": "declividade",
+                    "label": "Declividade",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": true,
+            "gpkg": false,
+            "raster": false,
+            "layerTypeName": "pontos_classes_raras_85k_mapbiomas",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Pontos Visualmente Inspecionados"
+            },
+            {
+                "title": "Descrição",
+                "description": "Conjunto georreferenciado de pontos para todo o território brasileiro utilizado para validação dos mapeamentos do mapbiomas, sendo atribuídas classes de uso e cobertura da terra conforme a legenda mapbiomas referente aos anos de 1985 a 2018. Foram utilizadas series temporais de imagens Landsat e utilizando a ferramenta TVI. Período: 1985 a 2019"
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região",
+                "description": "Todo o território nacional do Brasil"
+            },
+            {
+                "title": "Período",
+                "description": "1985 ~ 2019"
+            },
+            {
+                "title": "Escala",
+                "description": "1:250.000"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "UTF-8"
+            },
+            {
+                "title": "Fonte",
+                "description": "Laboratório de Processamento de Imagens e Geoprocessamento - LAPIG."
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://atlasdaspastagens.ufg.br'> https://atlasdaspastagens.ufg.br</a>"
+            }
+        ]
+    },
+    "region": {
+        "type": "country",
+        "text": "BRASIL",
+        "value": "BRASIL"
+    },
+    "typeDownload": "shp"
+},
+
+
+"pontos_validacao_pastagem_mapbiomas_col6_BRAASIL":{
+    "layer": {
+        "valueType": "pontos_validacao_pastagem_mapbiomas_col6",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Pontos (Col.6)",
+        "typeLabel": "Tipo",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "campanha",
+                    "label": "Campanha",
+                    "columnType": "string"
+                },
+                {
+                    "column": "class_2020",
+                    "label": "Classe em 2020",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": true,
+            "gpkg": false,
+            "raster": false,
+            "layerTypeName": "pontos_validacao_pastagem_mapbiomas_col6",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Pontos Visualmente Inspecionados"
+            },
+            {
+                "title": "Descrição",
+                "description": "Conjunto georreferenciado de pontos para todo o território brasileiro, sendo atribuídas classes de pastagem e não pastagem referente ao ano de 2020. Foram utilizadas imagens semestrais de Sentinel 2 através da plataforma GEE e utilizando o software Qgis. "
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região",
+                "description": "Todo o território nacional do Brasil"
+            },
+            {
+                "title": "Período",
+                "description": "2020"
+            },
+            {
+                "title": "Escala",
+                "description": "1:250.000"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "Latin 1"
+            },
+            {
+                "title": "Fonte",
+                "description": "Laboratório de Processamento de Imagens e Geoprocessamento - LAPIG."
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://atlasdaspastagens.ufg.br'> https://atlasdaspastagens.ufg.br</a>"
+            }
+        ]
+    },
+    "region": {
+        "type": "country",
+        "text": "BRASIL",
+        "value": "BRASIL"
+    },
+    "typeDownload": "shp"
+},
+
+
+"pontos_validacao_pastagem_mapbiomas_col6_pantanal":{
+    "layer": {
+        "valueType": "pontos_validacao_pastagem_mapbiomas_col6",
+        "type": "layertype",
+        "origin": {
+            "sourceService": "internal",
+            "typeOfTMS": "xyz"
+        },
+        "typeLayer": "vectorial",
+        "viewValueType": "Pontos (Col.6)",
+        "typeLabel": "Tipo",
+        "wfsMapCard": {
+            "show": true,
+            "attributes": [
+                {
+                    "column": "campanha",
+                    "label": "Campanha",
+                    "columnType": "string"
+                },
+                {
+                    "column": "class_2020",
+                    "label": "Classe em 2020",
+                    "columnType": "string"
+                }
+            ]
+        },
+        "download": {
+            "csv": true,
+            "shp": true,
+            "gpkg": false,
+            "raster": false,
+            "layerTypeName": "pontos_validacao_pastagem_mapbiomas_col6",
+            "loading": true
+        },
+        "regionFilter": true,
+        "visible": true,
+        "opacity": 1,
+        "metadata": [
+            {
+                "title": "Metadados",
+                "description": "Pontos Visualmente Inspecionados"
+            },
+            {
+                "title": "Descrição",
+                "description": "Conjunto georreferenciado de pontos para todo o território brasileiro, sendo atribuídas classes de pastagem e não pastagem referente ao ano de 2020. Foram utilizadas imagens semestrais de Sentinel 2 através da plataforma GEE e utilizando o software Qgis. "
+            },
+            {
+                "title": "Formato",
+                "description": "Shapefile (*.SHP), com arquivos complementares (*.PRJ, *DBF, *.SHX, *.SBX, *MAP)."
+            },
+            {
+                "title": "Região",
+                "description": "Todo o território nacional do Brasil"
+            },
+            {
+                "title": "Período",
+                "description": "2020"
+            },
+            {
+                "title": "Escala",
+                "description": "1:250.000"
+            },
+            {
+                "title": "Sistemas de Referência e Coordenadas",
+                "description": "Superfície de referência SIRGAS 2000, Sistema de Coordenada Geográfica (em graus)."
+            },
+            {
+                "title": "Projeção cartográfica",
+                "description": "Universal Transversa de Mercator (UTM)."
+            },
+            {
+                "title": "Codificação de caractere",
+                "description": "Latin 1"
+            },
+            {
+                "title": "Fonte",
+                "description": "Laboratório de Processamento de Imagens e Geoprocessamento - LAPIG."
+            },
+            {
+                "title": "URL",
+                "description": "<a target='_blank' class='link-details' href='https://atlasdaspastagens.ufg.br'> https://atlasdaspastagens.ufg.br</a>"
+            }
+        ]
+    },
+    "region": {
+        "text": "Pantanal",
+        "value": "PANTANAL",
+        "type": "biome"
+    },
+    "typeDownload": "csv"
+}
+
+
+
+}

@@ -20,7 +20,7 @@ for file in FILES:
 #TESTS = [('tests/payloads/areas_especias.json','Areas_Militares_Goiania_SHP')]
 
 @pytest.mark.parametrize('file, payload_name', TESTS)
-def test_payload_pasture(file, payload_name):
+def test_payload(file, payload_name):
     request = post(URL, json=PAYLOAD[file][payload_name])
     if not request.status_code == 200:
         try:

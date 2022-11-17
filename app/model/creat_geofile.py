@@ -57,10 +57,10 @@ class CreatGeoFile:
 
         if self.fileType == 'csv':
             self.column_name = ', '.join(
-                [name for name in cols if not name in type_geom]
+                [f"'{name}'" for name in cols if not name in type_geom]
             )
         else:
-            self.column_name = ', '.join([name for name in cols])
+            self.column_name = ', '.join([f"'{name}'" for name in cols])
 
     def where(self, msfilter):
         return ' AND '.join(msfilter)
@@ -99,13 +99,7 @@ class CreatGeoFile:
         if not self.valueFilter == '':
             list_filter.append(self.valueFilter)
         list_filter.append(self.region_type())
-        replaces = [
-            (' group,'," 'group',")
-            ]
-        column_name = self.column_name
-        for _from, _to in replaces:
-            column_name = column_name.replace(_from,_to)
-        return f"""SELECT {column_name} FROM {self.sql_layer} WHERE {self.where(list_filter)}"""
+        return f"""SELECT {self.column_name} FROM {self.sql_layer} WHERE {self.where(list_filter)}"""
 
     def gpd(self):
         con = geodb(self.db)
