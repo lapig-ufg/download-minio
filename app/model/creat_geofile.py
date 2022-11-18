@@ -109,7 +109,9 @@ class CreatGeoFile:
         list_filter = []
         if not self.valueFilter == '':
             list_filter.append(self.valueFilter)
-        list_filter.append(self.region_type())
+        tmp_region = self.region_type()
+        if not tmp_region == '':
+            list_filter.append(tmp_region)
         return f"""SELECT {self.column_name} FROM {self.sql_layer} WHERE {self.where(list_filter)}"""
 
     def gpd(self):
