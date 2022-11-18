@@ -77,6 +77,7 @@ class CreatGeoFile:
         region = self.regiao.lower()
         value = self.value.lower()
         query = {
+            
             'city':{'col':'cd_geocmu' ,'query':f" UPPER(unaccent(cd_geocmu)) = UPPER(unaccent('{value}'))"},
             'state': {'col':'uf' ,'query':f" UPPER(unaccent(uf)) = UPPER(unaccent('{value}'))"},
             'biome': {'col':'bioma' ,'query':f" UPPER(unaccent(bioma)) = UPPER(unaccent('{value}'))"},
@@ -87,6 +88,8 @@ class CreatGeoFile:
             'region': {'col':'regiao' ,'query':f" UPPER(unaccent(regiao)) = UPPER(unaccent('{value}'))"},
         }
         try:
+            if region == 'country':
+                return ''
             if region == 'fronteira':
                 if not value in self.cols:
                     raise FilterException('unable_filter_layer')
