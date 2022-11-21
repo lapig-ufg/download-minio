@@ -3,7 +3,7 @@
 ###############################################
 FROM python:3.10-slim as python-base
 
-ENV LAPIG_ENV="dev" \
+ENV LAPIG_ENV="production" \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=off \

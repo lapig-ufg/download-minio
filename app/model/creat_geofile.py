@@ -1,7 +1,7 @@
 import geopandas as gpd
 import pandas as pd
 
-from app.config import logger
+from app.config import logger, settings
 from app.db import geodb
 from app.util.mapfile import get_schema
 from app.util.exceptions import FilterException
@@ -13,6 +13,7 @@ def normalize_col(col):
         return f"'{col}'"
     return col
 
+from pymongo import MongoClient
 
 
 class CreatGeoFile:
@@ -49,27 +50,49 @@ class CreatGeoFile:
         cols = list(dataFrame.column_name)
         self.cols = cols
         self.schema = get_schema(dataFrame)
+        self.columns_names(cols)
+        self.rename = False
 
+    def columns_names(self, cols):
         logger.debug(f'Full column_name: {cols}')
         type_geom = ['geom', 'geometry']
         try:
             self.geom = [name for name in cols if name in type_geom][0]
         except:
             raise ValueError('Geometry has not been defined')
+        remove_cols =  ['gid', 'objectid', 'index']
+
+        with MongoClient(settings.MONGODB_URL) as client:
+            db = client.ows
+            personalized_query = db.queries.find_one({"sql_layer":self.sql_layer})
+            self.rename = {key:value for key, value in zip(personalized_query['columns'],personalized_query['columns_rename'])}
+
+
         try:
-            self.index = [
-                name for name in cols if name in ['gid', 'objectid', 'index']
-            ][0]
+            if self.fileType == 'csv':
+                self.column_name = ', '.join(
+                    [normalize_col(name) 
+                        for name in personalized_query['columns']])
+            else:
+                self.column_name = ', '.join([*
+                [normalize_col(name) 
+                    for name in personalized_query['columns']],
+                    self.geom ])
+
         except:
-            self.index = None
-
-        if self.fileType == 'csv':
-            self.column_name = ', '.join(
-                [normalize_col(name) for name in cols if not name in type_geom]
-            )
-        else:
-            self.column_name = ', '.join([normalize_col(name) for name in cols])
-
+            if self.fileType == 'csv':
+                self.column_name = ', '.join(
+                    [
+                        normalize_col(name) 
+                        for name in cols if not name.lower() in [*type_geom, *remove_cols]
+                ] )
+            else:
+                self.column_name = ', '.join(
+                    [
+                        normalize_col(name) 
+                        for name in cols if not strname.lower() in remove_cols
+                ])
+            
     def where(self, msfilter):
         return ' AND '.join(msfilter)
 
@@ -120,7 +143,7 @@ class CreatGeoFile:
         logger.debug(query)
         if self.fileType in ['shp', 'gpkg']:
             df = gpd.GeoDataFrame.from_postgis(
-                query, con, index_col=self.index, geom_col=self.geom
+                query, con, geom_col=self.geom
             )
             schema_df = gpd.io.file.infer_schema(df)
             for i in self.schema:
@@ -132,7 +155,9 @@ class CreatGeoFile:
                     )
             df.crs = self.crs
         elif self.fileType == 'csv':
-            df = pd.read_sql(query, con, index_col=self.index)
+            df = pd.read_sql(query, con)
             schema_df = ''
         con.close()
+        if not self.rename is False:
+            df = df.rename(columns=self.rename)
         return (df, None)
