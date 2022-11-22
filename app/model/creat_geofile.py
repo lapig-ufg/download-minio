@@ -63,23 +63,24 @@ class CreatGeoFile:
             db = client.ows
             personalized_query = db.queries.find_one({"sql_layer":self.sql_layer})
             try:
-                self.rename = {key:value for key, value in zip(personalized_query['columns'],personalized_query['columns_rename'])}
+                self.rename = [f"{normalize_col(key)} as {normalize_col(value)}" 
+                               for key, value in zip(
+                    personalized_query['columns'],
+                    personalized_query['columns_rename'])
+                               ]           
             except:
                 logger.debug(f'personalized_query: {personalized_query}')
 
-        try:
+        if not self.rename is False:
             if self.fileType == 'csv':
-                logger.debug(personalized_query['columns'])
-                self.column_name = ', '.join(
-                    [normalize_col(name) 
-                        for name in personalized_query['columns']])
+                logger.debug(self.rename )
+                self.column_name = ', '.join(self.rename )
             else:
-                self.column_name = ', '.join([*
-                [normalize_col(name) 
-                    for name in personalized_query['columns']],
+                self.column_name = ', '.join([
+                    *self.rename,
                     self.geom ])
 
-        except:
+        else:
             logger.debug('nao personalizado')
             if self.fileType == 'csv':
                 self.column_name = ', '.join(
@@ -161,7 +162,4 @@ class CreatGeoFile:
             df = pd.read_sql(query, con)
             schema_df = ''
         con.close()
-        if not self.rename is False:
-            logger.info(self.rename)
-            df = df.rename(columns=self.rename)
         return (df, None)
