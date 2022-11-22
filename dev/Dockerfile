@@ -87,7 +87,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y curl build-esse
 RUN pip3 install poetry 
 
 # copy project requirement files here to ensure they will be cached.
-WORKDIR $PYSETUP_PATH
+WORKDIR /opt/pysetup
 COPY poetry.lock pyproject.toml ./
 
 # install runtime deps - uses $POETRY_VIRTUALENVS_IN_PROJECT internally
@@ -97,7 +97,7 @@ RUN poetry install --only main --no-interaction --no-ansi
 # Production Image
 ###############################################
 FROM python-base as production
-COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
+COPY --from=builder-base /opt/pysetup /opt/pysetup
 
 
 WORKDIR /APP
