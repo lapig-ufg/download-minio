@@ -1,0 +1,74 @@
+FROM debian:latest
+
+SHELL ["/bin/bash", "-c"]
+
+USER root 
+
+# Install dependencies
+RUN apt-get update && \
+apt-get install -y apt-transport-https \
+     ca-certificates \
+     curl \
+     wget \
+     gnupg2 \
+     software-properties-common \
+     g++ \ 
+     sqlite3 \ 
+     libsqlite3-dev \ 
+     libtiff5-dev \  
+     pkg-config \
+     cmake \
+     python3-pip \
+     postgresql-client \
+     libpq-dev \
+     libgeos-dev \
+     htop \
+     postgis
+
+#-----------------------------
+# install proj-7
+ARG PROJ_VERSION=7.2.0
+RUN wget https://download.osgeo.org/proj/proj-7.2.0.tar.gz && \
+    tar xvzf proj-7.2.0.tar.gz && \
+    cd proj-7.2.0 && \
+    ./configure --without-curl && \
+    make clean &&  make -j48 &&  make install 
+
+#-----------------------------
+# Download GDAL v3.6.0 Source (ex. 3.6.0)
+ARG GDAL_VERSION=3.6.0
+RUN cd /root && \
+    wget https://github.com/OSGeo/gdal/releases/download/v3.6.0/gdal-3.6.0.tar.gz && \
+    tar xfv gdal-3.6.0.tar.gz && \
+    cd gdal-3.6.0 && \
+    mkdir build && \
+    cd build && \
+    cmake .. && \
+    make -j48 install && \
+    cd / && \
+    rm -rf proj-7.2.0* && \
+    cd /root && \
+    rm -rf gdal* && \
+    rm -rf /var/lib/apt/lists/* 
+
+#-----------------------------
+# Download Python 3.10.8 Source (ex. 3.10.8)
+RUN apt-get install -y  build-essential \
+                        zlib1g-dev \
+                        libncurses5-dev \
+                        libgdbm-dev \
+                        libnss3-dev \
+                        libssl-dev \ 
+                        libreadline-dev \
+                        libffi-dev \ 
+                        libsqlite3-dev \
+                        wget \  
+                        libbz2-dev && \
+                        wget https://www.python.org/ftp/python/3.10.8/Python-3.10.8.tar.xz && \
+                        tar xfv Python-3.10.8.tar.xz && \
+                        cd Python-3.10.8 && \
+                        ./configure --enable-optimizations && \
+                        make -j48 install  
+
+# Set LD_LIBRARY_PATH so that recompiled GDAL is used
+ENV LD_LIBRARY_PATH /lib:/usr/lib:/usr/local/lib
