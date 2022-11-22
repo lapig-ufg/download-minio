@@ -43,6 +43,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
             libpq-dev postgresql \
             make \
             gcc \
+            build-essential \
             wget && \
         wget http://download.osgeo.org/geos/geos-${GEOS_VERSION}.tar.bz2 -P /tmp/resources/ && \
             cd /tmp/resources && \
@@ -64,6 +65,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
             libgeos++-dev \
             libproj-dev \
             python3-dev \
+            python3-pip \
             libgeos-dev &&\
         cd /tmp && \
             wget download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz && \
