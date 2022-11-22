@@ -51,7 +51,7 @@ class CreatGeoFile:
         self.cols = cols
         self.rename = False
         self.schema = get_schema(dataFrame)
-        
+        self.query_personality = False
         type_geom = ['geom', 'geometry']
         try:
             self.geom = [name for name in cols if name in type_geom][0]
@@ -70,6 +70,11 @@ class CreatGeoFile:
                                ]           
             except:
                 logger.debug(f'personalized_query: {personalized_query}')
+
+            try:
+                self.query_personality = personalized_query[self.fileType]
+            except:
+                ...
 
         if not self.rename is False:
             if self.fileType == 'csv':
@@ -130,20 +135,22 @@ class CreatGeoFile:
             logger.exception('Error filter')
             raise Exception(e)
 
-    def querey(self):
+    def query(self):
         list_filter = []
         if not self.valueFilter == '':
             list_filter.append(self.valueFilter)
         tmp_region = self.region_type()
         if not tmp_region == '':
             list_filter.append(tmp_region)
+        if not self.query_personality is False:
+            return self.query_personality.replace('{{WHERE}}',self.where(list_filter))
         if len(list_filter) == 0:
             return f"SELECT {self.column_name} FROM {self.sql_layer}"
         return f"SELECT {self.column_name} FROM {self.sql_layer} WHERE {self.where(list_filter)}"
 
     def gpd(self):
         con = geodb(self.db)
-        query = self.querey()
+        query = self.query()
         logger.debug(query)
         if self.fileType in ['shp', 'gpkg']:
             df = gpd.GeoDataFrame.from_postgis(
@@ -163,3 +170,4 @@ class CreatGeoFile:
             schema_df = ''
         con.close()
         return (df, None)
+
