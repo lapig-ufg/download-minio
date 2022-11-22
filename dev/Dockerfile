@@ -1,7 +1,7 @@
 ###############################################
 # Base Image
 ###############################################
-FROM python:3.10-slim as python-base
+FROM registry.lapig.iesa.ufg.br/lapig-images-prod/download-minio:base as python-base
 
 ENV LAPIG_ENV='dev' \
     PYTHONUNBUFFERED=1 \

@@ -1,7 +1,7 @@
 import tempfile
 from glob import glob
-from zipfile import ZipFile
-
+from zipfile import ZipFile, ZIP_LZMA
+import subprocess
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, HttpUrl
 
@@ -178,7 +178,7 @@ def creat_file_postgre(
             crs=crs,
         )
 
-        df, schema = geofile.gpd()
+        
     except ValueError as e:
         if str(e) == "Cannot write empty DataFrame to file.":
             logger.info(f"{e}")
@@ -211,20 +211,33 @@ def creat_file_postgre(
         try:
             if payload.typeDownload == 'csv':
                 logger.debug(f'{tmpdirname}/{fileParam}.csv')
+                df, schema = geofile.gpd()
                 df.to_csv(f'{tmpdirname}/{fileParam}.csv')
             elif payload.typeDownload == 'gpkg':
                 logger.debug(f'{tmpdirname}/{fileParam}.gpkg')
-                df.to_file(
-                    f'{tmpdirname}/{fileParam}.gpkg',
-                    driver='GPKG',
-                    schema=schema,
-                )
+                DB_HOST= settings.DB_HOST
+                if db == '':
+                    DB_PORT=settings.DB_PORT
+                    DB_USER=settings.DB_USER
+                    DB_PASSWORD=settings.DB_PASSWORD
+                    DB_NAME=settings.DB_DATABASE
+                else:
+                    DB_PORT=db['port']
+                    DB_USER=db['user']
+                    DB_PASSWORD=db['password'].replace("'",'')
+                    DB_NAME=db['dbname']
+                FILE_STR = f'{tmpdirname}/{fileParam}.gpkg'
+                PG_STR = f"PG:\"dbname='{DB_NAME}' host='{DB_HOST}' port='{DB_PORT}' user='{DB_USER}' password='{DB_PASSWORD}'\" " 
+                ogr2ogr = f'ogr2ogr -f GPKG {FILE_STR} {PG_STR} -sql "{geofile.query()}"'
+                logger.debug(ogr2ogr)
+                return_value = subprocess.call(ogr2ogr, shell=True)
+                logger.debug(return_value)
             elif payload.typeDownload == 'shp':
                 logger.debug(f'{tmpdirname}/{fileParam}.shp')
                 df.to_file(f'{tmpdirname}/{fileParam}.shp', schema=schema)
         except ValueError as e:
             logger.exception(
-                f'Erro ao Criar arquivo ValueError: {e}\n{df.columns}\n{df.dtypes}'
+                f'Erro ao Criar arquivo ValueError: {e}'
             )
             raise HTTPException(
                 400,
@@ -233,11 +246,11 @@ def creat_file_postgre(
         except Exception as e:
             logger.exception('Erro ao Criar arquivo ValueError: {e}')
             raise HTTPException(
-                500, f'Erro ao Criar arquivo: {e}\n{df.columns}\n{df.dtypes}'
+                500, f'Erro ao Criar arquivo: {e}'
             )
 
         file_paths = glob(f'{tmpdirname}/*')
-        with ZipFile(f'{tmpdirname}/{fileParam}.zip', 'w') as zip:
+        with ZipFile(f'{tmpdirname}/{fileParam}.zip', 'w', ZIP_LZMA) as zip:
             # writing each file one by one
             for file in file_paths:
                 zip.write(file, file.split('/')[-1])
