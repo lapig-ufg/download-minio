@@ -143,7 +143,7 @@ async def start_dowload(payload: Payload):
             if not 'sqlite' == map_conect:
                 db = map_conect
             else:
-                ...
+                logger.debug('is sql')
         except:
             sql_layer = payload.layer.download.layerTypeName
             db = ''

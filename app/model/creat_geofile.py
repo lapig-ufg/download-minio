@@ -49,12 +49,9 @@ class CreatGeoFile:
         dbConnection.close()
         cols = list(dataFrame.column_name)
         self.cols = cols
-        self.schema = get_schema(dataFrame)
-        self.columns_names(cols)
         self.rename = False
-
-    def columns_names(self, cols):
-        logger.debug(f'Full column_name: {cols}')
+        self.schema = get_schema(dataFrame)
+        
         type_geom = ['geom', 'geometry']
         try:
             self.geom = [name for name in cols if name in type_geom][0]
@@ -65,11 +62,14 @@ class CreatGeoFile:
         with MongoClient(settings.MONGODB_URL) as client:
             db = client.ows
             personalized_query = db.queries.find_one({"sql_layer":self.sql_layer})
-            self.rename = {key:value for key, value in zip(personalized_query['columns'],personalized_query['columns_rename'])}
-
+            try:
+                self.rename = {key:value for key, value in zip(personalized_query['columns'],personalized_query['columns_rename'])}
+            except:
+                logger.debug(f'personalized_query: {personalized_query}')
 
         try:
             if self.fileType == 'csv':
+                logger.debug(personalized_query['columns'])
                 self.column_name = ', '.join(
                     [normalize_col(name) 
                         for name in personalized_query['columns']])
@@ -80,6 +80,7 @@ class CreatGeoFile:
                     self.geom ])
 
         except:
+            logger.debug('nao personalizado')
             if self.fileType == 'csv':
                 self.column_name = ', '.join(
                     [
@@ -90,7 +91,7 @@ class CreatGeoFile:
                 self.column_name = ', '.join(
                     [
                         normalize_col(name) 
-                        for name in cols if not strname.lower() in remove_cols
+                        for name in cols if not name.lower() in remove_cols
                 ])
             
     def where(self, msfilter):
@@ -135,7 +136,9 @@ class CreatGeoFile:
         tmp_region = self.region_type()
         if not tmp_region == '':
             list_filter.append(tmp_region)
-        return f"""SELECT {self.column_name} FROM {self.sql_layer} WHERE {self.where(list_filter)}"""
+        if len(list_filter) == 0:
+            return f"SELECT {self.column_name} FROM {self.sql_layer}"
+        return f"SELECT {self.column_name} FROM {self.sql_layer} WHERE {self.where(list_filter)}"
 
     def gpd(self):
         con = geodb(self.db)
@@ -159,5 +162,6 @@ class CreatGeoFile:
             schema_df = ''
         con.close()
         if not self.rename is False:
+            logger.info(self.rename)
             df = df.rename(columns=self.rename)
         return (df, None)
