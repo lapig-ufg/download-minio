@@ -81,3 +81,4 @@ class Payload(BaseModel):
     region: Region
     filter: Optional[Filter] = None
     typeDownload: str
+    update: str = 'LAPIG'

@@ -20,3 +20,4 @@ DB_PORT = '5432'
 DB_DATABASE = 'gdb'
 
 MONGODB_URL = 'localhost:27017'
+kEY_UPDATE = 'updatenow'

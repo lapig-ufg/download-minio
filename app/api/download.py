@@ -87,9 +87,11 @@ async def start_dowload(payload: Payload):
             valueFilter
         )
     )
-
+    
     objects_list = list(objects)
-    if len(objects_list) == 1:
+    logger.debug(f"{len(objects_list)} , {payload.update}, {settings.KEY_UPDATE}" )
+    
+    if len(objects_list) == 1 and not payload.update == settings.KEY_UPDATE:
         return DowloadUrl(
             object_name=objects_list[0].object_name, size=objects_list[0].size
         )
@@ -126,7 +128,7 @@ async def start_dowload(payload: Payload):
             recursive=True,
         )
         objects_list = list(objects)
-        if len(objects_list) == 1:
+        if len(objects_list) == 1 :
             return DowloadUrl(
                 object_name=objects_list[0].object_name,
                 size=objects_list[0].size,
@@ -234,7 +236,8 @@ def creat_file_postgre(
                 logger.debug(return_value)
             elif payload.typeDownload == 'shp':
                 logger.debug(f'{tmpdirname}/{fileParam}.shp')
-                df.to_file(f'{tmpdirname}/{fileParam}.shp', schema=schema)
+                df, schema = geofile.gpd()
+                df.to_file(f'{tmpdirname}/{fileParam}.shp')
         except ValueError as e:
             logger.exception(
                 f'Erro ao Criar arquivo ValueError: {e}'
