@@ -1,6 +1,6 @@
 import tempfile
 from glob import glob
-from zipfile import ZipFile, ZIP_LZMA
+from zipfile import ZipFile, ZIP_BZIP2
 import subprocess
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, HttpUrl
@@ -250,7 +250,7 @@ def creat_file_postgre(
             )
 
         file_paths = glob(f'{tmpdirname}/*')
-        with ZipFile(f'{tmpdirname}/{fileParam}.zip', 'w', ZIP_LZMA) as zip:
+        with ZipFile(f'{tmpdirname}/{fileParam}.zip', 'w', ZIP_BZIP2) as zip:
             # writing each file one by one
             for file in file_paths:
                 zip.write(file, file.split('/')[-1])
