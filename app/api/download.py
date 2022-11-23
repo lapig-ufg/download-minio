@@ -229,7 +229,7 @@ def creat_file_postgre(
                 FILE_STR = f'{tmpdirname}/{fileParam}.gpkg'
                 PG_STR = f"PG:\"dbname='{DB_NAME}' host='{DB_HOST}' port='{DB_PORT}' user='{DB_USER}' password='{DB_PASSWORD}'\" " 
                 ogr2ogr = f'ogr2ogr -f GPKG {FILE_STR} {PG_STR} -sql "{geofile.query()}"'
-                logger.debug(ogr2ogr)
+                logger.info(ogr2ogr)
                 return_value = subprocess.call(ogr2ogr, shell=True)
                 logger.debug(return_value)
             elif payload.typeDownload == 'shp':
