@@ -17,13 +17,8 @@ from .routers import created_routes
 start_logger()
 
 app = FastAPI(
-    title="Lapig - Laboratório de Processamento de Imagens e Geoprocessamento",
-    
-    version="0.0.3",
-    contact={
-        "name": "Lapig",
-        "url": "https://lapig.iesa.ufg.br/"
-    },
+
+   
 )
 
 origins = [
@@ -109,6 +104,10 @@ def custom_openapi():
     openapi_schema = get_openapi(
         title="Lapig - Laboratório de Processamento de Imagens e Geoprocessamento",
         version="0.1.3",
+         contact={
+        "name": "Lapig",
+        "url": "https://lapig.iesa.ufg.br/"
+    },
         description="API para baixar dados do mapserver",
         routes=app.routes,
     )
