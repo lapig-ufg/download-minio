@@ -2,16 +2,17 @@ import tempfile
 from glob import glob
 from zipfile import ZipFile, ZIP_BZIP2
 import subprocess
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Body, Path
 from pydantic import BaseModel, HttpUrl
 
 from app.config import logger, settings
 from app.functions import client_minio
 from app.model.creat_geofile import CreatGeoFile
 from app.model.models import GeoFile
-from app.model.payload import Download, Filter, Layer, Payload, Region
+from app.model.payload import Download, FileTypes, Filter, Layer, Payload, Region, RegionType
 from app.util.mapfile import get_layer
 from app.util.exceptions import FilterException
+from pymongo import MongoClient
 
 router = APIRouter()
 
@@ -33,29 +34,60 @@ async def atalas_paylaod(payload: Payload):
     return start_dowload(payload)
 
 
+qbaixa = ''
 
-@router.get('/{region_type}/{region_value}/{typeDownload}/{layer_download_layerTypeName}/{layer_valueType}/{filter_valueFilter}', response_description='Dowload', response_model=DowloadUrl)
+@router.get('/{regionType}/{regionValue}/{fileType}/{valueType}/{valueFilter}', response_description='Dowload', response_model=DowloadUrl)
 async def url_paylaod(
-    region_type:str,
-    region_value:str,
-    typeDownload:str,
-    layer_download_layerTypeName:str,
-    layer_valueType:str,
-    filter_valueFilter:str,
-    update='lapig'):
-    
+    regionType:RegionType  = Path(
+        default=None, description="Qual o tipo de região  você quer baixar? "
+    ),
+    regionValue:str = Path(
+        default=None, description="Qual o nome da região  você quer baixar? No caso de cidade(city) use o codigo de municipio do [IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php)"
+    ),
+    fileType:FileTypes = Path(
+        default=None, description="Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]"
+    ),
+    valueType:str = Path(
+        default=None, description="Nome da camada que  você quer baixar?"
+    ),
+    valueFilter:str = Path(
+        default=None, description="Filtro que sera usa para baixar camada?"
+    ),
+    update:str = Body(None)
+    ):
+    """
+    Baixa uma camada do mapserver conforme os parametos a seguir:
+
+    - **regionType**: Qual o tipo de região  você quer baixar? [biome, city, country, rater, region]
+    - **regionValue**: Qual o nome da região  você quer baixar? No caso de cidade(city) use o codigo de municipio do [IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php)
+    - **fileType**: Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]
+    - **valueType**: Nome da camada que  você quer baixar?
+    - **valueFilter**: Filtro que sera usa para baixar camada
+    """
+    layerTypeName = None
+    with MongoClient(settings.MONGODB_URL) as client:
+        db = client.ows
+        tmp = db.layers.find_one({"layertypes.valueType":valueType})
+        try:
+            layerTypeName = [x['download']['layerTypeName'] 
+                for x in tmp["layertypes"] 
+                if x["valueType"] == valueType][0]
+        except Exception as e:
+            layerTypeName = None
+       
+
     payload = Payload(
             region = Region(
-                type=region_type,
-                value=region_value
+                type=regionType,
+                value=regionValue.upper()
             ),
             layer= Layer(
-                valueType = layer_valueType,
-                download = Download(layerTypeName=layer_download_layerTypeName)
+                valueType = valueType,
+                download = Download(layerTypeName=layerTypeName)
             ),
-            typeDownload=typeDownload,
+            typeDownload=fileType,
             filter = Filter(
-                valueFilter=filter_valueFilter
+                valueFilter=valueFilter
             ),
             update=update
         )
