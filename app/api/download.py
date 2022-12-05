@@ -9,7 +9,7 @@ from app.config import logger, settings
 from app.functions import client_minio
 from app.model.creat_geofile import CreatGeoFile
 from app.model.models import GeoFile
-from app.model.payload import Payload
+from app.model.payload import Download, Filter, Layer, Payload, Region
 from app.util.mapfile import get_layer
 from app.util.exceptions import FilterException
 
@@ -29,12 +29,45 @@ class DowloadUrl(BaseModel):
 
 
 @router.post('/', response_description='Dowload', response_model=DowloadUrl)
-async def start_dowload(payload: Payload):
+async def atalas_paylaod(payload: Payload):
+    return start_dowload(payload)
 
-    if payload.layer.filterHandler == 'layername':
-        layerName = payload.layer.filterSelected
-    else:
-        layerName = payload.layer.valueType
+
+
+@router.get('/{region_type}/{region_value}/{typeDownload}/{layer_download_layerTypeName}/{layer_valueType}/{filter_valueFilter}', response_description='Dowload', response_model=DowloadUrl)
+async def url_paylaod(
+    region_type:str,
+    region_value:str,
+    typeDownload:str,
+    layer_download_layerTypeName:str,
+    layer_valueType:str,
+    filter_valueFilter:str,
+    update='lapig'):
+    
+    payload = Payload(
+            region = Region(
+                type=region_type,
+                value=region_value
+            ),
+            layer= Layer(
+                valueType = layer_valueType,
+                download = Download(layerTypeName=layer_download_layerTypeName)
+            ),
+            typeDownload=typeDownload,
+            filter = Filter(
+                valueFilter=filter_valueFilter
+            ),
+            update=update
+        )
+    logger.debug(payload)
+    return start_dowload(payload)
+
+
+
+
+
+
+def start_dowload(payload: Payload):
 
     valueFilter = ''
     try:

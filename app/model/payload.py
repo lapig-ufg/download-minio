@@ -32,17 +32,17 @@ class WfsMapCard(BaseModel):
 
 
 class Download(BaseModel):
-    csv: bool
-    shp: bool
-    gpkg: bool
-    raster: bool
+    csv: Optional[bool]
+    shp: Optional[bool]
+    gpkg: Optional[bool]
+    raster: Optional[bool]
     layerTypeName: str
-    loading: bool
+    loading: Optional[bool]
 
 
 class Filter(BaseModel):
     valueFilter: str
-    viewValueFilter: Union[str, int]
+    viewValueFilter: Optional[Union[str, int]]
 
 
 class Metadatum(BaseModel):
@@ -52,27 +52,27 @@ class Metadatum(BaseModel):
 
 class Layer(BaseModel):
     valueType: str
-    type: str
-    origin: Origin
-    typeLayer: str
-    viewValueType: str
-    typeLabel: str
+    type: Optional[str]= None
+    origin: Optional[Origin]= None
+    typeLayer: Optional[str]
+    viewValueType: Optional[str]
+    typeLabel: Optional[str]= None
     gallery: Optional[Gallery] = None
-    wfsMapCard: WfsMapCard
-    download: Download
-    regionFilter: bool
+    wfsMapCard: Optional[WfsMapCard] = None
+    download: Optional[Download] = None
+    regionFilter: Optional[bool] = None
     filters: Optional[List[Filter]] = None
     filterLabel: Optional[str] = None
     filterSelected: Optional[str] = None
     filterHandler: Optional[str] = None
-    visible: bool
-    opacity: int
-    metadata: List[Metadatum]
+    visible: Optional[bool] = None
+    opacity: Optional[int] = None
+    metadata: Optional[List[Metadatum]] = None
 
 
 class Region(BaseModel):
     type: str
-    text: str
+    text: Optional[str]
     value: str
 
 
