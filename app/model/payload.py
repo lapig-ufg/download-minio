@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import List, Optional, Union
 
 from pydantic import BaseModel
@@ -40,6 +41,21 @@ class Download(BaseModel):
     loading: Optional[bool]
 
 
+class RegionType(str, Enum):
+    biome = "biome"
+    city = "city"
+    country = "country"
+    fronteira = "fronteira"
+    region = "region"
+    state = "state"
+
+
+class FileTypes(str, Enum):
+    csv = 'csv'
+    shp = 'shp'
+    gpkg = 'gpkg'
+    raster = 'raster'
+
 class Filter(BaseModel):
     valueFilter: str
     viewValueFilter: Optional[Union[str, int]]
@@ -71,7 +87,7 @@ class Layer(BaseModel):
 
 
 class Region(BaseModel):
-    type: str
+    type: RegionType
     text: Optional[str]
     value: str
 
@@ -80,5 +96,5 @@ class Payload(BaseModel):
     layer: Layer
     region: Region
     filter: Optional[Filter] = None
-    typeDownload: str
+    typeDownload: FileTypes
     update: str = 'LAPIG'

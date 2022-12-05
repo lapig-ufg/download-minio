@@ -8,6 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from fastapi.openapi.utils import get_openapi
 
 from app.config import logger, settings, start_logger
 
@@ -15,7 +16,15 @@ from .routers import created_routes
 
 start_logger()
 
-app = FastAPI()
+app = FastAPI(
+    title="Lapig - Laboratório de Processamento de Imagens e Geoprocessamento",
+    
+    version="0.0.3",
+    contact={
+        "name": "Lapig",
+        "url": "https://lapig.iesa.ufg.br/"
+    },
+)
 
 origins = [
     "*",
@@ -91,3 +100,23 @@ async def shutdown():
     # If you have any shutdown activities that need to be defined,
     # define them here.
     pass
+
+
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    openapi_schema = get_openapi(
+        title="Lapig - Laboratório de Processamento de Imagens e Geoprocessamento",
+        version="0.1.3",
+        description="API para baixar dados do mapserver",
+        routes=app.routes,
+    )
+    openapi_schema["info"]["x-logo"] = {
+        "url": "https://files.cercomp.ufg.br/weby/up/1313/o/Marca_Lapig_PNG_sem_descri%C3%A7%C3%A3o-removebg-preview.png?1626024108"
+    }
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+
+app.openapi = custom_openapi
