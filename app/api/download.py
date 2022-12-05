@@ -30,14 +30,14 @@ class DowloadUrl(BaseModel):
 
 
 @router.post('/', response_description='Dowload', response_model=DowloadUrl)
-async def atalas_paylaod(payload: Payload):
+async def atalas_payload(payload: Payload):
     return start_dowload(payload)
 
 
 qbaixa = ''
 
 @router.get('/{regionType}/{regionValue}/{fileType}/{valueType}/{valueFilter}', response_description='Dowload', response_model=DowloadUrl)
-async def url_paylaod(
+async def url_payload(
     regionType:RegionType  = Path(
         default=None, description="Qual o tipo de região  você quer baixar? "
     ),
