@@ -2,7 +2,7 @@ import tempfile
 from glob import glob
 from zipfile import ZipFile, ZIP_BZIP2
 import subprocess
-from fastapi import APIRouter, HTTPException, Body, Path
+from fastapi import APIRouter, HTTPException, Query, Path
 from pydantic import BaseModel, HttpUrl
 
 from app.config import logger, settings
@@ -29,15 +29,16 @@ class DowloadUrl(BaseModel):
         self.url = f'https://{self.host}/{self.buckt}/{self.object_name}'
 
 
-@router.post('/', response_description='Dowload', response_model=DowloadUrl)
-async def atalas_payload(payload: Payload):
-    return start_dowload(payload)
+@router.post('/', response_description='Retorna um objeto json com a url do download', response_model=DowloadUrl)
+async def geofile(payload: Payload, update:str = Query('Lapig',include_in_schema=False)):
+    return start_dowload(payload,update)
 
 
-qbaixa = ''
 
-@router.get('/{regionType}/{regionValue}/{fileType}/{valueType}/{valueFilter}', response_description='Dowload', response_model=DowloadUrl)
-async def url_payload(
+@router.get('/{regionType}/{regionValue}/{fileType}/{valueType}/{valueFilter}', 
+            name='Geofile',
+            response_description='Retorna um objeto json com a url para download', response_model=DowloadUrl)
+async def get_geofile(
     regionType:RegionType  = Path(
         default=None, description="Qual o tipo de região  você quer baixar? "
     ),
@@ -53,7 +54,7 @@ async def url_payload(
     valueFilter:str = Path(
         default=None, description="Filtro que sera usa para baixar camada?"
     ),
-    update:str = Body(None)
+    update:str = Query('Lapig',include_in_schema=False)
     ):
     """
     Baixa uma camada do mapserver conforme os parametos a seguir:
@@ -92,14 +93,14 @@ async def url_payload(
             update=update
         )
     logger.debug(payload)
-    return start_dowload(payload)
+    return start_dowload(payload,update)
 
 
 
 
 
 
-def start_dowload(payload: Payload):
+def start_dowload(payload: Payload, update:str):
 
     valueFilter = ''
     try:
@@ -154,9 +155,9 @@ def start_dowload(payload: Payload):
     )
     
     objects_list = list(objects)
-    logger.debug(f"{len(objects_list)} , {payload.update}, {settings.KEY_UPDATE}" )
+    logger.debug(f"{len(objects_list)} , {update}, {settings.KEY_UPDATE}" )
     
-    if len(objects_list) == 1 and not payload.update == settings.KEY_UPDATE:
+    if len(objects_list) == 1 and not update == settings.KEY_UPDATE:
         return DowloadUrl(
             object_name=objects_list[0].object_name, size=objects_list[0].size
         )

@@ -97,4 +97,3 @@ class Payload(BaseModel):
     region: Region
     filter: Optional[Filter] = None
     typeDownload: FileTypes
-    update: str = 'LAPIG'
