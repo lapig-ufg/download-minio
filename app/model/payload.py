@@ -1,9 +1,98 @@
 from enum import Enum
 from typing import List, Optional, Union
+from app.model.models import make_enum
+from app.config import settings
+from pickle import load
+from pydantic import BaseModel, HttpUrl
 
-from pydantic import BaseModel
 
 
+with open(f'{settings.CACHE_MAP}{settings.LISTL_LAYER_OWS}', 'rb') as f:
+    listl_layer_ows = load(f)
+
+EnumValueType = make_enum('EnumValueType',{name:name for name in listl_layer_ows})   
+
+class DowloadUrl(BaseModel):
+    object_name: str
+    size: int
+    host: str = settings.DOWNLOAD_URL
+    buckt: str = settings.BUCKET
+    url: HttpUrl = ''
+
+    def __init__(self, **data) -> None:
+        super().__init__(**data)
+        self.url = f'https://{self.host}/{self.buckt}/{self.object_name}'
+        
+        
+class EnumCountry(str, Enum):
+    BRASIL = 'BRASIL'
+    @property
+    def enum_name(self):
+        return 'country'
+
+
+
+class EnumRegions(str,Enum):
+    NORTE = "NORTE"
+    CENTRO_OESTE = "CENTRO-OESTE"
+    NORDESTE = "NORDESTE"
+    SUDESTE = "SUDESTE"
+    SUL = "SUL"
+    @property
+    def enum_name(self):
+        return 'region'
+
+
+class EnumFronteiras(str,Enum):
+    AMZ_LEGAL = "AMZ_LEGAL"
+    MATOPIBA = "MATOPIBA"
+    @property
+    def enum_name(self):
+        return 'fronteira'
+
+class EnumBiomes(str,Enum):
+    AMAZONIA = "AMAZONIA"
+    CAATINGA = "CAATINGA"
+    CERRADO = "CERRADO"
+    MATA_ATLANTICA = "MATA_ATLANTICA"
+    PAMPA = "PAMPA"
+    PANTANAL = "PANTANAL"
+    @property
+    def enum_name(self):
+        return 'biome'
+
+
+class EnumStates(str, Enum):
+    AC = 'AC'
+    AL = 'AL'
+    AM = 'AM'
+    AP = 'AP'
+    BA = 'BA'
+    CE = 'CE'
+    DF = 'DF'
+    ES = 'ES'
+    GO = 'GO'
+    MA = 'MA'
+    MG = 'MG'
+    MS = 'MS'
+    MT = 'MT'
+    PA = 'PA'
+    PB = 'PB'
+    PE = 'PE'
+    PI = 'PI'
+    PR = 'PR'
+    RJ = 'RJ'
+    RN = 'RN'
+    RO = 'RO'
+    RR = 'RR'
+    RS = 'RS'
+    SC = 'SC'
+    SE = 'SE'
+    SP = 'SP'
+    TO = 'TO'
+    def enum_name(self):
+        return 'state'
+    
 class Origin(BaseModel):
     sourceService: str
     typeOfTMS: str
@@ -67,7 +156,7 @@ class Metadatum(BaseModel):
 
 
 class Layer(BaseModel):
-    valueType: str
+    valueType: EnumValueType
     type: Optional[str]= None
     origin: Optional[Origin]= None
     typeLayer: Optional[str]
@@ -89,7 +178,14 @@ class Layer(BaseModel):
 class Region(BaseModel):
     type: RegionType
     text: Optional[str]
-    value: str
+    value: Union[
+        EnumCountry,
+        EnumRegions,
+        EnumStates,
+        EnumFronteiras,
+        EnumBiomes,
+        int
+        ]
 
 
 class Payload(BaseModel):

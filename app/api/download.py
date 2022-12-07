@@ -3,13 +3,30 @@ from glob import glob
 from zipfile import ZipFile, ZIP_BZIP2
 import subprocess
 from fastapi import APIRouter, HTTPException, Query, Path
-from pydantic import BaseModel, HttpUrl
+
+
+from typing import Union
 
 from app.config import logger, settings
 from app.functions import client_minio
 from app.model.creat_geofile import CreatGeoFile
+from app.model.functions import get_format_valid, is_valid_query
 from app.model.models import GeoFile
-from app.model.payload import Download, FileTypes, Filter, Layer, Payload, Region, RegionType
+from app.model.payload import (
+    Download,
+    FileTypes, 
+    Filter, 
+    Layer, 
+    Payload, 
+    Region, 
+    EnumCountry,
+    EnumRegions,
+    EnumStates,
+    EnumFronteiras,
+    EnumBiomes,
+    EnumValueType,
+    DowloadUrl
+    )
 from app.util.mapfile import get_layer
 from app.util.exceptions import FilterException
 from pymongo import MongoClient
@@ -17,54 +34,96 @@ from pymongo import MongoClient
 router = APIRouter()
 
 
-class DowloadUrl(BaseModel):
-    object_name: str
-    size: int
-    host: str = settings.DOWNLOAD_URL
-    buckt: str = settings.BUCKET
-    url: HttpUrl = ''
-
-    def __init__(self, **data) -> None:
-        super().__init__(**data)
-        self.url = f'https://{self.host}/{self.buckt}/{self.object_name}'
-
-
 @router.post('/', response_description='Retorna um objeto json com a url do download', response_model=DowloadUrl)
 async def geofile(payload: Payload, update:str = Query('Lapig',include_in_schema=False)):
     return start_dowload(payload,update)
 
 
-
-@router.get('/{regionType}/{regionValue}/{fileType}/{valueType}/{valueFilter}', 
+@router.get('/{region}/{fileType}/{layer}', 
             name='Geofile',
             response_description='Retorna um objeto json com a url para download', response_model=DowloadUrl)
 async def get_geofile(
-    regionType:RegionType  = Path(
-        default=None, description="Qual o tipo de região  você quer baixar? "
-    ),
-    regionValue:str = Path(
+    region:Union[
+        EnumCountry,
+        EnumRegions,
+        EnumStates,
+        EnumFronteiras,
+        EnumBiomes,
+        int
+        ] = Path(
         default=None, description="Qual o nome da região  você quer baixar? No caso de cidade(city) use o codigo de municipio do [IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php)"
     ),
     fileType:FileTypes = Path(
         default=None, description="Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]"
     ),
-    valueType:str = Path(
+    layer:EnumValueType = Path(
         default=None, description="Nome da camada que  você quer baixar?"
-    ),
-    valueFilter:str = Path(
-        default=None, description="Filtro que sera usa para baixar camada?"
     ),
     update:str = Query('Lapig',include_in_schema=False)
     ):
     """
     Baixa uma camada do mapserver conforme os parametos a seguir:
 
-    - **regionType**: Qual o tipo de região  você quer baixar? [biome, city, country, rater, region]
-    - **regionValue**: Qual o nome da região  você quer baixar? No caso de cidade(city) use o codigo de municipio do [IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php)
+    - **region**: Qual o nome da região  você quer baixar? No caso de cidade(city) use o codigo de municipio do [IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php)
     - **fileType**: Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]
-    - **valueType**: Nome da camada que  você quer baixar?
-    - **valueFilter**: Filtro que sera usa para baixar camada
+    - **layer**: Nome da camada que  você quer baixar?
+    - **filter**: Filtro que sera usa para baixar camada
     """
+    return url_geofile(region,
+    fileType,
+    layer,
+    '',
+    update)
+
+
+
+@router.get('/{region}/{fileType}/{layer}/{filter}', 
+            name='Geofile',
+            response_description='Retorna um objeto json com a url para download', response_model=DowloadUrl)
+async def get_geofile_filter(
+    region:Union[
+        EnumCountry,
+        EnumRegions,
+        EnumStates,
+        EnumFronteiras,
+        EnumBiomes,
+        int
+        ] = Path(
+        default=None, description="Qual o nome da região  você quer baixar? No caso de cidade(city) use o codigo de municipio do [IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php)"
+    ),
+    fileType:FileTypes = Path(
+        default=None, description="Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]"
+    ),
+    layer:EnumValueType = Path(
+        default=None, description="Nome da camada que  você quer baixar?"
+    ),
+    filter:str = Path(
+        default='', description="Filtro que sera usa para baixar camada?"
+    ),
+    update:str = Query('Lapig',include_in_schema=False)
+    ):
+    """
+    Baixa uma camada do mapserver conforme os parametos a seguir:
+
+    - **region**: Qual o nome da região  você quer baixar? No caso de cidade(city) use o codigo de municipio do [IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php)
+    - **fileType**: Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]
+    - **layer**: Nome da camada que  você quer baixar?
+    - **filter**: Filtro que sera usa para baixar camada
+    """
+    return url_geofile(region,
+    fileType,
+    layer,
+    filter,
+    update)
+    
+    
+def url_geofile(
+    regionValue,
+    fileType,
+    valueType,
+    valueFilter,
+    update
+    ):
     layerTypeName = None
     with MongoClient(settings.MONGODB_URL) as client:
         db = client.ows
@@ -79,7 +138,7 @@ async def get_geofile(
 
     payload = Payload(
             region = Region(
-                type=regionType,
+                type=regionValue.enum_name,
                 value=regionValue.upper()
             ),
             layer= Layer(
@@ -118,17 +177,26 @@ def start_dowload(payload: Payload, update:str):
     except Exception as e:
         logger.exception('Login erro')
         raise HTTPException(500, f'{e}')
-
-    if payload.typeDownload == 'raster':
-        if not valueFilter == '':
-            raster_file, map_type, map_conect, crs = get_layer(valueFilter)
-        else:
-            raster_file, map_type, map_conect, crs = get_layer(
+    
+    if not valueFilter == '':
+        name_layer, map_type, map_conect, crs = get_layer(valueFilter)
+    else:
+        name_layer, map_type, map_conect, crs = get_layer(
                 payload.layer.download.layerTypeName
             )
+        
+    
+    if  not is_valid_query(payload.typeDownload,map_type):
+        raise HTTPException(
+            415,
+            f'Incongruity in the type of data entered, please enter valid data for this layer\n Valid formats {get_format_valid(map_type)}')
 
-        raster_file = raster_file.replace('/STORAGE/catalog/', '')
-        pathFile = f'rater/{raster_file}'
+
+    if payload.typeDownload == 'raster':
+        
+
+        name_layer = name_layer.replace('/STORAGE/catalog/', '')
+        pathFile = f'rater/{name_layer}'
         objects = client.list_objects(
             settings.BUCKET,
             prefix=f'{pathFile}',
@@ -171,7 +239,7 @@ def start_dowload(payload: Payload, update:str):
             result = client.fput_object(
                 settings.BUCKET,
                 f'{pathFile}',
-                f'/storage/catalog/{raster_file}',
+                f'/storage/catalog/{name_layer}',
                 content_type='application/x-geotiff',
             )
             
@@ -204,10 +272,8 @@ def start_dowload(payload: Payload, update:str):
             raise HTTPException(500, 'Erro ao gerar arquivo')
     else:
         try:
-            map_layer, map_type, map_conect, crs = get_layer(
-                payload.layer.download.layerTypeName
-            )
-            sql_layer = map_layer
+            
+            sql_layer = name_layer
             if not 'sqlite' == map_conect:
                 db = map_conect
             else:
