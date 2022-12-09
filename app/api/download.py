@@ -24,7 +24,6 @@ from app.model.payload import (
     EnumStates,
     EnumFronteiras,
     EnumBiomes,
-    EnumValueType,
     DowloadUrl
     )
 from app.util.mapfile import get_layer
@@ -56,7 +55,7 @@ async def get_geofile(
     fileType:FileTypes = Path(
         default=None, description="Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]"
     ),
-    layer:EnumValueType = Path(
+    layer:str = Path(
         default=None, description="Nome da camada que  você quer baixar?"
     ),
     update:str = Query('Lapig',include_in_schema=False)
@@ -72,7 +71,7 @@ async def get_geofile(
     return url_geofile(region,
     fileType,
     layer,
-    '',
+    None,
     update)
 
 
@@ -94,11 +93,11 @@ async def get_geofile_filter(
     fileType:FileTypes = Path(
         default=None, description="Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]"
     ),
-    layer:EnumValueType = Path(
+    layer:str = Path(
         default=None, description="Nome da camada que  você quer baixar?"
     ),
     filter:str = Path(
-        default='', description="Filtro que sera usa para baixar camada?"
+        default=None, description="Filtro que sera usa para baixar camada?"
     ),
     update:str = Query('Lapig',include_in_schema=False)
     ):
@@ -125,16 +124,31 @@ def url_geofile(
     update
     ):
     layerTypeName = None
+    filterLabel = None
+    
     with MongoClient(settings.MONGODB_URL) as client:
         db = client.ows
         tmp = db.layers.find_one({"layertypes.valueType":valueType})
         try:
-            layerTypeName = [x['download']['layerTypeName'] 
-                for x in tmp["layertypes"] 
-                if x["valueType"] == valueType][0]
+            tmp_descriptor = [x for x in tmp["layertypes"] if x["valueType"] == valueType][0]
+            
+            try:
+                filterLabel = tmp_descriptor['filterLabel']
+                filters = [str(x['valueFilter']) for x in tmp_descriptor['filters']]
+            except:
+                filterLabel = None
+                
+            try:
+                layerTypeName = tmp_descriptor['download']['layerTypeName'] 
+            except:
+                layerTypeName = valueType
         except Exception as e:
-            layerTypeName = None
-       
+            logger.exception('ERROR COM MONGO')
+            
+    if filterLabel is not None and valueFilter is None:
+        raise HTTPException(400,f'É obrigatorio informa um filter, use um desses. {filters}')
+    if filterLabel is not None and not valueFilter in filters:
+        raise HTTPException(400,f'Filtro informado não é valido, use um desses. {filters}')
 
     payload = Payload(
             region = Region(
@@ -155,12 +169,7 @@ def url_geofile(
     return start_dowload(payload,update)
 
 
-
-
-
-
 def start_dowload(payload: Payload, update:str):
-
     valueFilter = ''
     try:
         valueFilter = payload.filter.valueFilter
@@ -178,9 +187,9 @@ def start_dowload(payload: Payload, update:str):
         logger.exception('Login erro')
         raise HTTPException(500, f'{e}')
     
-    if not valueFilter == '':
+    try:
         name_layer, map_type, map_conect, crs = get_layer(valueFilter)
-    else:
+    except:
         name_layer, map_type, map_conect, crs = get_layer(
                 payload.layer.download.layerTypeName
             )
