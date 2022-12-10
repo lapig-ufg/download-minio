@@ -6,7 +6,8 @@ from fastapi import APIRouter, HTTPException, Query, Path
 from pydantic import BaseModel, HttpUrl
 
 from app.config import logger, settings
-from app.functions import client_minio
+from app.exceptions import OGR2OGRisRun
+from app.functions import client_minio, process_is_run_by_fileName
 from app.model.creat_geofile import CreatGeoFile
 from app.model.models import GeoFile
 from app.model.payload import Download, FileTypes, Filter, Layer, Payload, Region, RegionType
@@ -306,14 +307,23 @@ def creat_file_postgre(
                     DB_NAME=db['dbname']
                 FILE_STR = f'{tmpdirname}/{fileParam}.gpkg'
                 PG_STR = f"PG:\"dbname='{DB_NAME}' host='{DB_HOST}' port='{DB_PORT}' user='{DB_USER}' password='{DB_PASSWORD}'\" " 
-                ogr2ogr = f'ogr2ogr -f GPKG {FILE_STR} {PG_STR} -sql "{geofile.query()}"'
-                logger.info(ogr2ogr)
-                return_value = subprocess.call(ogr2ogr, shell=True)
-                logger.debug(return_value)
+                logger.debug('to aqui pai')
+                if not process_is_run_by_fileName('ogr2ogr',FILE_STR.split('/')[-1]):
+                    ogr2ogr = f'ogr2ogr -f GPKG {FILE_STR} {PG_STR} -sql "{geofile.query()}"'
+                    logger.info(ogr2ogr)
+                    return_value = subprocess.call(ogr2ogr, shell=True)
+                    logger.debug(return_value)
+                else:
+                    raise OGR2OGRisRun()
             elif payload.typeDownload == 'shp':
                 logger.debug(f'{tmpdirname}/{fileParam}.shp')
                 df, schema = geofile.gpd()
                 df.to_file(f'{tmpdirname}/{fileParam}.shp')
+        except OGR2OGRisRun:
+            raise HTTPException(
+                400,
+                f'ogr2ogr_run',
+            )
         except ValueError as e:
             logger.exception(
                 f'Erro ao Criar arquivo ValueError: {e}'

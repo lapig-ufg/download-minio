@@ -22,20 +22,14 @@ def client_minio():
 
 
 
-def process_is_run_ogr2ogr_by_fileName(fileName):
-
+def process_is_run_by_fileName(name,fileName):
     for proc in psutil.process_iter([
         'cmdline', 
-        'create_time', 
-        'name', 
-        'pid',  
-        'status', 
-        'username'
+        'name'
         ]):
-        details = proc.info
-        if details['name'] == 'ogr2ogr':
-            for detail in details['cmdline']:
+
+        if proc.name() == name:
+            for detail in proc.cmdline():
                 if fileName in detail:
-                    print(fileName)
                     return True
     return False
