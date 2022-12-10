@@ -203,10 +203,19 @@ def start_dowload(payload: Payload, update:str):
             logger.exception('Erro ao salvar dados')
             raise HTTPException(500, 'Erro ao gerar arquivo')
     else:
+        logger.debug(payload.layer.download.layerTypeName)
         try:
             map_layer, map_type, map_conect, crs = get_layer(
                 payload.layer.download.layerTypeName
             )
+        except:
+            logger.warning('Nome passado nao foi achado no filemap')
+        try:
+            logger.debug(payload.layer.valueType)
+            map_layer, map_type, map_conect, crs = get_layer(
+                payload.layer.valueType
+            )
+            map_layer = map_layer.replace('_s100','')
             sql_layer = map_layer
             if not 'sqlite' == map_conect:
                 db = map_conect
@@ -215,7 +224,8 @@ def start_dowload(payload: Payload, update:str):
         except:
             sql_layer = payload.layer.download.layerTypeName
             db = ''
-
+            logger.debug('eu acho que é sql')
+        logger.info(f'Processando map_layer:{map_layer}')
         if isinstance(map_conect, dict):
             return creat_file_postgre(
                 payload,
