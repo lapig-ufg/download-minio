@@ -24,7 +24,7 @@ node {
                     }
         }
         stage('Building Image') {
-            dockerImage = docker.build registryHOMOL + "/$application_name:$BUILD_NUMBER", " -f Dockerfile . --no-cache"
+            dockerImage = docker.build registryhomol + "/$application_name:$BUILD_NUMBER", " -f Dockerfile . --no-cache"
         }
         stage('Push Image to Registry') {
 
@@ -36,13 +36,13 @@ node {
 
             }
         stage('Removing image Locally') {
-            sh "docker rmi $registryHOMOL/$application_name:$BUILD_NUMBER"
-            sh "docker rmi $registryHOMOL/$application_name:latest"
+            sh "docker rmi $registryhomol/$application_name:$BUILD_NUMBER"
+            sh "docker rmi $registryhomol/$application_name:latest"
         }
 
         stage ('Pull imagem on HOMOL') {
         sshagent(credentials : ['KEY_FULL']) {
-            sh "$SERVER_HOMOL_SSH 'docker pull $registryHOMOL/$application_name:latest'"
+            sh "$SERVER_HOMOL_SSH 'docker pull $registryhomol/$application_name:latest'"
                 }
             
         }
