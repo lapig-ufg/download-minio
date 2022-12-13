@@ -42,7 +42,7 @@ node {
 
         stage ('Pull imagem on HOMOL') {
         sshagent(credentials : ['KEY_FULL']) {
-            sh "$SERVER_HOMOL_SSH 'docker pull $registryPROD/$application_name:latest'"
+            sh "$SERVER_HOMOL_SSH 'docker pull $registryHOMOL/$application_name:latest'"
                 }
             
         }
