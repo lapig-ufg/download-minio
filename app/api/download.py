@@ -8,12 +8,14 @@ from fastapi import APIRouter, HTTPException, Query, Path
 from typing import Union
 
 from app.config import logger, settings
-from app.functions import client_minio
+from app.exceptions import OGR2OGRisRun
+from app.functions import client_minio, process_is_run_by_fileName
 from app.model.creat_geofile import CreatGeoFile
 from app.model.functions import get_format_valid, is_valid_query
 from app.model.models import GeoFile
 from app.model.payload import (
     Download,
+    EnumCity,
     FileTypes, 
     Filter, 
     Layer, 
@@ -39,7 +41,7 @@ async def geofile(payload: Payload, update:str = Query('Lapig',include_in_schema
 
 
 @router.get('/{region}/{fileType}/{layer}', 
-            name='Geofile',
+            name='Get Geofile',
             response_description='Retorna um objeto json com a url para download', response_model=DowloadUrl)
 async def get_geofile(
     region:Union[
@@ -66,7 +68,6 @@ async def get_geofile(
     - **region**: Qual o nome da região  você quer baixar? No caso de cidade(city) use o codigo de municipio do [IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php)
     - **fileType**: Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]
     - **layer**: Nome da camada que  você quer baixar?
-    - **filter**: Filtro que sera usa para baixar camada
     """
     return url_geofile(region,
     fileType,
@@ -77,7 +78,7 @@ async def get_geofile(
 
 
 @router.get('/{region}/{fileType}/{layer}/{filter}', 
-            name='Geofile',
+            name='Get Geofile by Filter',
             response_description='Retorna um objeto json com a url para download', response_model=DowloadUrl)
 async def get_geofile_filter(
     region:Union[
@@ -125,9 +126,21 @@ def url_geofile(
     ):
     layerTypeName = None
     filterLabel = None
-    
+    logger.debug(regionValue)
     with MongoClient(settings.MONGODB_URL) as client:
         db = client.ows
+        if isinstance(regionValue,int):
+            if regionValue > 10  and regionValue < 54:
+                db_states = client.validations.states
+                tmp_states = db_states.find_one({"_id":regionValue})
+                logger.debug(f'states {tmp_states["sigla"]}')
+                regionValue = EnumStates(tmp_states['sigla'])
+                logger.debug(regionValue)
+            elif regionValue > 1100010 and regionValue < 5300109: 
+                regionValue = EnumCity(code=regionValue)
+            else:
+                raise HTTPException(400,'filter_number_invalid')
+
         tmp = db.layers.find_one({"layertypes.valueType":valueType})
         try:
             tmp_descriptor = [x for x in tmp["layertypes"] if x["valueType"] == valueType][0]
@@ -149,7 +162,7 @@ def url_geofile(
         raise HTTPException(400,f'É obrigatorio informa um filter, use um desses. {filters}')
     if filterLabel is not None and not valueFilter in filters:
         raise HTTPException(400,f'Filtro informado não é valido, use um desses. {filters}')
-
+    logger.debug(regionValue.enum_name)
     payload = Payload(
             region = Region(
                 type=regionValue.enum_name,
@@ -190,10 +203,28 @@ def start_dowload(payload: Payload, update:str):
     try:
         name_layer, map_type, map_conect, crs = get_layer(valueFilter)
     except:
-        name_layer, map_type, map_conect, crs = get_layer(
-                payload.layer.download.layerTypeName
-            )
-        
+        try:
+            name_layer, map_type, map_conect, crs = get_layer(
+                    payload.layer.download.layerTypeName
+                )
+        except:
+            logger.warning('Nome passado nao foi achado no filemap')
+            try:
+                logger.debug(payload.layer.valueType)
+                map_layer, map_type, map_conect, crs = get_layer(
+                    payload.layer.valueType
+                )
+                map_layer = map_layer.replace('_s100','')
+                sql_layer = map_layer
+                if not 'sqlite' == map_conect:
+                    db = map_conect
+                else:
+                    logger.debug('is sql')
+            except:
+                sql_layer = payload.layer.download.layerTypeName
+                db = ''
+                logger.debug('eu acho que é sql')
+            
     
     if  not is_valid_query(payload.typeDownload,map_type):
         raise HTTPException(
@@ -371,21 +402,37 @@ def creat_file_postgre(
                     DB_NAME=db['dbname']
                 FILE_STR = f'{tmpdirname}/{fileParam}.gpkg'
                 PG_STR = f"PG:\"dbname='{DB_NAME}' host='{DB_HOST}' port='{DB_PORT}' user='{DB_USER}' password='{DB_PASSWORD}'\" " 
-                ogr2ogr = f'ogr2ogr -f GPKG {FILE_STR} {PG_STR} -sql "{geofile.query()}"'
-                logger.info(ogr2ogr)
-                return_value = subprocess.call(ogr2ogr, shell=True)
-                logger.debug(return_value)
+                if not process_is_run_by_fileName('ogr2ogr',FILE_STR.split('/')[-1]):
+                    ogr2ogr = f'ogr2ogr -f GPKG {FILE_STR} {PG_STR} -sql "{geofile.query()}"'
+                    logger.info(ogr2ogr)
+                    return_value = subprocess.call(ogr2ogr, shell=True)
+                    logger.debug(return_value)
+                else:
+                    raise OGR2OGRisRun()
             elif payload.typeDownload == 'shp':
                 logger.debug(f'{tmpdirname}/{fileParam}.shp')
                 df, schema = geofile.gpd()
                 df.to_file(f'{tmpdirname}/{fileParam}.shp')
-        except ValueError as e:
-            logger.exception(
-                f'Erro ao Criar arquivo ValueError: {e}'
-            )
+        except OGR2OGRisRun:
             raise HTTPException(
                 400,
-                f'Erro ao Criar arquivo ValueError: {e}',
+                f'ogr2ogr_run',
+            )
+        except ValueError as e:
+            if str(e) == "Cannot write empty DataFrame to file.":
+                logger.info(f"{e}")
+                raise HTTPException(
+                        400,
+                    'file_empty',
+                    )
+            logger.exception('Valor Error not empty')
+            raise HTTPException(
+                        400,
+                    f'{e}',
+                    )
+        except FilterException as e:
+            raise HTTPException(
+                400, f'{e}'
             )
         except Exception as e:
             logger.exception('Erro ao Criar arquivo ValueError: {e}')

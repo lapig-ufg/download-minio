@@ -1,4 +1,4 @@
-from typing import  List, Union
+from typing import  List, Union,Dict
 
 from fastapi import APIRouter, HTTPException
 from app.config import settings
@@ -30,16 +30,14 @@ router = APIRouter()
 async def get_all_layers():
     return  dateset
 
+
 @router.get(
     '/{layer}/metadata',
-    response_description='Lista as layers',
-    response_model=Union[MapFileLayers,List[MapFileLayers]],
+    response_description='Obetem metadata',
+    response_model=Dict,
 )
-async def get_all_layers(layer):
+async def get_metadata(layer):
     try:
-        result = lpmap[layer]
-        result['name'] = layer
-        result['fileType'] = get_format_valid(result["type"])
-        return result
+        return all_metada[layer]
     except Exception:
         raise HTTPException(404,'Layer invalid')

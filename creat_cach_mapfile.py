@@ -8,7 +8,7 @@ import mappyfile
 
 from app.config import logger, settings
 from app.model.mapfile import MapFileLayers, Metadata
-
+from pymongo import MongoClient
 
 def remove__type__(obj):
     try:
@@ -26,6 +26,55 @@ layer_metata_ows = f'{settings.CACHE_MAP}{settings.LAYER_METATA_OWS}'
 if not os.environ.get('LAPIG_ENV') == 'production' and os.path.exists(file_ows):
     logger.debug('Voce ja tem um mapfile')
 else:
+    logger.info('Lendo description')
+    with MongoClient(settings.MONGODB_URL) as client:
+        db = client.ows
+        tmp = db.layers.find({
+            "layertypes.valueType":{"$exists": True},
+            "layertypes.origin.sourceService": "internal",
+            "_id":{"$ne":"basemaps"},
+            "_id":{"$ne":"basemaps"}
+        
+        })
+        traducao = db.languages.find_one({"_id":"pt"})
+        new_layers = {}
+        lista_layers = []
+        for layers in tmp:
+            layertype = layers['_id']
+            
+            tra_tmp = traducao["layertype"]
+            for obj in layers['layertypes']:
+                layer = obj["valueType"]
+                metadata = {}
+                
+                old_metadata = obj["metadata"]
+                
+                try:
+                    filters = [ f['valueFilter'] for f in obj['filters']]
+                except:
+                    filters = None
+                for name in obj["metadata"]:
+                    try:
+                        if old_metadata[name] == 'translate':
+                            metadata[name] = tra_tmp[layer]["metadata"][name]
+                        else:
+                            metadata[name] = old_metadata[name]
+                    except:
+                        metadata[name] = old_metadata[name]
+                        
+                tmp = {
+                    "layer":layer,
+                    "layertype":layertype,
+                    "metadata":metadata,
+                    'fileType':[x for x in obj['download'] if obj['download'][x] is True]
+                }
+                if not filters is None:
+                    tmp['filters'] = filters
+                new_layers[layer] = tmp
+                lista_layers.append(layer)
+
+
+    logger.info('Lendo mapfile')
     map = {}
     file = mappyfile.open(settings.MAPFILE)['layers']
 
@@ -105,21 +154,7 @@ else:
         pickle.dump(map, f)
 
     with open(listl_layer_ows, 'wb') as f:
-        dateset = sorted(list(set([name for name in map])))
-        pickle.dump(dateset, f)
+        pickle.dump(lista_layers, f)
         
     with open(layer_metata_ows, 'wb') as f:
-        all_metada = [
-            MapFileLayers(
-                name=name,
-                projection = map[name]['projection'],
-                type = map[name]['type'],
-                metadata = Metadata(
-                    ows_title=map[name]['metadata']['ows_title'],
-                    ows_abstract=map[name]['metadata']['ows_abstract'],
-                    gml_exclude_items=map[name]['metadata']['gml_exclude_items'],
-                    gml_include_items=map[name]['metadata']['gml_include_items'],
-                    gml_geometries=map[name]['metadata']['gml_geometries']
-                        )).dict()
-                        for name in map]
-        pickle.dump(all_metada, f)
+        pickle.dump(new_layers, f)

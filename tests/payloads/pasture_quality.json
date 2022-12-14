@@ -494,9 +494,9 @@
     },
     "typeDownload": "csv"
 },
-"pasture_quality_col6_s100_csv_5211800":{
+"pasture_quality_col7_s100_csv_5211800":{
     "layer": {
-        "valueType": "pasture_quality_col6_s100",
+        "valueType": "pasture_quality_col7_s100",
         "type": "layertype",
         "origin": {
             "sourceService": "internal",
@@ -518,7 +518,7 @@
             "shp": false,
             "gpkg": true,
             "raster": false,
-            "layerTypeName": "pasture_quality_col6",
+            "layerTypeName": "pasture_quality_col7",
             "loading": true
         },
         "regionFilter": true,
@@ -671,9 +671,9 @@
     "typeDownload": "csv"
 },
 
-"pasture_quality_col6_s100_gpkg_5211800":{
+"pasture_quality_col7_s100_gpkg_5211800":{
     "layer": {
-        "valueType": "pasture_quality_col6_s100",
+        "valueType": "pasture_quality_col7_s100",
         "type": "layertype",
         "origin": {
             "sourceService": "internal",
@@ -695,7 +695,7 @@
             "shp": false,
             "gpkg": true,
             "raster": false,
-            "layerTypeName": "pasture_quality_col6",
+            "layerTypeName": "pasture_quality_col7",
             "loading": true
         },
         "regionFilter": true,

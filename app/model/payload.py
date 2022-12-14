@@ -61,6 +61,18 @@ class EnumBiomes(str,Enum):
     def enum_name(self):
         return 'biome'
 
+class EnumCity(BaseModel):
+    code: int
+    
+    def __repr__(self):
+        return str(self.code)
+    
+    def upper(self):
+        return str(self.code)
+    
+    @property
+    def enum_name(self):
+        return 'city'
 
 class EnumStates(str, Enum):
     AC = 'AC'
@@ -90,6 +102,7 @@ class EnumStates(str, Enum):
     SE = 'SE'
     SP = 'SP'
     TO = 'TO'
+    @property
     def enum_name(self):
         return 'state'
     
@@ -184,7 +197,8 @@ class Region(BaseModel):
         EnumStates,
         EnumFronteiras,
         EnumBiomes,
-        int
+        EnumCity,
+        str
         ]
 
 
