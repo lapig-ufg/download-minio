@@ -17,12 +17,28 @@ class DowloadUrl(BaseModel):
     size: int
     host: str = settings.DOWNLOAD_URL
     buckt: str = settings.BUCKET
+    file_name:str = ''
+    content_type:str = ''
     url: HttpUrl = ''
 
     def __init__(self, **data) -> None:
+        extensions = {
+            'csv': 'text/csv',
+            'gpkg': 'application/geopackage+sqlite3',
+            'shp': 'application/octet-stream',
+            'tif': 'application/x-geotiff',
+            'tiff': 'application/x-geotiff',
+            'zip': 'application/zip',
+        }
         super().__init__(**data)
         self.url = f'https://{self.host}/{self.buckt}/{self.object_name}'
-        
+        self.file_name = self.object_name.split('/')[-1]
+        try:
+            self.content_type = extensions[
+                self.object_name.split('/')[-1].split('.')[-1]
+            ]
+        except:
+            self.content_type = 'application/octet-stream'
         
 class EnumCountry(str, Enum):
     BRASIL = 'BRASIL'

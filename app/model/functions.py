@@ -18,7 +18,7 @@ def remove_accents(input_str):
 
 
 def is_valid_query(ptype,ftype):
-    geom = ['LINE', 'POINT', 'POLYGON', 'CSV', 'SHP', 'GKPG']
+    geom = ['LINE', 'POINT', 'POLYGON', 'CSV', 'SHP', 'GPKG']
     raster = ['RASTER','TIFF','TIF']
     if ptype.upper() in geom and ftype.upper() in geom:
         return True

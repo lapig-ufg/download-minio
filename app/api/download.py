@@ -3,6 +3,7 @@ from glob import glob
 from zipfile import ZipFile, ZIP_BZIP2
 import subprocess
 from fastapi import APIRouter, HTTPException, Query, Path
+from fastapi.responses import RedirectResponse
 
 
 from typing import Union
@@ -36,8 +37,10 @@ router = APIRouter()
 
 
 @router.post('/', response_description='Retorna um objeto json com a url do download', response_model=DowloadUrl)
-async def geofile(payload: Payload, update:str = Query('Lapig',include_in_schema=False)):
-    return start_dowload(payload,update)
+async def geofile(payload: Payload,
+                  update:str = Query('Lapig',include_in_schema=False),
+                  direct:bool = Query(False,include_in_schema=False)):
+    return start_dowload(payload,update,direct)
 
 
 @router.get('/{region}/{fileType}/{layer}', 
@@ -60,7 +63,8 @@ async def get_geofile(
     layer:str = Path(
         default=None, description="Nome da camada que  você quer baixar?"
     ),
-    update:str = Query('Lapig',include_in_schema=False)
+    update:str = Query('Lapig',include_in_schema=False),
+    direct:bool = Query(False,include_in_schema=False)
     ):
     """
     Baixa uma camada do mapserver conforme os parametos a seguir:
@@ -73,7 +77,8 @@ async def get_geofile(
     fileType,
     layer,
     None,
-    update)
+    update,
+    direct)
 
 
 
@@ -100,7 +105,8 @@ async def get_geofile_filter(
     filter:str = Path(
         default=None, description="Filtro que sera usa para baixar camada?"
     ),
-    update:str = Query('Lapig',include_in_schema=False)
+    update:str = Query('Lapig',include_in_schema=False),
+    direct:bool = Query(False,include_in_schema=False)
     ):
     """
     Baixa uma camada do mapserver conforme os parametos a seguir:
@@ -114,7 +120,9 @@ async def get_geofile_filter(
     fileType,
     layer,
     filter,
-    update)
+    update,
+    direct
+    )
     
     
 def url_geofile(
@@ -122,7 +130,8 @@ def url_geofile(
     fileType,
     valueType,
     valueFilter,
-    update
+    update,
+    direct=False
     ):
     layerTypeName = None
     filterLabel = None
@@ -176,13 +185,12 @@ def url_geofile(
             filter = Filter(
                 valueFilter=valueFilter
             ),
-            update=update
         )
     logger.debug(payload)
-    return start_dowload(payload,update)
+    return start_dowload(payload,update,direct)
 
 
-def start_dowload(payload: Payload, update:str):
+def start_dowload(payload: Payload, update:str,direct:bool):
     valueFilter = ''
     try:
         valueFilter = payload.filter.valueFilter
@@ -211,11 +219,11 @@ def start_dowload(payload: Payload, update:str):
             logger.warning('Nome passado nao foi achado no filemap')
             try:
                 logger.debug(payload.layer.valueType)
-                map_layer, map_type, map_conect, crs = get_layer(
+                name_layer, map_type, map_conect, crs = get_layer(
                     payload.layer.valueType
                 )
-                map_layer = map_layer.replace('_s100','')
-                sql_layer = map_layer
+                name_layer = name_layer.replace('_s100','')
+                sql_layer = name_layer
                 if not 'sqlite' == map_conect:
                     db = map_conect
                 else:
@@ -225,7 +233,7 @@ def start_dowload(payload: Payload, update:str):
                 db = ''
                 logger.debug('eu acho que é sql')
             
-    
+    logger.debug(f"name_layer:{name_layer} map_type:{map_type}" )
     if  not is_valid_query(payload.typeDownload,map_type):
         raise HTTPException(
             415,
@@ -266,9 +274,7 @@ def start_dowload(payload: Payload, update:str):
     logger.debug(f"{len(objects_list)} , {update}, {settings.KEY_UPDATE}" )
     
     if len(objects_list) == 1 and not update == settings.KEY_UPDATE:
-        return DowloadUrl(
-            object_name=objects_list[0].object_name, size=objects_list[0].size
-        )
+        return responce_dowload(objects_list,direct) 
 
     elif len(objects_list) > 1:
         logger.exception('ERROR TEM MAIS DE UM OBJECT')
@@ -303,10 +309,7 @@ def start_dowload(payload: Payload, update:str):
         )
         objects_list = list(objects)
         if len(objects_list) == 1 :
-            return DowloadUrl(
-                object_name=objects_list[0].object_name,
-                size=objects_list[0].size,
-            )
+            return responce_dowload(objects_list,direct) 
         else:
             logger.exception('Erro ao salvar dados')
             raise HTTPException(500, 'Erro ao gerar arquivo')
@@ -332,13 +335,14 @@ def start_dowload(payload: Payload, update:str):
                 fileParam,
                 db,
                 crs,
+                direct
             )
         else:
             return HTTPException(500,'PayLoad')
 
 
 def creat_file_postgre(
-    payload, pathFile, region, sql_layer, valueFilter, fileParam, db, crs
+    payload, pathFile, region, sql_layer, valueFilter, fileParam, db, crs, direct
 ):
     try:
         geofile = CreatGeoFile(
@@ -402,6 +406,7 @@ def creat_file_postgre(
                     DB_NAME=db['dbname']
                 FILE_STR = f'{tmpdirname}/{fileParam}.gpkg'
                 PG_STR = f"PG:\"dbname='{DB_NAME}' host='{DB_HOST}' port='{DB_PORT}' user='{DB_USER}' password='{DB_PASSWORD}'\" " 
+                logger.info(f'OGR2OGR {FILE_STR}')
                 if not process_is_run_by_fileName('ogr2ogr',FILE_STR.split('/')[-1]):
                     ogr2ogr = f'ogr2ogr -f GPKG {FILE_STR} {PG_STR} -sql "{geofile.query()}"'
                     logger.info(ogr2ogr)
@@ -479,10 +484,19 @@ def creat_file_postgre(
         )
         objects_list = list(objects)
         if len(objects_list) == 1:
-            return DowloadUrl(
-                object_name=objects_list[0].object_name,
-                size=objects_list[0].size,
-            )
+            return responce_dowload(objects_list,direct) 
         else:
             logger.exception('Erro ao salvar dados')
             raise HTTPException(500, 'Erro ao gerar arquivo')
+
+def responce_dowload(obj,direct):
+    tmp_dowloadUrl = DowloadUrl(
+                object_name=obj[0].object_name, size=obj[0].size
+            )
+    if direct:
+        return RedirectResponse(tmp_dowloadUrl.url,307)
+           
+    else:
+        return tmp_dowloadUrl
+
+
