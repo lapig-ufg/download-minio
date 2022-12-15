@@ -45,7 +45,7 @@ WORKDIR /APP
 
 # Clone app and npm install on server
 ENV URL_TO_APPLICATION_GITHUB="https://github.com/lapig-ufg/download-minio.git"
-ENV BRANCH="main"
+ENV BRANCH="develop"
 
 RUN apt-get update && \
     apt-get install -y git make libpq-dev libpq5 && \

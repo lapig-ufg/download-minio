@@ -20,8 +20,6 @@ def client_minio():
     except Exception as e:
         raise MinioAuthError
 
-
-
 def process_is_run_by_fileName(name,fileName):
     for proc in psutil.process_iter([
         'cmdline', 

@@ -3,14 +3,32 @@ from glob import glob
 from zipfile import ZipFile, ZIP_BZIP2
 import subprocess
 from fastapi import APIRouter, HTTPException, Query, Path
-from pydantic import BaseModel, HttpUrl
+from fastapi.responses import RedirectResponse
+
+
+from typing import Union
 
 from app.config import logger, settings
 from app.exceptions import OGR2OGRisRun
 from app.functions import client_minio, process_is_run_by_fileName
 from app.model.creat_geofile import CreatGeoFile
+from app.model.functions import get_format_valid, is_valid_query
 from app.model.models import GeoFile
-from app.model.payload import Download, FileTypes, Filter, Layer, Payload, Region, RegionType
+from app.model.payload import (
+    Download,
+    EnumCity,
+    FileTypes, 
+    Filter, 
+    Layer, 
+    Payload, 
+    Region, 
+    EnumCountry,
+    EnumRegions,
+    EnumStates,
+    EnumFronteiras,
+    EnumBiomes,
+    DowloadUrl
+    )
 from app.util.mapfile import get_layer
 from app.util.exceptions import FilterException
 from pymongo import MongoClient
@@ -18,69 +36,145 @@ from pymongo import MongoClient
 router = APIRouter()
 
 
-class DowloadUrl(BaseModel):
-    object_name: str
-    size: int
-    host: str = settings.DOWNLOAD_URL
-    buckt: str = settings.BUCKET
-    url: HttpUrl = ''
-
-    def __init__(self, **data) -> None:
-        super().__init__(**data)
-        self.url = f'https://{self.host}/{self.buckt}/{self.object_name}'
-
-
 @router.post('/', response_description='Retorna um objeto json com a url do download', response_model=DowloadUrl)
-async def geofile(payload: Payload, update:str = Query('Lapig',include_in_schema=False)):
-    return start_dowload(payload,update)
+async def geofile(payload: Payload,
+                  update:str = Query('Lapig',include_in_schema=False),
+                  direct:bool = Query(False,include_in_schema=False)):
+    return start_dowload(payload,update,direct)
 
 
-
-@router.get('/{regionType}/{regionValue}/{fileType}/{valueType}/{valueFilter}', 
-            name='Geofile',
+@router.get('/{region}/{fileType}/{layer}', 
+            name='Get Geofile',
             response_description='Retorna um objeto json com a url para download', response_model=DowloadUrl)
 async def get_geofile(
-    regionType:RegionType  = Path(
-        default=None, description="Qual o tipo de região  você quer baixar? "
-    ),
-    regionValue:str = Path(
+    region:Union[
+        EnumCountry,
+        EnumRegions,
+        EnumStates,
+        EnumFronteiras,
+        EnumBiomes,
+        int
+        ] = Path(
         default=None, description="Qual o nome da região  você quer baixar? No caso de cidade(city) use o codigo de municipio do [IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php)"
     ),
     fileType:FileTypes = Path(
         default=None, description="Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]"
     ),
-    valueType:str = Path(
+    layer:str = Path(
         default=None, description="Nome da camada que  você quer baixar?"
     ),
-    valueFilter:str = Path(
-        default=None, description="Filtro que sera usa para baixar camada?"
-    ),
-    update:str = Query('Lapig',include_in_schema=False)
+    update:str = Query('Lapig',include_in_schema=False),
+    direct:bool = Query(False,include_in_schema=False)
     ):
     """
     Baixa uma camada do mapserver conforme os parametos a seguir:
 
-    - **regionType**: Qual o tipo de região  você quer baixar? [biome, city, country, rater, region]
-    - **regionValue**: Qual o nome da região  você quer baixar? No caso de cidade(city) use o codigo de municipio do [IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php)
+    - **region**: Qual o nome da região  você quer baixar? No caso de cidade(city) use o codigo de municipio do [IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php)
     - **fileType**: Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]
-    - **valueType**: Nome da camada que  você quer baixar?
-    - **valueFilter**: Filtro que sera usa para baixar camada
+    - **layer**: Nome da camada que  você quer baixar?
     """
+    return url_geofile(region,
+    fileType,
+    layer,
+    None,
+    update,
+    direct)
+
+
+
+@router.get('/{region}/{fileType}/{layer}/{filter}', 
+            name='Get Geofile by Filter',
+            response_description='Retorna um objeto json com a url para download', response_model=DowloadUrl)
+async def get_geofile_filter(
+    region:Union[
+        EnumCountry,
+        EnumRegions,
+        EnumStates,
+        EnumFronteiras,
+        EnumBiomes,
+        int
+        ] = Path(
+        default=None, description="Qual o nome da região  você quer baixar? No caso de cidade(city) use o codigo de municipio do [IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php)"
+    ),
+    fileType:FileTypes = Path(
+        default=None, description="Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]"
+    ),
+    layer:str = Path(
+        default=None, description="Nome da camada que  você quer baixar?"
+    ),
+    filter:str = Path(
+        default=None, description="Filtro que sera usa para baixar camada?"
+    ),
+    update:str = Query('Lapig',include_in_schema=False),
+    direct:bool = Query(False,include_in_schema=False)
+    ):
+    """
+    Baixa uma camada do mapserver conforme os parametos a seguir:
+
+    - **region**: Qual o nome da região  você quer baixar? No caso de cidade(city) use o codigo de municipio do [IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php)
+    - **fileType**: Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]
+    - **layer**: Nome da camada que  você quer baixar?
+    - **filter**: Filtro que sera usa para baixar camada
+    """
+    return url_geofile(region,
+    fileType,
+    layer,
+    filter,
+    update,
+    direct
+    )
+    
+    
+def url_geofile(
+    regionValue,
+    fileType,
+    valueType,
+    valueFilter,
+    update,
+    direct=False
+    ):
     layerTypeName = None
+    filterLabel = None
+    logger.debug(regionValue)
     with MongoClient(settings.MONGODB_URL) as client:
         db = client.ows
+        if isinstance(regionValue,int):
+            if regionValue > 10  and regionValue < 54:
+                db_states = client.validations.states
+                tmp_states = db_states.find_one({"_id":regionValue})
+                logger.debug(f'states {tmp_states["sigla"]}')
+                regionValue = EnumStates(tmp_states['sigla'])
+                logger.debug(regionValue)
+            elif regionValue > 1100010 and regionValue < 5300109: 
+                regionValue = EnumCity(code=regionValue)
+            else:
+                raise HTTPException(400,'filter_number_invalid')
+
         tmp = db.layers.find_one({"layertypes.valueType":valueType})
         try:
-            layerTypeName = [x['download']['layerTypeName'] 
-                for x in tmp["layertypes"] 
-                if x["valueType"] == valueType][0]
+            tmp_descriptor = [x for x in tmp["layertypes"] if x["valueType"] == valueType][0]
+            
+            try:
+                filterLabel = tmp_descriptor['filterLabel']
+                filters = [str(x['valueFilter']) for x in tmp_descriptor['filters']]
+            except:
+                filterLabel = None
+                
+            try:
+                layerTypeName = tmp_descriptor['download']['layerTypeName'] 
+            except:
+                layerTypeName = valueType
         except Exception as e:
-            layerTypeName = None
-       
-
+            logger.exception('ERROR COM MONGO')
+            
+    if filterLabel is not None and valueFilter is None:
+        raise HTTPException(400,f'É obrigatorio informa um filter, use um desses. {filters}')
+    if filterLabel is not None and not valueFilter in filters:
+        raise HTTPException(400,f'Filtro informado não é valido, use um desses. {filters}')
+    logger.debug(regionValue.enum_name)
     payload = Payload(
             region = Region(
-                type=regionType,
+                type=regionValue.enum_name,
                 value=regionValue.upper()
             ),
             layer= Layer(
@@ -91,18 +185,12 @@ async def get_geofile(
             filter = Filter(
                 valueFilter=valueFilter
             ),
-            update=update
         )
     logger.debug(payload)
-    return start_dowload(payload,update)
+    return start_dowload(payload,update,direct)
 
 
-
-
-
-
-def start_dowload(payload: Payload, update:str):
-
+def start_dowload(payload: Payload, update:str,direct:bool):
     valueFilter = ''
     try:
         valueFilter = payload.filter.valueFilter
@@ -119,17 +207,44 @@ def start_dowload(payload: Payload, update:str):
     except Exception as e:
         logger.exception('Login erro')
         raise HTTPException(500, f'{e}')
+    
+    try:
+        name_layer, map_type, map_conect, crs = get_layer(valueFilter)
+    except:
+        try:
+            name_layer, map_type, map_conect, crs = get_layer(
+                    payload.layer.download.layerTypeName
+                )
+        except:
+            logger.warning('Nome passado nao foi achado no filemap')
+            try:
+                logger.debug(payload.layer.valueType)
+                name_layer, map_type, map_conect, crs = get_layer(
+                    payload.layer.valueType
+                )
+                name_layer = name_layer.replace('_s100','')
+                sql_layer = name_layer
+                if not 'sqlite' == map_conect:
+                    db = map_conect
+                else:
+                    logger.debug('is sql')
+            except:
+                sql_layer = payload.layer.download.layerTypeName
+                db = ''
+                logger.debug('eu acho que é sql')
+            
+    logger.debug(f"name_layer:{name_layer} map_type:{map_type}" )
+    if  not is_valid_query(payload.typeDownload,map_type):
+        raise HTTPException(
+            415,
+            f'Incongruity in the type of data entered, please enter valid data for this layer\n Valid formats {get_format_valid(map_type)}')
+
 
     if payload.typeDownload == 'raster':
-        if not valueFilter == '':
-            raster_file, map_type, map_conect, crs = get_layer(valueFilter)
-        else:
-            raster_file, map_type, map_conect, crs = get_layer(
-                payload.layer.download.layerTypeName
-            )
+        
 
-        raster_file = raster_file.replace('/STORAGE/catalog/', '')
-        pathFile = f'rater/{raster_file}'
+        name_layer = name_layer.replace('/STORAGE/catalog/', '')
+        pathFile = f'rater/{name_layer}'
         objects = client.list_objects(
             settings.BUCKET,
             prefix=f'{pathFile}',
@@ -159,9 +274,7 @@ def start_dowload(payload: Payload, update:str):
     logger.debug(f"{len(objects_list)} , {update}, {settings.KEY_UPDATE}" )
     
     if len(objects_list) == 1 and not update == settings.KEY_UPDATE:
-        return DowloadUrl(
-            object_name=objects_list[0].object_name, size=objects_list[0].size
-        )
+        return responce_dowload(objects_list,direct) 
 
     elif len(objects_list) > 1:
         logger.exception('ERROR TEM MAIS DE UM OBJECT')
@@ -172,7 +285,7 @@ def start_dowload(payload: Payload, update:str):
             result = client.fput_object(
                 settings.BUCKET,
                 f'{pathFile}',
-                f'/storage/catalog/{raster_file}',
+                f'/storage/catalog/{name_layer}',
                 content_type='application/x-geotiff',
             )
             
@@ -196,28 +309,15 @@ def start_dowload(payload: Payload, update:str):
         )
         objects_list = list(objects)
         if len(objects_list) == 1 :
-            return DowloadUrl(
-                object_name=objects_list[0].object_name,
-                size=objects_list[0].size,
-            )
+            return responce_dowload(objects_list,direct) 
         else:
             logger.exception('Erro ao salvar dados')
             raise HTTPException(500, 'Erro ao gerar arquivo')
     else:
         logger.debug(payload.layer.download.layerTypeName)
         try:
-            map_layer, map_type, map_conect, crs = get_layer(
-                payload.layer.download.layerTypeName
-            )
-        except:
-            logger.warning('Nome passado nao foi achado no filemap')
-        try:
-            logger.debug(payload.layer.valueType)
-            map_layer, map_type, map_conect, crs = get_layer(
-                payload.layer.valueType
-            )
-            map_layer = map_layer.replace('_s100','')
-            sql_layer = map_layer
+            
+            sql_layer = name_layer
             if not 'sqlite' == map_conect:
                 db = map_conect
             else:
@@ -237,13 +337,14 @@ def start_dowload(payload: Payload, update:str):
                 fileParam,
                 db,
                 crs,
+                direct
             )
         else:
             return HTTPException(500,'PayLoad')
 
 
 def creat_file_postgre(
-    payload, pathFile, region, sql_layer, valueFilter, fileParam, db, crs
+    payload, pathFile, region, sql_layer, valueFilter, fileParam, db, crs, direct
 ):
     try:
         geofile = CreatGeoFile(
@@ -307,7 +408,7 @@ def creat_file_postgre(
                     DB_NAME=db['dbname']
                 FILE_STR = f'{tmpdirname}/{fileParam}.gpkg'
                 PG_STR = f"PG:\"dbname='{DB_NAME}' host='{DB_HOST}' port='{DB_PORT}' user='{DB_USER}' password='{DB_PASSWORD}'\" " 
-                logger.debug('to aqui pai')
+                logger.info(f'OGR2OGR {FILE_STR}')
                 if not process_is_run_by_fileName('ogr2ogr',FILE_STR.split('/')[-1]):
                     ogr2ogr = f'ogr2ogr -f GPKG {FILE_STR} {PG_STR} -sql "{geofile.query()}"'
                     logger.info(ogr2ogr)
@@ -325,12 +426,20 @@ def creat_file_postgre(
                 f'ogr2ogr_run',
             )
         except ValueError as e:
-            logger.exception(
-                f'Erro ao Criar arquivo ValueError: {e}'
-            )
+            if str(e) == "Cannot write empty DataFrame to file.":
+                logger.info(f"{e}")
+                raise HTTPException(
+                        400,
+                    'file_empty',
+                    )
+            logger.exception('Valor Error not empty')
             raise HTTPException(
-                400,
-                f'Erro ao Criar arquivo ValueError: {e}',
+                        400,
+                    f'{e}',
+                    )
+        except FilterException as e:
+            raise HTTPException(
+                400, f'{e}'
             )
         except Exception as e:
             logger.exception('Erro ao Criar arquivo ValueError: {e}')
@@ -377,10 +486,19 @@ def creat_file_postgre(
         )
         objects_list = list(objects)
         if len(objects_list) == 1:
-            return DowloadUrl(
-                object_name=objects_list[0].object_name,
-                size=objects_list[0].size,
-            )
+            return responce_dowload(objects_list,direct) 
         else:
             logger.exception('Erro ao salvar dados')
             raise HTTPException(500, 'Erro ao gerar arquivo')
+
+def responce_dowload(obj,direct):
+    tmp_dowloadUrl = DowloadUrl(
+                object_name=obj[0].object_name, size=obj[0].size
+            )
+    if direct:
+        return RedirectResponse(tmp_dowloadUrl.url,307)
+           
+    else:
+        return tmp_dowloadUrl
+
+

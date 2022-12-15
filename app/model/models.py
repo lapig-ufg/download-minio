@@ -10,6 +10,19 @@ from app.config import logger, settings
 from app.db import MongoModel, PyObjectId
 
 
+def make_enum(name, values):
+    _k = _v = None
+    class TheEnum(str, Enum):
+        nonlocal _k, _v
+        for _k, _v in values.items():
+            try:
+                locals()[_k] = _v
+            except:
+                logger.exception('Make enum')
+    TheEnum.__name__ = name
+    return TheEnum  
+
+
 class GeoFile:
     def __init__(self, path_name):
 
