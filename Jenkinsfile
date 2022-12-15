@@ -4,11 +4,11 @@ node {
     def application_name= "download-minio"
     
         stage('Checkout') {
-            git branch: 'develop',
+            git branch: 'main',
             url: 'https://github.com/lapig-ufg/download-minio.git'
         }
         stage('Validate') {
-            sh 'git pull origin develop'
+            sh 'git pull origin main'
 
         }
         stage('SonarQube analysis') {
