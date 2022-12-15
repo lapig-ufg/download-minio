@@ -326,7 +326,7 @@ def start_dowload(payload: Payload, update:str,direct:bool):
             sql_layer = payload.layer.download.layerTypeName
             db = ''
             logger.debug('eu acho que é sql')
-        logger.info(f'Processando map_layer:{map_layer}')
+        logger.info(f'Processando map_layer:{name_layer}')
         if isinstance(map_conect, dict):
             return creat_file_postgre(
                 payload,
