@@ -8,9 +8,12 @@ MINIO_PASSWORD = 'passadmin'
 MINIO_PORT = 9000
 BUCKET = 'ows'
 
+#Cach do mapserver
 MAPFILE = '/mnt/tmpfs/ows_runtime.map'
 CACHE_MAP = 'app/data/'
 FILE_MAP_CACH = 'ows.map.cache.lgobj'
+LISTL_LAYER_OWS = 'listl_layer_ows.lgobj'
+LAYER_METATA_OWS =  'layer_metata_ows.lgobj'
 
 
 DB_USER = 'user'
