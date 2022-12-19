@@ -15,7 +15,7 @@ router = APIRouter()
 
 @router.get(
     '/{region}/{fileType}/{layer}',
-    name='Get Timeseri Geofile',
+    name='Get Time Series Geofile',
     response_description='Retorna um txt com os link para Download',
 )
 async def get_geofile(
@@ -55,8 +55,11 @@ async def get_geofile(
             if regionValue > 10 and regionValue < 54:
                 db_states = client.validations.states
                 tmp_states = db_states.find_one({'_id': regionValue})
-                logger.debug(f'states {tmp_states["sigla"]}')
-                regionValue = EnumStates(tmp_states['sigla'])
+                try:
+                    logger.debug(f'states {tmp_states["sigla"]}')
+                    regionValue = EnumStates(tmp_states['sigla'])
+                except:
+                    raise HTTPException(400, 'invalid_region')
                 logger.debug(regionValue)
             elif regionValue > 1100010 and regionValue < 5300109:
                 regionValue = EnumCity(code=regionValue)
