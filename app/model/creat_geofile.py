@@ -3,8 +3,8 @@ import pandas as pd
 
 from app.config import logger, settings
 from app.db import geodb
-from app.util.mapfile import get_schema
 from app.util.exceptions import FilterException
+from app.util.mapfile import get_schema
 
 
 def normalize_col(col):
@@ -12,6 +12,7 @@ def normalize_col(col):
     if col in SQL or ' ' in col:
         return f"'{col}'"
     return col
+
 
 from pymongo import MongoClient
 
@@ -57,17 +58,21 @@ class CreatGeoFile:
             self.geom = [name for name in cols if name in type_geom][0]
         except:
             raise ValueError('Geometry has not been defined')
-        remove_cols =  ['gid', 'objectid', 'index']
+        remove_cols = ['gid', 'objectid', 'index']
 
         with MongoClient(settings.MONGODB_URL) as client:
             db = client.ows
-            personalized_query = db.queries.find_one({"sql_layer":self.sql_layer})
+            personalized_query = db.queries.find_one(
+                {'sql_layer': self.sql_layer}
+            )
             try:
-                self.rename = [f"{normalize_col(key)} as {normalize_col(value)}" 
-                               for key, value in zip(
-                    personalized_query['columns'],
-                    personalized_query['columns_rename'])
-                               ]           
+                self.rename = [
+                    f'{normalize_col(key)} as {normalize_col(value)}'
+                    for key, value in zip(
+                        personalized_query['columns'],
+                        personalized_query['columns_rename'],
+                    )
+                ]
             except:
                 logger.debug(f'personalized_query: {personalized_query}')
 
@@ -78,28 +83,30 @@ class CreatGeoFile:
 
         if not self.rename is False:
             if self.fileType == 'csv':
-                logger.debug(self.rename )
-                self.column_name = ', '.join(self.rename )
+                logger.debug(self.rename)
+                self.column_name = ', '.join(self.rename)
             else:
-                self.column_name = ', '.join([
-                    *self.rename,
-                    self.geom ])
+                self.column_name = ', '.join([*self.rename, self.geom])
 
         else:
             logger.debug('nao personalizado')
             if self.fileType == 'csv':
                 self.column_name = ', '.join(
                     [
-                        normalize_col(name) 
-                        for name in cols if not name.lower() in [*type_geom, *remove_cols]
-                ] )
+                        normalize_col(name)
+                        for name in cols
+                        if not name.lower() in [*type_geom, *remove_cols]
+                    ]
+                )
             else:
                 self.column_name = ', '.join(
                     [
-                        normalize_col(name) 
-                        for name in cols if not name.lower() in remove_cols
-                ])
-            
+                        normalize_col(name)
+                        for name in cols
+                        if not name.lower() in remove_cols
+                    ]
+                )
+
     def where(self, msfilter):
         return ' AND '.join(msfilter)
 
@@ -107,15 +114,26 @@ class CreatGeoFile:
         region = self.regiao.lower()
         value = self.value.lower()
         query = {
-            
-            'city':{'col':'cd_geocmu' ,'query':f" UPPER(unaccent(cd_geocmu)) = UPPER(unaccent('{value}'))"},
-            'state': {'col':'uf' ,'query':f" UPPER(unaccent(uf)) = UPPER(unaccent('{value}'))"},
-            'biome': {'col':'bioma' ,'query':f" UPPER(unaccent(bioma)) = UPPER(unaccent('{value}'))"},
+            'city': {
+                'col': 'cd_geocmu',
+                'query': f" UPPER(unaccent(cd_geocmu)) = UPPER(unaccent('{value}'))",
+            },
+            'state': {
+                'col': 'uf',
+                'query': f" UPPER(unaccent(uf)) = UPPER(unaccent('{value}'))",
+            },
+            'biome': {
+                'col': 'bioma',
+                'query': f" UPPER(unaccent(bioma)) = UPPER(unaccent('{value}'))",
+            },
             'fronteira': {
                 'amaz_legal': 'amaz_legal = 1',
                 'matopiba': 'matopiba = 1',
             },
-            'region': {'col':'regiao' ,'query':f" UPPER(unaccent(regiao)) = UPPER(unaccent('{value}'))"},
+            'region': {
+                'col': 'regiao',
+                'query': f" UPPER(unaccent(regiao)) = UPPER(unaccent('{value}'))",
+            },
         }
         try:
             if region == 'country':
@@ -143,19 +161,19 @@ class CreatGeoFile:
         if not tmp_region == '':
             list_filter.append(tmp_region)
         if not self.query_personality is False:
-            return self.query_personality.replace('{{WHERE}}',self.where(list_filter))
+            return self.query_personality.replace(
+                '{{WHERE}}', self.where(list_filter)
+            )
         if len(list_filter) == 0:
-            return f"SELECT {self.column_name} FROM {self.sql_layer}"
-        return f"SELECT {self.column_name} FROM {self.sql_layer} WHERE {self.where(list_filter)}"
+            return f'SELECT {self.column_name} FROM {self.sql_layer}'
+        return f'SELECT {self.column_name} FROM {self.sql_layer} WHERE {self.where(list_filter)}'
 
     def gpd(self):
         con = geodb(self.db)
         query = self.query()
         logger.debug(query)
         if self.fileType in ['shp', 'gpkg']:
-            df = gpd.GeoDataFrame.from_postgis(
-                query, con, geom_col=self.geom
-            )
+            df = gpd.GeoDataFrame.from_postgis(query, con, geom_col=self.geom)
             schema_df = gpd.io.file.infer_schema(df)
             for i in self.schema:
                 if self.schema[i] in ['date']:
@@ -170,4 +188,3 @@ class CreatGeoFile:
             schema_df = ''
         con.close()
         return (df, None)
-

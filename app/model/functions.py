@@ -1,5 +1,6 @@
-from hashlib import shake_256
 import unicodedata
+from hashlib import shake_256
+
 from app.db import ObjectId
 
 
@@ -17,20 +18,20 @@ def remove_accents(input_str):
     return only_ascii.decode('utf-8')
 
 
-def is_valid_query(ptype,ftype):
+def is_valid_query(ptype, ftype):
     geom = ['LINE', 'POINT', 'POLYGON', 'CSV', 'SHP', 'GPKG']
-    raster = ['RASTER','TIFF','TIF']
+    raster = ['RASTER', 'TIFF', 'TIF']
     if ptype.upper() in geom and ftype.upper() in geom:
         return True
     if ptype.upper() in raster and ftype.upper() in raster:
         return True
     return False
 
+
 def get_format_valid(ftype):
     fgeom = ['LINE', 'POINT', 'POLYGON']
     fraster = ['RASTER']
     if ftype.upper() in fgeom:
-        return ['csv', 'shp','gpkg']
+        return ['csv', 'shp', 'gpkg']
     if ftype.upper() in fraster:
         return ['raster']
-    

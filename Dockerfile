@@ -45,7 +45,7 @@ WORKDIR /APP
 
 # Clone app and npm install on server
 ENV URL_TO_APPLICATION_GITHUB="https://github.com/lapig-ufg/download-minio.git"
-ENV BRANCH="develop"
+ENV BRANCH="main"
 
 RUN apt-get update && \
     apt-get install -y git make libpq-dev libpq5 && \
@@ -53,4 +53,4 @@ RUN apt-get update && \
     git clone -b ${BRANCH} ${URL_TO_APPLICATION_GITHUB} && \
     rm -rf /var/lib/apt/lists/* && chmod +x /APP/download-minio/start.sh
 
-CMD sh -c "cd /APP/download-minio && python creat_cach_mapfile.py && gunicorn -k  uvicorn.workers.UvicornWorker --bind 0.0.0.0:8080 -w 8 -t 0 app.server:app"
+CMD sh -c "cd /APP/download-minio && python creat_cach_mapfile.py && gunicorn -k  uvicorn.workers.UvicornWorker --bind 0.0.0.0:8080 -w 32 -t 0 app.server:app"

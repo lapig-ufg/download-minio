@@ -4,11 +4,11 @@ node {
     def application_name= "download-minio"
     
         stage('Checkout') {
-            git branch: 'develop',
+            git branch: 'main',
             url: 'https://github.com/lapig-ufg/download-minio.git'
         }
         stage('Validate') {
-            sh 'git pull origin develop'
+            sh 'git pull origin main'
 
         }
         stage('SonarQube analysis') {
@@ -24,7 +24,7 @@ node {
                     }
         }
         stage('Building Image') {
-            dockerImage = docker.build registryhomol + "/$application_name:$BUILD_NUMBER", " -f Dockerfile . --no-cache"
+            dockerImage = docker.build registryPROD + "/$application_name:$BUILD_NUMBER", " -f Dockerfile . --no-cache"
         }
         stage('Push Image to Registry') {
 
@@ -36,34 +36,34 @@ node {
 
             }
         stage('Removing image Locally') {
-            sh "docker rmi $registryhomol/$application_name:$BUILD_NUMBER"
-            sh "docker rmi $registryhomol/$application_name:latest"
+            sh "docker rmi $registryPROD/$application_name:$BUILD_NUMBER"
+            sh "docker rmi $registryPROD/$application_name:latest"
         }
 
-        stage ('Pull imagem on HOMOL') {
+        stage ('Pull imagem on PROD') {
         sshagent(credentials : ['KEY_FULL']) {
-            sh "$SERVER_HOMOL_SSH 'docker pull $registryhomol/$application_name:latest'"
+            sh "$SERVER_PROD_SSH 'docker pull $registryPROD/$application_name:latest'"
                 }
             
         }
 
-        stage('Deploy container on HOMOL') {
+        stage('Deploy container on PROD') {
 
-                        configFileProvider([configFile(fileId: "$File_Json_Id_APP_LAPIG_DOWNLOAD_MINIO_SERVER_HOMOL", targetLocation: 'container-lapig-download-minio-deploy-homol.json')]) {
+                        configFileProvider([configFile(fileId: "$File_Json_Id_APP_LAPIG_DOWNLOAD_MINIO_SERVER_PROD", targetLocation: 'container-lapig-download-minio-deploy-prod.json')]) {
 
-                            def url = "http://$SERVER_HOMOL/containers/$application_name?force=true"
+                            def url = "http://$SERVER_PROD/containers/$application_name?force=true"
                             def response = sh(script: "curl -v -X DELETE $url", returnStdout: true).trim()
                             echo response
 
-                            url = "http://$SERVER_HOMOL/containers/create?name=$application_name"
-                            response = sh(script: "curl -v -X POST -H 'Content-Type: application/json' -d @container-lapig-download-minio-deploy-homol.json -s $url", returnStdout: true).trim()
+                            url = "http://$SERVER_PROD/containers/create?name=$application_name"
+                            response = sh(script: "curl -v -X POST -H 'Content-Type: application/json' -d @container-lapig-download-minio-deploy-prod.json -s $url", returnStdout: true).trim()
                             echo response
                         }
 
             }            
-        stage('Start container on HOMOL') {
+        stage('Start container on PROD') {
 
-                        final String url = "http://$SERVER_HOMOL/containers/$application_name/start"
+                        final String url = "http://$SERVER_PROD/containers/$application_name/start"
                         final String response = sh(script: "curl -v -X POST -s $url", returnStdout: true).trim()
                         echo response                    
 
