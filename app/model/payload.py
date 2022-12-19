@@ -1,24 +1,27 @@
 from enum import Enum
-from typing import List, Optional, Union
-from app.model.models import make_enum
-from app.config import settings
 from pickle import load
+from typing import List, Optional, Union
+
 from pydantic import BaseModel, HttpUrl
 
-
+from app.config import settings
+from app.model.models import make_enum
 
 with open(f'{settings.CACHE_MAP}{settings.LISTL_LAYER_OWS}', 'rb') as f:
     listl_layer_ows = load(f)
 
-EnumValueType = make_enum('EnumValueType',{name:name for name in listl_layer_ows})   
+EnumValueType = make_enum(
+    'EnumValueType', {name: name for name in listl_layer_ows}
+)
+
 
 class DowloadUrl(BaseModel):
     object_name: str
     size: int
     host: str = settings.DOWNLOAD_URL
     buckt: str = settings.BUCKET
-    file_name:str = ''
-    content_type:str = ''
+    file_name: str = ''
+    content_type: str = ''
     url: HttpUrl = ''
 
     def __init__(self, **data) -> None:
@@ -39,56 +42,63 @@ class DowloadUrl(BaseModel):
             ]
         except:
             self.content_type = 'application/octet-stream'
-        
+
+
 class EnumCountry(str, Enum):
     BRASIL = 'BRASIL'
+
     @property
     def enum_name(self):
         return 'country'
 
 
+class EnumRegions(str, Enum):
+    NORTE = 'NORTE'
+    CENTRO_OESTE = 'CENTRO-OESTE'
+    NORDESTE = 'NORDESTE'
+    SUDESTE = 'SUDESTE'
+    SUL = 'SUL'
 
-class EnumRegions(str,Enum):
-    NORTE = "NORTE"
-    CENTRO_OESTE = "CENTRO-OESTE"
-    NORDESTE = "NORDESTE"
-    SUDESTE = "SUDESTE"
-    SUL = "SUL"
     @property
     def enum_name(self):
         return 'region'
 
 
-class EnumFronteiras(str,Enum):
-    AMZ_LEGAL = "AMZ_LEGAL"
-    MATOPIBA = "MATOPIBA"
+class EnumFronteiras(str, Enum):
+    AMZ_LEGAL = 'AMZ_LEGAL'
+    MATOPIBA = 'MATOPIBA'
+
     @property
     def enum_name(self):
         return 'fronteira'
 
-class EnumBiomes(str,Enum):
-    AMAZONIA = "AMAZONIA"
-    CAATINGA = "CAATINGA"
-    CERRADO = "CERRADO"
-    MATA_ATLANTICA = "MATA_ATLANTICA"
-    PAMPA = "PAMPA"
-    PANTANAL = "PANTANAL"
+
+class EnumBiomes(str, Enum):
+    AMAZONIA = 'AMAZONIA'
+    CAATINGA = 'CAATINGA'
+    CERRADO = 'CERRADO'
+    MATA_ATLANTICA = 'MATA_ATLANTICA'
+    PAMPA = 'PAMPA'
+    PANTANAL = 'PANTANAL'
+
     @property
     def enum_name(self):
         return 'biome'
 
+
 class EnumCity(BaseModel):
     code: int
-    
+
     def __repr__(self):
         return str(self.code)
-    
+
     def upper(self):
         return str(self.code)
-    
+
     @property
     def enum_name(self):
         return 'city'
+
 
 class EnumStates(str, Enum):
     AC = 'AC'
@@ -118,10 +128,12 @@ class EnumStates(str, Enum):
     SE = 'SE'
     SP = 'SP'
     TO = 'TO'
+
     @property
     def enum_name(self):
         return 'state'
-    
+
+
 class Origin(BaseModel):
     sourceService: str
     typeOfTMS: str
@@ -160,12 +172,12 @@ class Download(BaseModel):
 
 
 class RegionType(str, Enum):
-    biome = "biome"
-    city = "city"
-    country = "country"
-    fronteira = "fronteira"
-    region = "region"
-    state = "state"
+    biome = 'biome'
+    city = 'city'
+    country = 'country'
+    fronteira = 'fronteira'
+    region = 'region'
+    state = 'state'
 
 
 class FileTypes(str, Enum):
@@ -173,6 +185,7 @@ class FileTypes(str, Enum):
     shp = 'shp'
     gpkg = 'gpkg'
     raster = 'raster'
+
 
 class Filter(BaseModel):
     valueFilter: str
@@ -186,11 +199,11 @@ class Metadatum(BaseModel):
 
 class Layer(BaseModel):
     valueType: EnumValueType
-    type: Optional[str]= None
-    origin: Optional[Origin]= None
+    type: Optional[str] = None
+    origin: Optional[Origin] = None
     typeLayer: Optional[str]
     viewValueType: Optional[str]
-    typeLabel: Optional[str]= None
+    typeLabel: Optional[str] = None
     gallery: Optional[Gallery] = None
     wfsMapCard: Optional[WfsMapCard] = None
     download: Optional[Download] = None
@@ -214,8 +227,8 @@ class Region(BaseModel):
         EnumFronteiras,
         EnumBiomes,
         EnumCity,
-        str
-        ]
+        str,
+    ]
 
 
 class Payload(BaseModel):

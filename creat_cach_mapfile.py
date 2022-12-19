@@ -2,13 +2,13 @@ import os
 import pathlib
 import pickle
 import re
-from app.config import logger
 
 import mappyfile
+from pymongo import MongoClient
 
 from app.config import logger, settings
 from app.model.mapfile import MapFileLayers, Metadata
-from pymongo import MongoClient
+
 
 def remove__type__(obj):
     try:
@@ -23,61 +23,66 @@ listl_layer_ows = f'{settings.CACHE_MAP}{settings.LISTL_LAYER_OWS}'
 layer_metata_ows = f'{settings.CACHE_MAP}{settings.LAYER_METATA_OWS}'
 
 
-if not os.environ.get('LAPIG_ENV') == 'production' and os.path.exists(file_ows):
+if not os.environ.get('LAPIG_ENV') == 'production' and os.path.exists(
+    file_ows
+):
     logger.debug('Voce ja tem um mapfile')
 else:
     logger.info('Lendo description')
     with MongoClient(settings.MONGODB_URL) as client:
         db = client.ows
-        tmp = db.layers.find({
-            "layertypes.valueType":{"$exists": True},
-            "layertypes.origin.sourceService": "internal",
-            "_id":{"$ne":"basemaps"},
-            "_id":{"$ne":"basemaps"}
-        
-        })
-        traducao = db.languages.find_one({"_id":"pt"})
+        tmp = db.layers.find(
+            {
+                'layertypes.valueType': {'$exists': True},
+                'layertypes.origin.sourceService': 'internal',
+                '_id': {'$ne': 'basemaps'},
+                '_id': {'$ne': 'basemaps'},
+            }
+        )
+        traducao = db.languages.find_one({'_id': 'pt'})
         new_layers = {}
         lista_layers = []
         for layers in tmp:
             layertype = layers['_id']
-            
-            tra_tmp = traducao["layertype"]
+
+            tra_tmp = traducao['layertype']
             for obj in layers['layertypes']:
-                layer = obj["valueType"]
+                layer = obj['valueType']
                 metadata = {}
-                
-                old_metadata = obj["metadata"]
-                
+
+                old_metadata = obj['metadata']
+
                 try:
-                    filters = [ f['valueFilter'] for f in obj['filters']]
+                    filters = [f['valueFilter'] for f in obj['filters']]
                 except:
                     filters = None
-                for name in obj["metadata"]:
+                for name in obj['metadata']:
                     try:
                         if old_metadata[name] == 'translate':
-                            metadata[name] = tra_tmp[layer]["metadata"][name]
+                            metadata[name] = tra_tmp[layer]['metadata'][name]
                         else:
                             metadata[name] = old_metadata[name]
                     except:
                         metadata[name] = old_metadata[name]
-                        
+
                 tmp = {
-                    "layer":layer,
-                    "layertype":layertype,
-                    "metadata":metadata,
-                    'fileType':[x for x in obj['download'] if obj['download'][x] is True]
+                    'layer': layer,
+                    'layertype': layertype,
+                    'metadata': metadata,
+                    'fileType': [
+                        x
+                        for x in obj['download']
+                        if obj['download'][x] is True
+                    ],
                 }
                 if not filters is None:
                     tmp['filters'] = filters
                 new_layers[layer] = tmp
                 lista_layers.append(layer)
 
-
     logger.info('Lendo mapfile')
     map = {}
     file = mappyfile.open(settings.MAPFILE)['layers']
-
 
     total = len(file)
 
@@ -110,7 +115,9 @@ else:
             elif d['connectiontype'] == 'OGR':
                 map[name]['data'] = data
                 map[name]['connectiontype'] = {d['connectiontype']: {}}
-                map[name]['connectiontype'][d['connectiontype']] = d['connection']
+                map[name]['connectiontype'][d['connectiontype']] = d[
+                    'connection'
+                ]
             else:
                 map[name]['data'] = data
                 table = re.sub(regex, '', data).split(')')[0].split(' ')
@@ -124,22 +131,22 @@ else:
                     tuple(connection.split('='))
                     for connection in d['connection'].split(' ')
                 ]:
-                    map[name]['connectiontype'][d['connectiontype']][key] = value
+                    map[name]['connectiontype'][d['connectiontype']][
+                        key
+                    ] = value
         except Exception as e:
             logger.exception(f'Error {i}')
-
-
 
     if os.path.exists(file_ows):
         os.remove(file_ows)
     else:
         logger.debug('The file does not exist')
-        
+
     if os.path.exists(listl_layer_ows):
         os.remove(listl_layer_ows)
     else:
         logger.debug('The file does not exist')
-        
+
     if os.path.exists(layer_metata_ows):
         os.remove(layer_metata_ows)
     else:
@@ -155,6 +162,6 @@ else:
 
     with open(listl_layer_ows, 'wb') as f:
         pickle.dump(lista_layers, f)
-        
+
     with open(layer_metata_ows, 'wb') as f:
         pickle.dump(new_layers, f)
