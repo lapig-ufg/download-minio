@@ -12,6 +12,7 @@ from app.db import MongoModel, PyObjectId
 
 def make_enum(name, values):
     _k = _v = None
+
     class TheEnum(str, Enum):
         nonlocal _k, _v
         for _k, _v in values.items():
@@ -19,8 +20,9 @@ def make_enum(name, values):
                 locals()[_k] = _v
             except:
                 logger.exception('Make enum')
+
     TheEnum.__name__ = name
-    return TheEnum  
+    return TheEnum
 
 
 class GeoFile:

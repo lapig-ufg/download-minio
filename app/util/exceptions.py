@@ -1,4 +1,2 @@
-
-
 class FilterException(Exception):
     pass
