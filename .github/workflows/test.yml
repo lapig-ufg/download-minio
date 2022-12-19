@@ -49,5 +49,3 @@ jobs:
         run: poetry run blue . --check
       - name: Run isort
         run: poetry run isort . --check-only --profile black
-      - name: Run bandit
-        run: poetry run bandit .
