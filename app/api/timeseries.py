@@ -6,9 +6,15 @@ from fastapi.encoders import jsonable_encoder
 from pymongo import MongoClient
 
 from app.config import logger, settings
-from app.model.payload import (EnumBiomes, EnumCity, EnumCountry,
-                               EnumFronteiras, EnumRegions, EnumStates,
-                               FileTypes)
+from app.model.payload import (
+    EnumBiomes,
+    EnumCity,
+    EnumCountry,
+    EnumFronteiras,
+    EnumRegions,
+    EnumStates,
+    FileTypes,
+)
 
 router = APIRouter()
 

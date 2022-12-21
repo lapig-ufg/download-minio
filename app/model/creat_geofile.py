@@ -38,6 +38,7 @@ class CreatGeoFile:
         self.db = db
         self.crs = crs
         dbConnection = geodb(self.db)
+        logger.debug(self.sql_layer)
         dataFrame = pd.read_sql(
             f"""
             SELECT column_name,data_type 
@@ -57,7 +58,7 @@ class CreatGeoFile:
         try:
             self.geom = [name for name in cols if name in type_geom][0]
         except:
-            raise ValueError('Geometry has not been defined')
+            logger.exception('Geometry has not been defined')
         remove_cols = ['gid', 'objectid', 'index']
 
         with MongoClient(settings.MONGODB_URL) as client:

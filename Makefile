@@ -4,7 +4,7 @@ install:
 	pip3 install poetry 
 	poetry install
 pformat:
-	@poetry run isort .
+	@poetry run isort --profile black .
 	@poetry run blue .
 plint:
 	@poetry run blue . --check
