@@ -81,7 +81,10 @@ class CreatGeoFile:
                 self.query_personality = personalized_query[self.fileType]
             except:
                 ...
-
+            try:
+                self.cols = personalized_query['search_column']
+            except:
+                ...
         if not self.rename is False:
             if self.fileType == 'csv':
                 logger.debug(self.rename)
@@ -137,6 +140,7 @@ class CreatGeoFile:
             },
         }
         try:
+
             if region == 'country':
                 return ''
             if region == 'fronteira':
