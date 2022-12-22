@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-      
+
       downloadmino-server-dev:
         build: .
         hostname: downloadmino-server-dev
@@ -10,12 +10,13 @@ services:
         ports:
           - '127.0.0.1:8282:8282'
         expose:
-          - '8282'    
+          - '8282'
         restart: always
         stdin_open: true
         tty: true
         volumes:
           - '../:/APP/download-minio'
+          - './data:/data'
           - '/etc/localtime:/etc/localtime'
           - './mnt/tmpfs:/mnt/tmpfs'
           - './.env:/APP/.env'
