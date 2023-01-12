@@ -91,6 +91,10 @@ async def get_geofile(
         except Exception as e:
             logger.exception('ERROR COM MONGO')
         base_url = f'{base_url}api/download/{regionValue}/{fileType}/{layer}'
+        extencao = 'zip'
+        if fileType == 'raster':
+            extencao = 'tif'
+
         if filterLabel is None:
             match type:
                 case 'json':
@@ -118,7 +122,7 @@ async def get_geofile(
                 case 'wget':
                     comand = '#/bin/bash\n'
                     for _filter in filters:
-                        comand += f'wget -O {layer}_{regionValue}_{_filter}.zip {base_url}/{_filter}?direct=true  \n'
+                        comand += f'wget -O {layer}_{regionValue}_{_filter}.{extencao} {base_url}/{_filter}?direct=true  \n'
                     return Response(comand, 200, media_type='text/plain')
                 case _:
                     return Response(
