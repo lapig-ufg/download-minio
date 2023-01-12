@@ -233,7 +233,7 @@ def start_dowload(payload: Payload, update: str, direct: bool):
     if payload.typeDownload == 'raster':
 
         name_layer = name_layer.replace('/STORAGE/catalog/', '')
-        pathFile = f'rater/{name_layer}'
+        pathFile = f'raster/{name_layer}'
         objects = client.list_objects(
             settings.BUCKET,
             prefix=f'{pathFile}',
