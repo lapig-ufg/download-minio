@@ -181,6 +181,9 @@ def url_geofile(
 
 
 def start_dowload(payload: Payload, update: str, direct: bool):
+    file_type = '.zip'
+    if payload.typeDownload == 'csv':
+        file_type = '.csv'
     valueFilter = ''
     try:
         valueFilter = payload.filter.valueFilter
@@ -244,13 +247,14 @@ def start_dowload(payload: Payload, update: str, direct: bool):
         pathFile = f'{region.type}/{region.value}/{payload.typeDownload}/{payload.layer.valueType}/{fileParam}'
         objects = client.list_objects(
             settings.BUCKET,
-            prefix=f'{pathFile}.zip',
+            prefix=f'{pathFile}{file_type}',
             recursive=True,
         )
 
     logger.info(
-        'file: {}.zip fileType: {} regiao: {} value: {} sql_layer: {} valueFilter: {}'.format(
+        'file: {}{} fileType: {} regiao: {} value: {} sql_layer: {} valueFilter: {}'.format(
             pathFile,
+            file_type,
             payload.typeDownload,
             region.type,
             region.value,
@@ -343,10 +347,13 @@ def creat_file_postgre(
     crs,
     direct,
 ):
+    file_type = '.zip'
+    if payload.typeDownload == 'csv':
+        file_type = '.csv'
     try:
         geofile = CreatGeoFile(
             fileType=payload.typeDownload,
-            file=f'{pathFile}.zip',
+            file=f'{pathFile}{file_type}',
             regiao=region.type,
             value=region.value,
             sql_layer=sql_layer,
@@ -440,20 +447,21 @@ def creat_file_postgre(
             raise HTTPException(500, f'Erro ao Criar arquivo: {e}')
 
         file_paths = glob(f'{tmpdirname}/*')
-        with ZipFile(f'{tmpdirname}/{fileParam}.zip', 'w', ZIP_BZIP2) as zip:
-            # writing each file one by one
-            for file in file_paths:
-                zip.write(file, file.split('/')[-1])
+        if file_type == '.zip':
+            with ZipFile(f'{tmpdirname}/{fileParam}.zip', 'w', ZIP_BZIP2) as zip:
+                # writing each file one by one
+                for file in file_paths:
+                    zip.write(file, file.split('/')[-1])
 
-        logger.info(
-            f'zip criado {tmpdirname}/{fileParam}.zip dos arquivos {file_paths}'
-        )
-        geofile = GeoFile(f'{pathFile}.zip')
+            logger.info(
+                f'zip criado {tmpdirname}/{fileParam}.zip dos arquivos {file_paths}'
+            )
+        geofile = GeoFile(f'{pathFile}{file_type}')
         try:
             result = client.fput_object(
                 settings.BUCKET,
                 f'{geofile.object_name}',
-                f'{tmpdirname}/{fileParam}.zip',
+                f'{tmpdirname}/{fileParam}{file_type}',
                 content_type=geofile.content_type,
                 tags=geofile.to_tags,
                 metadata=dict(geofile.to_tags),
@@ -473,7 +481,7 @@ def creat_file_postgre(
         )
         objects = client.list_objects(
             settings.BUCKET,
-            prefix=f'{pathFile}.zip',
+            prefix=f'{pathFile}{file_type}',
             recursive=True,
         )
         objects_list = list(objects)
