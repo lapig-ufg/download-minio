@@ -158,15 +158,28 @@ def url_geofile(
                 layerTypeName = valueType
         except Exception as e:
             logger.exception('ERROR COM MONGO')
-
-    if filterLabel is not None and valueFilter is None:
-        raise HTTPException(
-            400, f'É obrigatorio informa um filter, use um desses. {filters}'
-        )
-    if filterLabel is not None and not valueFilter in filters:
-        raise HTTPException(
-            400, f'Filtro informado não é valido, use um desses. {filters}'
-        )
+    if valueFilter == 'year=all' and fileType == 'csv':
+        valueFilter = ''
+    else:
+        if filterLabel is not None and valueFilter is None:
+            if fileType == 'csv':
+                    raise HTTPException(
+                    400, f'É obrigatorio informa um filter, use um desses. {filters+["year=all"]}'
+                )
+            
+            else:
+                raise HTTPException(
+                    400, f'É obrigatorio informa um filter, use um desses. {filters}'
+                )
+        if filterLabel is not None and not valueFilter in filters:
+            if fileType == 'csv':
+                raise HTTPException(
+                400, f'Filtro informado não é valido, use um desses. {filters+["year=all"]}'
+                )
+            else:
+                raise HTTPException(
+                    400, f'Filtro informado não é valido, use um desses. {filters}'
+                )
     logger.debug(regionValue.enum_name)
     payload = Payload(
         region=Region(type=regionValue.enum_name, value=regionValue.upper()),
@@ -187,7 +200,10 @@ def start_dowload(payload: Payload, update: str, direct: bool):
     valueFilter = ''
     try:
         valueFilter = payload.filter.valueFilter
-        fileParam = f'{payload.layer.valueType}_{payload.filter.valueFilter}'
+        if payload.filter.valueFilter == '':
+            fileParam = payload.layer.valueType
+        else:
+            fileParam = f'{payload.layer.valueType}_{payload.filter.valueFilter}'
     except AttributeError:
         fileParam = payload.layer.valueType
     except Exception as e:
