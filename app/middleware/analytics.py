@@ -53,13 +53,16 @@ class Analytics(BaseHTTPMiddleware):
         start = time()
         response = await call_next(request)
         logger.debug(request.headers)
+        try:
+            ip_address = request.headers['x-forwarded-for']
+        except:
+            ip_address = request.client.host,
         if request.url.path.split('/')[1] in ['api',*self.routes]:
             request_data = {
                 'headers':dict(request.headers),
                 'hostname': request.url.hostname,
-                'ip_address': request.client.host,
+                'ip_address': ip_address,
                 'path': request.url.path,
-                
                 'method': request.method,
                 'status': response.status_code,
                 'response_time': int((time() - start) * 1000),
