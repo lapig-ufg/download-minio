@@ -90,7 +90,7 @@ async def get_geofile(
 
         except Exception as e:
             logger.exception('ERROR COM MONGO')
-        base_url = f'{base_url}api/download/{regionValue}/{fileType}/{layer}'
+        base_url = f'{base_url}api/download/{str(regionValue).replace("code=","")}/{fileType}/{layer}'
         extencao = 'zip'
         if fileType == 'raster':
             extencao = 'tif'

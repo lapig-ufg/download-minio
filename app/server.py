@@ -9,6 +9,8 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from app.middleware.analytics import Analytics
+
 
 from app.config import logger, settings, start_logger
 
@@ -17,6 +19,9 @@ from .routers import created_routes
 start_logger()
 
 app = FastAPI()
+
+app.add_middleware(Analytics, api_name=settings.API_NAME) 
+
 
 origins = [
     '*',
