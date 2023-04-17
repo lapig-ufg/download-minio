@@ -2,6 +2,7 @@ import threading
 from datetime import datetime
 from time import time
 
+
 import requests
 from starlette.middleware.base import (BaseHTTPMiddleware,
                                        RequestResponseEndpoint)
@@ -27,7 +28,6 @@ def get_location(ip_address):
 
 
 def _post_requests(requests_data: list[dict], framework: str):
-    logger.debug(f'Get data user {requests_data}')
     requests_data['location'] = get_location(requests_data['ip_address'])
     with MongoClient(settings.MONGODB_URL) as client:
         db = client.analytics
@@ -42,26 +42,29 @@ def log_request(request_data: dict, framework: str):
 
 
 class Analytics(BaseHTTPMiddleware):
-    def __init__(self, app: ASGIApp, api_name: str = 'AnalyticsFastAPI'):
+    def __init__(self, app: ASGIApp, api_name: str = 'AnalyticsFastAPI',routes=[]):
         super().__init__(app)
         self.api_name = api_name
+        self.routes = routes
 
     async def dispatch(
         self, request: Request, call_next: RequestResponseEndpoint
     ) -> Response:
         start = time()
         response = await call_next(request)
+        logger.debug(request.headers)
+        if request.url.path.split('/')[1] in ['api',*self.routes]:
+            request_data = {
+                'headers':dict(request.headers),
+                'hostname': request.url.hostname,
+                'ip_address': request.client.host,
+                'path': request.url.path,
+                
+                'method': request.method,
+                'status': response.status_code,
+                'response_time': int((time() - start) * 1000),
+                'created_at': datetime.now().isoformat(),
+            }
 
-        request_data = {
-            'hostname': request.url.hostname,
-            'ip_address': request.client.host,
-            'path': request.url.path,
-            'user_agent': request.headers['user-agent'],
-            'method': request.method,
-            'status': response.status_code,
-            'response_time': int((time() - start) * 1000),
-            'created_at': datetime.now().isoformat(),
-        }
-
-        log_request(request_data, self.api_name)
+            log_request(request_data, self.api_name)
         return response
