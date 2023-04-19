@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from fastapi import FastAPI, status
+from fastapi import FastAPI,  status
 from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
@@ -51,10 +51,13 @@ app.mount('/static', StaticFiles(directory=templates_path.resolve()), 'static')
 @app.exception_handler(StarletteHTTPException)
 async def http_exception_handler(request, exc):
     start_code = exc.status_code
+    logger.info(exc)
+    
     if request.url.path.split('/')[1] == 'api':
         return JSONResponse(
             content={'status_code': start_code, 'message': exc.detail},
             status_code=start_code,
+            headers=exc.headers
         )
     base_url = request.base_url
     if settings.HTTPS:
@@ -76,6 +79,9 @@ async def validation_exception_handler(request, exc):
     return JSONResponse(
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
         content=jsonable_encoder({'detail': exc.errors(), 'body': exc.body}),
+        headers={
+            'X-Download-Detail': f"{exc.errors()}", 
+            'X-Download-Body': f"{exc.body}"}
     )
 
 

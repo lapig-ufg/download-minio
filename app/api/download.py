@@ -5,7 +5,9 @@ from typing import Union
 from zipfile import ZIP_BZIP2, ZipFile
 
 from fastapi import APIRouter, HTTPException, Path, Query
-from fastapi.responses import RedirectResponse
+
+
+from fastapi.responses import RedirectResponse, JSONResponse
 from pymongo import MongoClient
 
 from app.config import logger, settings
@@ -69,7 +71,7 @@ async def get_geofile(
         default=None, description='Nome da camada que  você quer baixar?'
     ),
     update: str = Query('Lapig', include_in_schema=False),
-    direct: bool = Query(False, include_in_schema=False),
+    direct: bool = Query(False, include_in_schema=False)
 ):
     """
     Baixa uma camada do mapserver conforme os parametos a seguir:
@@ -121,6 +123,14 @@ async def get_geofile_filter(
 def url_geofile(
     regionValue, fileType, valueType, valueFilter, update, direct=False
 ):
+    headers = {
+        "X-Download-Region-Type": '',
+        "X-Download-Region-Value": regionValue,
+        "X-Download-Type-File": fileType,
+        'X-Download-Layer':valueType,
+        'X-Download-Filter':valueFilter
+        
+    }
     layerTypeName = None
     filterLabel = None
     logger.debug(regionValue)
@@ -136,7 +146,8 @@ def url_geofile(
             elif regionValue > 1100010 and regionValue < 5300109:
                 regionValue = EnumCity(code=regionValue)
             else:
-                raise HTTPException(400, 'filter_number_invalid')
+                
+                raise HTTPException(400, 'filter_number_invalid', headers=headers)
 
         tmp = db.layers.find_one({'layertypes.valueType': valueType})
         try:
@@ -163,22 +174,25 @@ def url_geofile(
     else:
         if filterLabel is not None and valueFilter is None:
             if fileType == 'csv':
-                    raise HTTPException(
-                    400, f'É obrigatorio informa um filter, use um desses. {filters+["year=all"]}'
+                headers['X-Download-Filter']=''
+                raise HTTPException(
+                    400, f'É obrigatorio informa um filter, use um desses. {filters+["year=all"]}',
+                    headers=headers
                 )
             
             else:
+                headers['X-Download-Filter']=''
                 raise HTTPException(
-                    400, f'É obrigatorio informa um filter, use um desses. {filters}'
+                    400, f'É obrigatorio informa um filter, use um desses. {filters}',headers=headers
                 )
         if filterLabel is not None and not valueFilter in filters:
             if fileType == 'csv':
                 raise HTTPException(
-                400, f'Filtro informado não é valido, use um desses. {filters+["year=all"]}'
+                400, f'Filtro informado não é valido, use um desses. {filters+["year=all"]}',headers=headers
                 )
             else:
                 raise HTTPException(
-                    400, f'Filtro informado não é valido, use um desses. {filters}'
+                    400, f'Filtro informado não é valido, use um desses. {filters}',headers=headers
                 )
     logger.debug(regionValue.enum_name)
     payload = Payload(
@@ -194,28 +208,39 @@ def url_geofile(
 
 
 def start_dowload(payload: Payload, update: str, direct: bool):
+    
     file_type = '.zip'
     if payload.typeDownload == 'csv':
         file_type = '.csv'
     valueFilter = ''
+    region = payload.region
+    headers = {
+        "X-Download-Region-Type": region.type,
+        "X-Download-Region-Value": region.value,
+        "X-Download-Type-File": payload.typeDownload,
+        'X-Download-Layer':payload.layer.valueType,
+        'X-Download-Filter':valueFilter
+        
+    }
     try:
         valueFilter = payload.filter.valueFilter
         if payload.filter.valueFilter == '':
             fileParam = payload.layer.valueType
         else:
             fileParam = f'{payload.layer.valueType}_{payload.filter.valueFilter}'
+        headers['X-Download-Filter'] = valueFilter
     except AttributeError:
         fileParam = payload.layer.valueType
     except Exception as e:
         logger.exception('erro')
-        return HTTPException(500, f'e')
+        return HTTPException(500, f'e', headers=headers)
 
-    region = payload.region
+    
     try:
         client = client_minio()
     except Exception as e:
         logger.exception('Login erro')
-        raise HTTPException(500, f'{e}')
+        raise HTTPException(500, f'{e}', headers=headers)
 
     try:
         name_layer, map_type, map_conect, crs = get_layer(valueFilter)
@@ -247,6 +272,7 @@ def start_dowload(payload: Payload, update: str, direct: bool):
         raise HTTPException(
             415,
             f'Incongruity in the type of data entered, please enter valid data for this layer\n Valid formats {get_format_valid(map_type)}',
+            headers=headers
         )
 
     if payload.typeDownload == 'raster':
@@ -278,16 +304,17 @@ def start_dowload(payload: Payload, update: str, direct: bool):
             valueFilter,
         )
     )
-
+    
+    
     objects_list = list(objects)
     logger.debug(f'{len(objects_list)} , {update}, {settings.KEY_UPDATE}')
 
     if len(objects_list) == 1 and not update == settings.KEY_UPDATE:
-        return responce_dowload(objects_list, direct)
+        return responce_dowload(objects_list, direct, headers)
 
     elif len(objects_list) > 1:
         logger.exception('ERROR TEM MAIS DE UM OBJECT')
-        raise HTTPException(500, 'Flaha ao carregar o dados')
+        raise HTTPException(500, 'Flaha ao carregar o dados', headers=headers)
     if payload.typeDownload == 'raster':
         client = client_minio()
         try:
@@ -299,10 +326,10 @@ def start_dowload(payload: Payload, update: str, direct: bool):
             )
 
         except FileNotFoundError:
-            raise HTTPException(400, 'file_not_found')
+            raise HTTPException(400, 'file_not_found', headers=headers)
         except Exception as e:
             logger.exception(e)
-            raise HTTPException(500, e)
+            raise HTTPException(500, e, headers=headers)
 
         logger.info(
             'created {0} object; etag: {1}, version-id: {2}'.format(
@@ -318,10 +345,10 @@ def start_dowload(payload: Payload, update: str, direct: bool):
         )
         objects_list = list(objects)
         if len(objects_list) == 1:
-            return responce_dowload(objects_list, direct)
+            return responce_dowload(objects_list, direct, headers)
         else:
             logger.exception('Erro ao salvar dados')
-            raise HTTPException(500, 'Erro ao gerar arquivo')
+            raise HTTPException(500, 'Erro ao gerar arquivo', headers=headers)
     else:
         logger.debug(payload.layer.download.layerTypeName)
         try:
@@ -349,7 +376,7 @@ def start_dowload(payload: Payload, update: str, direct: bool):
                 direct,
             )
         else:
-            return HTTPException(500, 'PayLoad')
+            return HTTPException(500, 'PayLoad', headers=headers)
 
 
 def creat_file_postgre(
@@ -363,6 +390,14 @@ def creat_file_postgre(
     crs,
     direct,
 ):
+    headers = {
+        "X-Download-Region-Type": region.type,
+        "X-Download-Region-Value": region.value,
+        "X-Download-Type-File": payload.typeDownload,
+        'X-Download-Layer':payload.layer.valueType,
+        'X-Download-Filter':valueFilter
+        
+    }
     file_type = '.zip'
     if payload.typeDownload == 'csv':
         file_type = '.csv'
@@ -383,23 +418,23 @@ def creat_file_postgre(
             logger.info(f'{e}')
             raise HTTPException(
                 400,
-                'file_empty',
+                'file_empty', headers=headers
             )
         logger.exception('Valor Error not empty')
         raise HTTPException(
             400,
-            f'{e}',
+            f'{e}', headers=headers
         )
     except FilterException as e:
         raise HTTPException(
             400,
-            f'{e}',
+            f'{e}', headers=headers
         )
 
     except Exception as e:
         raise HTTPException(
             400,
-            f'{e}',
+            f'{e}', headers=headers
         )
 
     with tempfile.TemporaryDirectory() as tmpdirname:
@@ -442,25 +477,25 @@ def creat_file_postgre(
         except OGR2OGRisRun:
             raise HTTPException(
                 400,
-                f'ogr2ogr_run',
+                f'ogr2ogr_run', headers=headers
             )
         except ValueError as e:
             if str(e) == 'Cannot write empty DataFrame to file.':
                 logger.info(f'{e}')
                 raise HTTPException(
                     400,
-                    'file_empty',
+                    'file_empty', headers=headers
                 )
             logger.exception('Valor Error not empty')
             raise HTTPException(
                 400,
-                f'{e}',
+                f'{e}', headers=headers
             )
         except FilterException as e:
-            raise HTTPException(400, f'{e}')
+            raise HTTPException(400, f'{e}', headers=headers)
         except Exception as e:
             logger.exception('Erro ao Criar arquivo ValueError: {e}')
-            raise HTTPException(500, f'Erro ao Criar arquivo: {e}')
+            raise HTTPException(500, f'Erro ao Criar arquivo: {e}', headers=headers)
 
         file_paths = glob(f'{tmpdirname}/*')
         if file_type == '.zip':
@@ -483,10 +518,10 @@ def creat_file_postgre(
                 metadata=dict(geofile.to_tags),
             )
         except FileNotFoundError:
-            raise HTTPException(400, 'file_not_found')
+            raise HTTPException(400, 'file_not_found', headers=headers)
         except Exception as e:
             logger.exception(e)
-            raise HTTPException(500, e)
+            raise HTTPException(500, e, headers=headers)
 
         logger.info(
             'created {0} object; etag: {1}, version-id: {2}'.format(
@@ -502,13 +537,13 @@ def creat_file_postgre(
         )
         objects_list = list(objects)
         if len(objects_list) == 1:
-            return responce_dowload(objects_list, direct)
+            return responce_dowload(objects_list, direct, headers)
         else:
             logger.exception('Erro ao salvar dados')
-            raise HTTPException(500, 'Erro ao gerar arquivo')
+            raise HTTPException(500, 'Erro ao gerar arquivo', headers=headers)
 
 
-def responce_dowload(obj, direct):
+def responce_dowload(obj, direct,headers):
     tmp_dowloadUrl = DowloadUrl(
         object_name=obj[0].object_name, size=obj[0].size
     )
@@ -516,4 +551,4 @@ def responce_dowload(obj, direct):
         return RedirectResponse(tmp_dowloadUrl.url, 307)
 
     else:
-        return tmp_dowloadUrl
+        return JSONResponse(content=dict(tmp_dowloadUrl), headers=headers )
