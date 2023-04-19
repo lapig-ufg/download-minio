@@ -67,7 +67,10 @@ class Analytics(BaseHTTPMiddleware):
             ip_address = request.client.host
         if request.url.path.split('/')[1] in ['api',*self.routes]:
             headers= dict(request.headers)
-            headers.pop('cookie')
+            try:
+                headers.pop('cookie')
+            except:
+                pass
             request_data = {
                 'headers':headers,
                 'hostname': request.url.hostname,
