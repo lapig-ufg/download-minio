@@ -16,19 +16,26 @@ from app.config import settings, logger
 
 
 def get_location(ip_address):
-    response = requests.get(
-        f'https://ipapi.co/{ip_address}/json/', timeout=15
-    ).json()
-    location_data = {
-        'city': response.get('city'),
-        'region': response.get('region'),
-        'country': response.get('country_name'),
-    }
-    return location_data
+    try:
+        response = requests.get(
+            f'https://ipapi.co/{ip_address}/json/', timeout=15
+        ).json()
+        location_data = {
+            'city': response.get('city'),
+            'region': response.get('region'),
+            'country': response.get('country_name'),
+            "org":response.get('org'),
+        }
+        return location_data
+    except:
+        raise Exception('not info')
 
 
 def _post_requests(requests_data: list[dict], framework: str):
-    requests_data['location'] = get_location(requests_data['ip_address'])
+    try:
+        requests_data['location'] = get_location(requests_data['ip_address'])
+    except:
+        pass
     with MongoClient(settings.MONGODB_URL) as client:
         db = client.analytics
         db[framework].insert_one(requests_data)
@@ -52,22 +59,28 @@ class Analytics(BaseHTTPMiddleware):
     ) -> Response:
         start = time()
         response = await call_next(request)
-        logger.debug(request.headers)
+        user_interaction = {key.lower().replace('x-download-','').replace('-','_'):value 
+                            for key, value in dict(response.headers).items() if 'x-download' in key.lower()}
         try:
             ip_address = request.headers['x-forwarded-for']
         except:
-            ip_address = request.client.host,
+            ip_address = request.client.host
         if request.url.path.split('/')[1] in ['api',*self.routes]:
+            headers= dict(request.headers)
+            headers.pop('cookie')
             request_data = {
-                'headers':dict(request.headers),
+                'headers':headers,
                 'hostname': request.url.hostname,
                 'ip_address': ip_address,
                 'path': request.url.path,
                 'method': request.method,
                 'status': response.status_code,
                 'response_time': int((time() - start) * 1000),
-                'created_at': datetime.now().isoformat(),
+                'created_at': datetime.now(),
+                
             }
-
+            if len(user_interaction) > 0:
+                request_data['user_interaction'] = user_interaction 
+            
             log_request(request_data, self.api_name)
         return response
