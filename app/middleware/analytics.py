@@ -24,7 +24,7 @@ def get_location(ip_address):
             'city': response.get('city'),
             'region': response.get('region'),
             'country': response.get('country_name'),
-            "org":response.get('org'),
+            'org':response.get('org'),
         }
         return location_data
     except:

@@ -107,7 +107,7 @@ def custom_openapi():
         return app.openapi_schema
     openapi_schema = get_openapi(
         title='Lapig - Laboratório de Processamento de Imagens e Geoprocessamento',
-        version='0.1.3',
+        version='1.0.1',
         contact={'name': 'Lapig', 'url': 'https://lapig.iesa.ufg.br/'},
         description='API para baixar dados do mapserver',
         routes=app.routes,
