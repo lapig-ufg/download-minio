@@ -194,15 +194,25 @@ def url_geofile(
                 raise HTTPException(
                     400, f'Filtro informado não é valido, use um desses. {filters}',headers=headers
                 )
-    logger.debug(regionValue.enum_name)
-    payload = Payload(
-        region=Region(type=regionValue.enum_name, value=regionValue.upper()),
-        layer=Layer(
-            valueType=valueType, download=Download(layerTypeName=layerTypeName)
-        ),
-        typeDownload=fileType,
-        filter=Filter(valueFilter=valueFilter),
-    )
+    logger.debug(f"{regionValue.enum_name}|{valueFilter}|")
+    if valueFilter is None:
+        payload = Payload(
+            region=Region(type=regionValue.enum_name, value=regionValue.upper()),
+            layer=Layer(
+                valueType=valueType, download=Download(layerTypeName=layerTypeName)
+            ),
+            typeDownload=fileType
+        )
+
+    else:
+        payload = Payload(
+            region=Region(type=regionValue.enum_name, value=regionValue.upper()),
+            layer=Layer(
+                valueType=valueType, download=Download(layerTypeName=layerTypeName)
+            ),
+            typeDownload=fileType,
+            filter=Filter(valueFilter=valueFilter),
+        )
     logger.debug(payload)
     return start_dowload(payload, update, direct)
 
@@ -265,7 +275,7 @@ def start_dowload(payload: Payload, update: str, direct: bool):
             except:
                 sql_layer = payload.layer.download.layerTypeName
                 db = ''
-                logger.debug('eu acho que é sql')
+                logger.exception('eu acho que é sql')
 
     logger.debug(f'name_layer:{name_layer} map_type:{map_type}')
     if not is_valid_query(payload.typeDownload, map_type):
