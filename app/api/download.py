@@ -286,7 +286,9 @@ def start_dowload(payload: Payload, update: str, direct: bool):
         )
 
     else:
-        pathFile = f'{region.type}/{region.value}/{payload.typeDownload}/{payload.layer.valueType}/{fileParam}'
+        #ows/city/1200401/gpkg/pasture_col6_s100
+        
+        pathFile = f'{region.type}/{region.value}/{payload.typeDownload}/{payload.layer.valueType}/{region.value.lower()}_{fileParam}'
         objects = client.list_objects(
             settings.BUCKET,
             prefix=f'{pathFile}{file_type}',
