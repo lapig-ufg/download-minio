@@ -225,12 +225,12 @@ def start_dowload(payload: Payload, update: str, direct: bool):
     try:
         valueFilter = payload.filter.valueFilter
         if payload.filter.valueFilter == '':
-            fileParam = payload.layer.valueType
+            fileParam = f'{region.value.lower()}_{payload.layer.valueType}'
         else:
-            fileParam = f'{payload.layer.valueType}_{payload.filter.valueFilter}'
+            fileParam = f'{region.value.lower()}_{payload.layer.valueType}_{payload.filter.valueFilter}'
         headers['X-Download-Filter'] = valueFilter
     except AttributeError:
-        fileParam = payload.layer.valueType
+        fileParam = f'{region.value.lower()}_{payload.layer.valueType}'
     except Exception as e:
         logger.exception('erro')
         return HTTPException(500, f'e', headers=headers)
@@ -288,7 +288,7 @@ def start_dowload(payload: Payload, update: str, direct: bool):
     else:
         #ows/city/1200401/gpkg/pasture_col6_s100
         
-        pathFile = f'{region.type}/{region.value}/{payload.typeDownload}/{payload.layer.valueType}/{region.value.lower()}_{fileParam}'
+        pathFile = f'{region.type}/{region.value}/{payload.typeDownload}/{payload.layer.valueType}/{fileParam}'
         objects = client.list_objects(
             settings.BUCKET,
             prefix=f'{pathFile}{file_type}',
