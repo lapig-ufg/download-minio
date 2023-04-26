@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from fastapi import FastAPI,  status
+from fastapi import FastAPI, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
@@ -9,10 +9,9 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.exceptions import HTTPException as StarletteHTTPException
-from app.middleware.analytics import Analytics
-
 
 from app.config import logger, settings, start_logger
+from app.middleware.analytics import Analytics
 
 from .routers import created_routes
 
@@ -20,7 +19,7 @@ start_logger()
 
 app = FastAPI()
 
-app.add_middleware(Analytics, api_name=settings.API_NAME) 
+app.add_middleware(Analytics, api_name=settings.API_NAME)
 
 
 origins = [
@@ -52,12 +51,12 @@ app.mount('/static', StaticFiles(directory=templates_path.resolve()), 'static')
 async def http_exception_handler(request, exc):
     start_code = exc.status_code
     logger.info(exc)
-    
+
     if request.url.path.split('/')[1] == 'api':
         return JSONResponse(
             content={'status_code': start_code, 'message': exc.detail},
             status_code=start_code,
-            headers=exc.headers
+            headers=exc.headers,
         )
     base_url = request.base_url
     if settings.HTTPS:
@@ -80,8 +79,9 @@ async def validation_exception_handler(request, exc):
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
         content=jsonable_encoder({'detail': exc.errors(), 'body': exc.body}),
         headers={
-            'X-Download-Detail': f"{exc.errors()}", 
-            'X-Download-Body': f"{exc.body}"}
+            'X-Download-Detail': f'{exc.errors()}',
+            'X-Download-Body': f'{exc.body}',
+        },
     )
 
 

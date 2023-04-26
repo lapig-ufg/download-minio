@@ -1,12 +1,8 @@
-name: Test api
-
-on:
-  # Triggers the workflow every 5 minutes
-  schedule:
-    - test: "0 9 1,7,15,24 * *"
+name: Code Quality
+on: [push]
 
 jobs:
-  test:
+  code-quality:
     strategy:
       fail-fast: false
       matrix:
@@ -15,18 +11,17 @@ jobs:
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
       - name: Run image
         uses: abatilo/actions-poetry@v2
         with:
           poetry-version: ${{ matrix.poetry-version }}
-      - name: Create folder
-        run: sudo mkdir -p /data/logs && sudo chown -R 1001:1001 /data/logs
       - name: Install dependencies
         run: poetry install
-      - name: Run tests
-        run: poetry run pytest -v
-      
+      - name: Run blue
+        run: poetry run blue . --check
+      - name: Run isort
+        run: poetry run isort . --check-only --profile black

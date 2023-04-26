@@ -16,7 +16,7 @@ with open(f'{settings.CACHE_MAP}{settings.LISTL_LAYER_OWS}', 'rb') as f:
 with open(f'{settings.CACHE_MAP}{settings.LAYER_METATA_OWS}', 'rb') as f:
     all_metada = load(f)
 
-
+result = sorted(set(dateset) & set(lpmap))
 router = APIRouter()
 
 
@@ -26,7 +26,7 @@ router = APIRouter()
     response_model=List[str],
 )
 async def get_all_layers():
-    return dateset
+    return sorted(result)
 
 
 @router.get(

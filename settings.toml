@@ -24,3 +24,4 @@ DB_DATABASE = 'gdb'
 
 MONGODB_URL = 'localhost:27017'
 kEY_UPDATE = 'updatenow'
+API_NAME = 'dowloadMinioHomol'
