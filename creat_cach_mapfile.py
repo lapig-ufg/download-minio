@@ -17,6 +17,15 @@ def remove__type__(obj):
     except:
         return obj
 
+def remove_error(text):
+    while True:
+        palavra=re.search(r'(\[\w+_\w+\])+',text)
+        if not palavra is None:
+            palavra=palavra.group()
+            text = text.replace(palavra,palavra.replace('_',''))
+        else:
+            break
+    return text
 
 file_ows = f'{settings.CACHE_MAP}{settings.FILE_MAP_CACH}'
 listl_layer_ows = f'{settings.CACHE_MAP}{settings.LISTL_LAYER_OWS}'
@@ -79,10 +88,18 @@ else:
                     tmp['filters'] = filters
                 new_layers[layer] = tmp
                 lista_layers.append(layer)
-
+                
     logger.info('Lendo mapfile')
+
+    
+    with open(settings.MAPFILE,'r') as file:
+        _map = file.read()
+        _map = remove_error(_map)
+    
+    
+    
     map = {}
-    file = mappyfile.open(settings.MAPFILE)['layers']
+    file = mappyfile.loads(_map)['layers']
 
     total = len(file)
 
