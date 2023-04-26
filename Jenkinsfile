@@ -3,30 +3,31 @@ node {
     load "$JENKINS_HOME/.envvars"
     def application_name= "download-minio"
     
-        stage('Checkout') {
+        stage('Checkout Prod') {
+            when {
+                branch 'main'
+            }
             git branch: 'main',
             url: 'https://github.com/lapig-ufg/download-minio.git'
         }
-        stage('Validate') {
+        stage('Validate Prod') {
+            when {
+                branch 'main'
+            }
             sh 'git pull origin main'
 
         }
-        stage('SonarQube analysis') {
-
-        def scannerHome = tool 'sonarqube-scanner';
-                    withSonarQubeEnv("sonarqube") {
-                    sh "${tool("sonarqube-scanner")}/bin/sonar-scanner \
-                    -Dsonar.projectKey=download-minio \
-                    -Dsonar.sources=. \
-                    -Dsonar.css.node=. \
-                    -Dsonar.host.url=$SonarUrl \
-                    -Dsonar.login=$SonarKeyProject"
-                    }
-        }
-        stage('Building Image') {
+        
+        stage('Building Image Prod') {
+            when {
+                branch 'main'
+            }
             dockerImage = docker.build registryPROD + "/$application_name:$BUILD_NUMBER", " -f Dockerfile . --no-cache"
         }
-        stage('Push Image to Registry') {
+        stage('Push Image to Registry Prod') {
+            when {
+                branch 'main'
+            }
 
             docker.withRegistry( "$Url_Private_Registry", "$registryCredential" ) {
             dockerImage.push("${env.BUILD_NUMBER}")
@@ -35,19 +36,28 @@ node {
                 }   
 
             }
-        stage('Removing image Locally') {
+        stage('Removing image Locally Prod') {
+            when {
+                branch 'main'
+            }
             sh "docker rmi $registryPROD/$application_name:$BUILD_NUMBER"
             sh "docker rmi $registryPROD/$application_name:latest"
         }
 
         stage ('Pull imagem on PROD') {
-        sshagent(credentials : ['KEY_FULL']) {
-            sh "$SERVER_PROD_SSH 'docker pull $registryPROD/$application_name:latest'"
-                }
+            when {
+                branch 'main'
+            }
+            sshagent(credentials : ['KEY_FULL']) {
+                sh "$SERVER_PROD_SSH 'docker pull $registryPROD/$application_name:latest'"
+                    }
             
         }
 
         stage('Deploy container on PROD') {
+            when {
+                branch 'main'
+            }
 
                         configFileProvider([configFile(fileId: "$File_Json_Id_APP_LAPIG_DOWNLOAD_MINIO_SERVER_PROD", targetLocation: 'container-lapig-download-minio-deploy-prod.json')]) {
 
@@ -62,14 +72,22 @@ node {
 
             }            
         stage('Start container on PROD') {
+            when {
+                branch 'main'
+            }
 
                         final String url = "http://$SERVER_PROD/containers/$application_name/start"
                         final String response = sh(script: "curl -v -X POST -s $url", returnStdout: true).trim()
                         echo response                    
 
 
-            }                      
+            }   
+
+
         stage('Send message to Telegram') {
+            when {
+                branch 'main'
+            }
 
                             def Author_Name=sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
                             def Author_Email=sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
@@ -87,6 +105,9 @@ node {
                             }
         }
         stage('Send message to Discord') {
+            when {
+                branch 'main'
+            }
 
                         //SEND DISCORD NOTIFICATION
                         def discordImageSuccess = 'https://www.jenkins.io/images/logos/formal/256.png'
