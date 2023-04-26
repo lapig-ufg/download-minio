@@ -3,7 +3,7 @@
 ###############################################
 FROM registry.lapig.iesa.ufg.br/lapig-images-prod/download-minio:base as python-base
 
-ENV LAPIG_ENV="develop" \
+ENV LAPIG_ENV="homologation" \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=off \

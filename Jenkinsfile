@@ -34,12 +34,12 @@ node {
             }
             if (env.BRANCH_NAME == 'develop') {
                 sh("ls -lh .")
-                dockerImage = docker.build registryhomol + "/$application_name:$BUILD_NUMBER", " -f Dockerfile.dev . --no-cache"
+                dockerImage = docker.build registryhomol + "/$application_name:$BUILD_NUMBER", " -f homologation/Dockerfile . --no-cache"
             }
         }
 
 
-        stage('Push Image to Registry Prod') {
+        stage('Push Image to Registry') {
             docker.withRegistry( "$Url_Private_Registry", "$registryCredential" ) {
                 dockerImage.push("${env.BUILD_NUMBER}")
                 dockerImage.push("latest")
