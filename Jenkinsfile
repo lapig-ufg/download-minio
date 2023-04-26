@@ -12,7 +12,7 @@ node {
             }
             if (env.BRANCH_NAME == 'develop') {
                 echo 'develop'
-                git branch: 'main',
+                git branch: 'develop',
                 url: 'https://github.com/lapig-ufg/download-minio.git'
             }
            
@@ -33,7 +33,7 @@ node {
                 dockerImage = docker.build registryPROD + "/$application_name:$BUILD_NUMBER", " -f Dockerfile . --no-cache"
             }
             if (env.BRANCH_NAME == 'develop') {
-                dockerImage = docker.build registryhomol + "/$application_name:$BUILD_NUMBER", " -f Dockerfile .dev . --no-cache"
+                dockerImage = docker.build registryhomol + "/$application_name:$BUILD_NUMBER", " -f Dockerfile.dev . --no-cache"
             }
         }
 
