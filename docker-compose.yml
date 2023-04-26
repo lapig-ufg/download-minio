@@ -3,7 +3,7 @@ version: '3.7'
 services:
       
       downloadmino-server:
-        build: .
+        build: ./docker/production/Dockerfile
         hostname: downloadmino-server
         container_name: downloadmino-server
         privileged: true

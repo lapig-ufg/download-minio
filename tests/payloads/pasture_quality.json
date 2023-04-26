@@ -1,6 +1,6 @@
-{"pasture_col6_s100_gkpg":{
+{"pasture_col7_s100_gkpg":{
     "layer": {
-        "valueType": "pasture_col6_s100",
+        "valueType": "pasture_col7_s100",
         "type": "layertype",
         "origin": {
             "sourceService": "internal",
@@ -29,7 +29,7 @@
             "shp": false,
             "gpkg": true,
             "raster": false,
-            "layerTypeName": "pasture_col6",
+            "layerTypeName": "pasture_col7",
             "loading": true
         },
         "regionFilter": true,
@@ -246,9 +246,9 @@
     },
     "typeDownload": "gpkg"
 },
-"pasture_col6_s100_csv":{
+"pasture_col7_s100_csv":{
     "layer": {
-        "valueType": "pasture_col6_s100",
+        "valueType": "pasture_col7_s100",
         "type": "layertype",
         "origin": {
             "sourceService": "internal",
@@ -277,7 +277,7 @@
             "shp": false,
             "gpkg": true,
             "raster": false,
-            "layerTypeName": "pasture_col6",
+            "layerTypeName": "pasture_col7",
             "loading": true
         },
         "regionFilter": true,

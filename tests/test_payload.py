@@ -4,7 +4,7 @@ from glob import glob
 import pytest
 from requests import post
 
-URL = 'https://download.lapig.iesa.ufg.br/api/download/'
+URL = 'https://devdownload.lapig.iesa.ufg.br/api/download/'
 # URL = 'http://localhost:8282/api/download/'
 FILES = glob('tests/payloads/*.json')
 
