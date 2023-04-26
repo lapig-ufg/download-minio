@@ -30,11 +30,11 @@ node {
         
         stage('Building Image') {
             if (env.BRANCH_NAME == 'main') {
-                dockerImage = docker.build registryPROD + "/$application_name:$BUILD_NUMBER", " -f Dockerfile . --no-cache"
+                dockerImage = docker.build registryPROD + "/$application_name:$BUILD_NUMBER", " -f docker/production/Dockerfile . --no-cache"
             }
             if (env.BRANCH_NAME == 'develop') {
                 sh("ls -lh .")
-                dockerImage = docker.build registryhomol + "/$application_name:$BUILD_NUMBER", " -f homologation/Dockerfile . --no-cache"
+                dockerImage = docker.build registryhomol + "/$application_name:$BUILD_NUMBER", " -f docker/homologation/Dockerfile . --no-cache"
             }
         }
 
