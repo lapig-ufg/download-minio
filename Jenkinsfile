@@ -3,12 +3,17 @@ node {
     load "$JENKINS_HOME/.envvars"
     def application_name= "download-minio"
     
-        stage('Checkout Prod') {
-            when {
-                branch 'main'
+        stage('Checkout') {
+            if (env.BRANCH_NAME == 'master') {
+                git branch: 'main',
+                url: 'https://github.com/lapig-ufg/download-minio.git'
+
             }
-            git branch: 'main',
-            url: 'https://github.com/lapig-ufg/download-minio.git'
+            if (env.BRANCH_NAME == 'develop') {
+                echo 'develop'
+            }
+           
+            
         }
         stage('Validate Prod') {
             when {
