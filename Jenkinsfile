@@ -33,6 +33,7 @@ node {
                 dockerImage = docker.build registryPROD + "/$application_name:$BUILD_NUMBER", " -f Dockerfile . --no-cache"
             }
             if (env.BRANCH_NAME == 'develop') {
+                sh("ls -lh .")
                 dockerImage = docker.build registryhomol + "/$application_name:$BUILD_NUMBER", " -f Dockerfile.dev . --no-cache"
             }
         }
