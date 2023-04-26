@@ -5,9 +5,7 @@ from typing import Union
 from zipfile import ZIP_BZIP2, ZipFile
 
 from fastapi import APIRouter, HTTPException, Path, Query
-
-
-from fastapi.responses import RedirectResponse, JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from pymongo import MongoClient
 
 from app.config import logger, settings
@@ -71,7 +69,7 @@ async def get_geofile(
         default=None, description='Nome da camada que  você quer baixar?'
     ),
     update: str = Query('Lapig', include_in_schema=False),
-    direct: bool = Query(False, include_in_schema=False)
+    direct: bool = Query(False, include_in_schema=False),
 ):
     """
     Baixa uma camada do mapserver conforme os parametos a seguir:
@@ -124,12 +122,11 @@ def url_geofile(
     regionValue, fileType, valueType, valueFilter, update, direct=False
 ):
     headers = {
-        "X-Download-Region-Type": '',
-        "X-Download-Region-Value": regionValue,
-        "X-Download-Type-File": fileType,
-        'X-Download-Layer':valueType,
-        'X-Download-Filter':valueFilter
-        
+        'X-Download-Region-Type': '',
+        'X-Download-Region-Value': regionValue,
+        'X-Download-Type-File': fileType,
+        'X-Download-Layer': valueType,
+        'X-Download-Filter': valueFilter,
     }
     layerTypeName = None
     filterLabel = None
@@ -146,8 +143,10 @@ def url_geofile(
             elif regionValue > 1100010 and regionValue < 5300109:
                 regionValue = EnumCity(code=regionValue)
             else:
-                
-                raise HTTPException(400, 'filter_number_invalid', headers=headers)
+
+                raise HTTPException(
+                    400, 'filter_number_invalid', headers=headers
+                )
 
         tmp = db.layers.find_one({'layertypes.valueType': valueType})
         try:
@@ -174,41 +173,54 @@ def url_geofile(
     else:
         if filterLabel is not None and valueFilter is None:
             if fileType == 'csv':
-                headers['X-Download-Filter']=''
+                headers['X-Download-Filter'] = ''
                 raise HTTPException(
-                    400, f'É obrigatorio informa um filter, use um desses. {filters+["year=all"]}',
-                    headers=headers
+                    400,
+                    f'É obrigatorio informa um filter, use um desses. {filters+["year=all"]}',
+                    headers=headers,
                 )
-            
+
             else:
-                headers['X-Download-Filter']=''
+                headers['X-Download-Filter'] = ''
                 raise HTTPException(
-                    400, f'É obrigatorio informa um filter, use um desses. {filters}',headers=headers
+                    400,
+                    f'É obrigatorio informa um filter, use um desses. {filters}',
+                    headers=headers,
                 )
         if filterLabel is not None and not valueFilter in filters:
             if fileType == 'csv':
                 raise HTTPException(
-                400, f'Filtro informado não é valido, use um desses. {filters+["year=all"]}',headers=headers
+                    400,
+                    f'Filtro informado não é valido, use um desses. {filters+["year=all"]}',
+                    headers=headers,
                 )
             else:
                 raise HTTPException(
-                    400, f'Filtro informado não é valido, use um desses. {filters}',headers=headers
+                    400,
+                    f'Filtro informado não é valido, use um desses. {filters}',
+                    headers=headers,
                 )
-    logger.debug(f"{regionValue.enum_name}|{valueFilter}|")
+    logger.debug(f'{regionValue.enum_name}|{valueFilter}|')
     if valueFilter is None:
         payload = Payload(
-            region=Region(type=regionValue.enum_name, value=regionValue.upper()),
-            layer=Layer(
-                valueType=valueType, download=Download(layerTypeName=layerTypeName)
+            region=Region(
+                type=regionValue.enum_name, value=regionValue.upper()
             ),
-            typeDownload=fileType
+            layer=Layer(
+                valueType=valueType,
+                download=Download(layerTypeName=layerTypeName),
+            ),
+            typeDownload=fileType,
         )
 
     else:
         payload = Payload(
-            region=Region(type=regionValue.enum_name, value=regionValue.upper()),
+            region=Region(
+                type=regionValue.enum_name, value=regionValue.upper()
+            ),
             layer=Layer(
-                valueType=valueType, download=Download(layerTypeName=layerTypeName)
+                valueType=valueType,
+                download=Download(layerTypeName=layerTypeName),
             ),
             typeDownload=fileType,
             filter=Filter(valueFilter=valueFilter),
@@ -218,19 +230,18 @@ def url_geofile(
 
 
 def start_dowload(payload: Payload, update: str, direct: bool):
-    
+
     file_type = '.zip'
     if payload.typeDownload == 'csv':
         file_type = '.csv'
     valueFilter = ''
     region = payload.region
     headers = {
-        "X-Download-Region-Type": region.type,
-        "X-Download-Region-Value": region.value,
-        "X-Download-Type-File": payload.typeDownload,
-        'X-Download-Layer':payload.layer.valueType,
-        'X-Download-Filter':valueFilter
-        
+        'X-Download-Region-Type': region.type,
+        'X-Download-Region-Value': region.value,
+        'X-Download-Type-File': payload.typeDownload,
+        'X-Download-Layer': payload.layer.valueType,
+        'X-Download-Filter': valueFilter,
     }
     try:
         valueFilter = payload.filter.valueFilter
@@ -245,7 +256,6 @@ def start_dowload(payload: Payload, update: str, direct: bool):
         logger.exception('erro')
         return HTTPException(500, f'e', headers=headers)
 
-    
     try:
         client = client_minio()
     except Exception as e:
@@ -282,7 +292,7 @@ def start_dowload(payload: Payload, update: str, direct: bool):
         raise HTTPException(
             415,
             f'Incongruity in the type of data entered, please enter valid data for this layer\n Valid formats {get_format_valid(map_type)}',
-            headers=headers
+            headers=headers,
         )
 
     if payload.typeDownload == 'raster':
@@ -296,8 +306,8 @@ def start_dowload(payload: Payload, update: str, direct: bool):
         )
 
     else:
-        #ows/city/1200401/gpkg/pasture_col6_s100
-        
+        # ows/city/1200401/gpkg/pasture_col6_s100
+
         pathFile = f'{region.type}/{region.value}/{payload.typeDownload}/{payload.layer.valueType}/{fileParam}'
         objects = client.list_objects(
             settings.BUCKET,
@@ -316,8 +326,7 @@ def start_dowload(payload: Payload, update: str, direct: bool):
             valueFilter,
         )
     )
-    
-    
+
     objects_list = list(objects)
     logger.debug(f'{len(objects_list)} , {update}, {settings.KEY_UPDATE}')
 
@@ -403,12 +412,11 @@ def creat_file_postgre(
     direct,
 ):
     headers = {
-        "X-Download-Region-Type": region.type,
-        "X-Download-Region-Value": region.value,
-        "X-Download-Type-File": payload.typeDownload,
-        'X-Download-Layer':payload.layer.valueType,
-        'X-Download-Filter':valueFilter
-        
+        'X-Download-Region-Type': region.type,
+        'X-Download-Region-Value': region.value,
+        'X-Download-Type-File': payload.typeDownload,
+        'X-Download-Layer': payload.layer.valueType,
+        'X-Download-Filter': valueFilter,
     }
     file_type = '.zip'
     if payload.typeDownload == 'csv':
@@ -428,26 +436,14 @@ def creat_file_postgre(
     except ValueError as e:
         if str(e) == 'Cannot write empty DataFrame to file.':
             logger.info(f'{e}')
-            raise HTTPException(
-                400,
-                'file_empty', headers=headers
-            )
+            raise HTTPException(400, 'file_empty', headers=headers)
         logger.exception('Valor Error not empty')
-        raise HTTPException(
-            400,
-            f'{e}', headers=headers
-        )
+        raise HTTPException(400, f'{e}', headers=headers)
     except FilterException as e:
-        raise HTTPException(
-            400,
-            f'{e}', headers=headers
-        )
+        raise HTTPException(400, f'{e}', headers=headers)
 
     except Exception as e:
-        raise HTTPException(
-            400,
-            f'{e}', headers=headers
-        )
+        raise HTTPException(400, f'{e}', headers=headers)
 
     with tempfile.TemporaryDirectory() as tmpdirname:
         client = client_minio()
@@ -487,31 +483,26 @@ def creat_file_postgre(
                 df, schema = geofile.gpd()
                 df.to_file(f'{tmpdirname}/{fileParam}.shp')
         except OGR2OGRisRun:
-            raise HTTPException(
-                400,
-                f'ogr2ogr_run', headers=headers
-            )
+            raise HTTPException(400, f'ogr2ogr_run', headers=headers)
         except ValueError as e:
             if str(e) == 'Cannot write empty DataFrame to file.':
                 logger.info(f'{e}')
-                raise HTTPException(
-                    400,
-                    'file_empty', headers=headers
-                )
+                raise HTTPException(400, 'file_empty', headers=headers)
             logger.exception('Valor Error not empty')
-            raise HTTPException(
-                400,
-                f'{e}', headers=headers
-            )
+            raise HTTPException(400, f'{e}', headers=headers)
         except FilterException as e:
             raise HTTPException(400, f'{e}', headers=headers)
         except Exception as e:
             logger.exception('Erro ao Criar arquivo ValueError: {e}')
-            raise HTTPException(500, f'Erro ao Criar arquivo: {e}', headers=headers)
+            raise HTTPException(
+                500, f'Erro ao Criar arquivo: {e}', headers=headers
+            )
 
         file_paths = glob(f'{tmpdirname}/*')
         if file_type == '.zip':
-            with ZipFile(f'{tmpdirname}/{fileParam}.zip', 'w', ZIP_BZIP2) as zip:
+            with ZipFile(
+                f'{tmpdirname}/{fileParam}.zip', 'w', ZIP_BZIP2
+            ) as zip:
                 # writing each file one by one
                 for file in file_paths:
                     zip.write(file, file.split('/')[-1])
@@ -555,7 +546,7 @@ def creat_file_postgre(
             raise HTTPException(500, 'Erro ao gerar arquivo', headers=headers)
 
 
-def responce_dowload(obj, direct,headers):
+def responce_dowload(obj, direct, headers):
     tmp_dowloadUrl = DowloadUrl(
         object_name=obj[0].object_name, size=obj[0].size
     )
@@ -563,4 +554,4 @@ def responce_dowload(obj, direct,headers):
         return RedirectResponse(tmp_dowloadUrl.url, 307)
 
     else:
-        return JSONResponse(content=dict(tmp_dowloadUrl), headers=headers )
+        return JSONResponse(content=dict(tmp_dowloadUrl), headers=headers)
