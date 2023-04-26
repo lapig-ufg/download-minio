@@ -108,7 +108,8 @@ node {
                 final String url = "http://$SERVER_HOMOL/containers/$application_name/start"
                 final String response = sh(script: "curl -v -X POST -s $url", returnStdout: true).trim()
                 echo response              
-            }   
+            }
+        }   
 
 
         stage('Send message to Telegram') {
@@ -127,6 +128,7 @@ node {
                     """)
                 }
         }
+
         stage('Send message to Discord') {
             //SEND DISCORD NOTIFICATION
             def discordImageSuccess = 'https://www.jenkins.io/images/logos/formal/256.png'
