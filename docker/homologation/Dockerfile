@@ -42,6 +42,7 @@ FROM python-base as production
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
 WORKDIR /APP
+COPY ./version.jso* /APP
 
 # Clone app and npm install on server
 ENV URL_TO_APPLICATION_GITHUB="https://github.com/lapig-ufg/download-minio.git"
