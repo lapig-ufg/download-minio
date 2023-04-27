@@ -32,6 +32,7 @@ node {
             steps {
                 script {
                     def commitId = sh(returnStdout: true, script: 'git log --pretty=format:%h -n 1').trim()
+                    echo commitId
                     def json = [:]
                     json['commitId'] = commitId
                     writeFile(file: 'version.json', text: groovy.json.JsonOutput.toJson(json))
