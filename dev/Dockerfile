@@ -45,7 +45,7 @@ WORKDIR /APP
 
 COPY ./ssh /root/.ssh 
 COPY ./entrypoint.sh /APP
-
+COPY ./version.jso* /APP
 
 RUN apt-get update && \
     apt-get install -y git make build-essential libpq-dev libpq5 && \

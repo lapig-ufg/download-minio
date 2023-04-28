@@ -3,7 +3,7 @@ name: Test api
 on:
   # Triggers the workflow every 5 minutes
   schedule:
-    - test: "0 9 1,7,15,24 * *"
+    - test: "0 9 * * 1"
 
 jobs:
   test:

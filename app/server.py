@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.exceptions import HTTPException as StarletteHTTPException
-
+from json import load as jload
 from app.config import logger, settings, start_logger
 from app.middleware.analytics import Analytics
 
@@ -103,11 +103,17 @@ async def shutdown():
 
 
 def custom_openapi():
+    try:
+        with open('/APP/version.json') as user_file:
+            parsed_json = jload(user_file)
+            version = parsed_json['commitId']
+    except:
+        version = 'not-informad'
     if app.openapi_schema:
         return app.openapi_schema
     openapi_schema = get_openapi(
         title='Lapig - Laboratório de Processamento de Imagens e Geoprocessamento',
-        version='1.0.1',
+        version=version,
         contact={'name': 'Lapig', 'url': 'https://lapig.iesa.ufg.br/'},
         description='API para baixar dados do mapserver',
         routes=app.routes,
