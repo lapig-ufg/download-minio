@@ -60,33 +60,43 @@ class Analytics(BaseHTTPMiddleware):
     ) -> Response:
         start = time()
         response = await call_next(request)
-        user_interaction = {
-            key.lower().replace('x-download-', '').replace('-', '_'): value
-            for key, value in dict(response.headers).items()
-            if 'x-download' in key.lower()
-        }
+        
         try:
-            ip_address = request.headers['x-forwarded-for']
+            is_teste = request.headers['x-download-test']
         except:
-            ip_address = request.client.host
-        if request.url.path.split('/')[1] in ['api', *self.routes]:
-            headers = dict(request.headers)
-            try:
-                headers.pop('cookie')
-            except:
-                pass
-            request_data = {
-                'headers': headers,
-                'hostname': request.url.hostname,
-                'ip_address': ip_address,
-                'path': request.url.path,
-                'method': request.method,
-                'status': response.status_code,
-                'response_time': int((time() - start) * 1000),
-                'created_at': datetime.now(),
+            is_teste = False
+        if not is_teste:
+            user_interaction = {
+                key.lower().replace('x-download-', '').replace('-', '_'): value
+                for key, value in dict(response.headers).items()
+                if 'x-download' in key.lower()
             }
-            if len(user_interaction) > 0:
-                request_data['user_interaction'] = user_interaction
+            logger.debug(dict(request.headers))
+            try:
+                ip_address = request.headers['x-forwarded-for']
+            except:
+                ip_address = request.client.host
+            if request.url.path.split('/')[1] in ['api', *self.routes]:
+                headers = dict(request.headers)
+                try:
+                    headers.pop('cookie')
+                except:
+                    pass
+                request_data = {
+                    'headers': headers,
+                    'hostname': request.url.hostname,
+                    'ip_address': ip_address,
+                    'path': request.url.path,
+                    'method': request.method,
+                    'status': response.status_code,
+                    'response_time': int((time() - start) * 1000),
+                    'created_at': datetime.now(),
+                }
+                if len(user_interaction) > 0:
+                    request_data['user_interaction'] = user_interaction
 
-            log_request(request_data, self.api_name)
-        return response
+                log_request(request_data, self.api_name)
+            return response
+        else:
+            logger.debug('API TA SENDO TESTADA')
+            return response
