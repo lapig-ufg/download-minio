@@ -299,12 +299,15 @@ def start_dowload(payload: Payload, update: str, direct: bool):
         
         if isinstance(payload.layer.download.raster,str):
             pathFile = payload.layer.download.raster
+            
+            BUCKET = pathFile.split('/')[0]
+            pathFile = pathFile.replace(f'{BUCKET}/','')
             valueFilter_dict = {x[0] : x[1] for x in [x.split("=") for x in valueFilter.split("&") ]}
             for k, v in valueFilter_dict.items():
                 pathFile = pathFile.replace(f"%{k.lower()}%",v) 
             
             objects = client.list_objects(
-                settings.BUCKET,
+                BUCKET,
                 prefix=pathFile,
                 recursive=True,
             )           
@@ -340,7 +343,7 @@ def start_dowload(payload: Payload, update: str, direct: bool):
     )
 
     objects_list = list(objects)
-    logger.debug(f'{len(objects_list)} , {update}, {settings.KEY_UPDATE}')
+    logger.debug(f'len:{len(objects_list)} , {update}, {settings.KEY_UPDATE}')
 
     if len(objects_list) == 1 and not update == settings.KEY_UPDATE:
         return responce_dowload(objects_list, direct, headers)
@@ -348,7 +351,7 @@ def start_dowload(payload: Payload, update: str, direct: bool):
     elif len(objects_list) > 1:
         logger.exception('ERROR TEM MAIS DE UM OBJECT')
         raise HTTPException(500, 'Falha ao carregar o dados', headers=headers)
-    elif isinstance(payload.layer.download.raster,str) and len(objects_list) != 1 :
+    elif isinstance(payload.layer.download.raster,str) and payload.typeDownload == 'raster' :
         raise HTTPException(404, 'Arquivo não existe', headers=headers)
     if payload.typeDownload == 'raster':
         client = client_minio()
@@ -562,7 +565,7 @@ def creat_file_postgre(
 
 def responce_dowload(obj, direct, headers):
     tmp_dowloadUrl = DowloadUrl(
-        object_name=obj[0].object_name, size=obj[0].size
+        object_name=obj[0].object_name, size=obj[0].size,buckt=obj[0].bucket_name
     )
     if direct:
         return RedirectResponse(tmp_dowloadUrl.url, 307)
