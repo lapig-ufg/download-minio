@@ -176,7 +176,7 @@ class CreatGeoFile:
     def gpd(self):
         con = geodb(self.db)
         query = self.query()
-        logger.debug(query)
+        logger.info(query)
         if self.fileType in ['shp', 'gpkg']:
             df = gpd.GeoDataFrame.from_postgis(query, con, geom_col=self.geom)
             schema_df = gpd.io.file.infer_schema(df)

@@ -166,7 +166,7 @@ class Download(BaseModel):
     csv: Optional[bool]
     shp: Optional[bool]
     gpkg: Optional[bool]
-    raster: Optional[bool]
+    raster: Optional[bool|str]
     layerTypeName: str
     loading: Optional[bool]
 
