@@ -288,7 +288,7 @@ def start_dowload(payload: Payload, update: str, direct: bool):
                 logger.exception('eu acho que é sql')
 
     logger.debug(f'name_layer:{name_layer} map_type:{map_type}')
-    if not is_valid_query(payload.typeDownload, map_type):
+    if not is_valid_query(payload.typeDownload, map_type)  and isinstance(payload.layer.download.raster,bool):
         raise HTTPException(
             415,
             f'Incongruity in the type of data entered, please enter valid data for this layer\n Valid formats {get_format_valid(map_type)}',
@@ -296,14 +296,26 @@ def start_dowload(payload: Payload, update: str, direct: bool):
         )
 
     if payload.typeDownload == 'raster':
-
-        name_layer = name_layer.replace('/STORAGE/catalog/', '')
-        pathFile = f'raster/{name_layer}'
-        objects = client.list_objects(
-            settings.BUCKET,
-            prefix=f'{pathFile}',
-            recursive=True,
-        )
+        
+        if isinstance(payload.layer.download.raster,str):
+            pathFile = payload.layer.download.raster
+            valueFilter_dict = {x[0] : x[1] for x in [x.split("=") for x in valueFilter.split("&") ]}
+            for k, v in valueFilter_dict.items():
+                pathFile = pathFile.replace(f"%{k.lower()}%",v) 
+            
+            objects = client.list_objects(
+                settings.BUCKET,
+                prefix=pathFile,
+                recursive=True,
+            )           
+        else:
+            name_layer = name_layer.replace('/STORAGE/catalog/', '')
+            pathFile = f'raster/{name_layer}'
+            objects = client.list_objects(
+                settings.BUCKET,
+                prefix=f'{pathFile}',
+                recursive=True,
+            )
 
     else:
         # ows/city/1200401/gpkg/pasture_col6_s100
@@ -335,7 +347,9 @@ def start_dowload(payload: Payload, update: str, direct: bool):
 
     elif len(objects_list) > 1:
         logger.exception('ERROR TEM MAIS DE UM OBJECT')
-        raise HTTPException(500, 'Flaha ao carregar o dados', headers=headers)
+        raise HTTPException(500, 'Falha ao carregar o dados', headers=headers)
+    elif isinstance(payload.layer.download.raster,str) and len(objects_list) != 1 :
+        raise HTTPException(404, 'Arquivo não existe', headers=headers)
     if payload.typeDownload == 'raster':
         client = client_minio()
         try:
