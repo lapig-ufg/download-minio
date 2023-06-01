@@ -71,12 +71,14 @@ class Analytics(BaseHTTPMiddleware):
                 for key, value in dict(response.headers).items()
                 if 'x-download' in key.lower()
             }
-            logger.debug(dict(request.headers))
+            
             try:
                 ip_address = request.headers['x-forwarded-for']
             except:
                 ip_address = request.client.host
+
             if request.url.path.split('/')[1] in ['api', *self.routes]:
+                logger.debug(dict(request.headers))
                 headers = dict(request.headers)
                 try:
                     headers.pop('cookie')
