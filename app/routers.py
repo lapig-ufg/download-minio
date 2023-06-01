@@ -1,4 +1,4 @@
-from .api import download, layers, timeseries
+from .api import download, layers, timeseries, status
 
 
 def created_routes(app):
@@ -11,5 +11,9 @@ def created_routes(app):
 
     app.include_router(
         timeseries.router, prefix='/api/timeseries', tags=['Time Series']
+    )
+
+    app.include_router(
+        status.router, prefix='/status', tags=['Lapig Status'], include_in_schema=False
     )
     return app
