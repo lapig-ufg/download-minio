@@ -36,9 +36,6 @@ async def get_status_jobs():
                 if RUNNING:
                         now = datetime.now().astimezone(pytz.utc)
                         start = RUNNING['startRunning'].replace(tzinfo=pytz.utc)
-                        logger.debug(RUNNING)
-                        logger.debug(f"{RUNNING['startRunning']},{now}")
-                        
                         time = (now-start).total_seconds() / 60.0
                         result['running'] = {'runtime_minutes':time}
                 TEMPOMEDIO = db.find({'status':'DONE'},{'startRunning':1,'endRunning':1})
