@@ -131,6 +131,7 @@ class CreatGeoFile:
                 'query': f" UPPER(unaccent(bioma)) = UPPER(unaccent('{value}'))",
             },
             'fronteira': {
+                'amz_legal': 'amaz_legal = 1',
                 'amaz_legal': 'amaz_legal = 1',
                 'matopiba': 'matopiba = 1',
             },
@@ -144,7 +145,10 @@ class CreatGeoFile:
             if region == 'country':
                 return ''
             if region == 'fronteira':
+                if value == 'amz_legal':
+                    value = 'amaz_legal'
                 if not value in self.cols:
+                    logger.debug(self.cols)
                     raise FilterException('unable_filter_layer')
                 return query[region][value]
 
