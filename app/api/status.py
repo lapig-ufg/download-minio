@@ -4,6 +4,8 @@ from datetime import timedelta, datetime
 from app.config import logger, settings
 import pandas as pd
 import pytz
+import numpy as np
+from app.util.functions import number2text
 
 router = APIRouter()
 
@@ -47,3 +49,71 @@ async def get_status_jobs():
                 return result
 
 
+
+@router.get(
+    '/access',
+    name='Get access',
+    response_description='Get status access',
+)
+async def get_status_jobs():
+        with MongoClient(settings.MONGODB_URL) as client:
+                db = client.analytics.dowloadMinioProd
+                date = datetime.now() - timedelta(30)
+                result = db.aggregate([
+                                {
+                                        '$match': {
+                                        'created_at': {
+                                                '$gte': date
+                                        }
+                                        }
+                                }, {
+                                        '$group': {
+                                        '_id': {
+                                                '$dateToString': {
+                                                'date': '$created_at', 
+                                                'format': '%Y-%m-%d'
+                                                }
+                                        }, 
+                                        'value': {
+                                                '$sum': 1
+                                        }
+                                        }
+                                }, {
+                                        '$sort': {
+                                        '_id': 1
+                                        }
+                                }
+                                ])
+                x=[]
+                y=[]
+                for c in result:
+                        x.append(c['_id'])
+                        y.append(c['value'])
+                
+                ymax = int(np.mean([np.percentile(y,80), np.percentile(y,25)]))+5     
+                annotations = []
+                texts = [number2text(i) for i in y]
+                for i, text in enumerate(texts):
+                        annotations.append({
+                        'x': x[i],
+                        'y': 5,
+                        'text': text,
+                        'showarrow': False,
+                        'font': {
+                                'color': '#000000', 
+                                'size': 12
+                        }})
+                                         
+                return  {'date':[{
+                                'x': x,
+                                'y': y,
+                                'type': 'bar'
+                        }],
+                        'layout':{
+                                'annotations':annotations,
+                                'yaxis': {
+                                'range': [0, ymax ],
+                        }
+                        }
+                        }
+        
