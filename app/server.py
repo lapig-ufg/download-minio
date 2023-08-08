@@ -12,13 +12,14 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from json import load as jload
 from app.config import logger, settings, start_logger
 from app.middleware.analytics import Analytics
+from app.middleware.TokenMiddleware import TokenMiddleware
 
 from .routers import created_routes
 
 start_logger()
 
 app = FastAPI()
-
+app.add_middleware(TokenMiddleware)
 app.add_middleware(Analytics, api_name=settings.API_NAME)
 
 

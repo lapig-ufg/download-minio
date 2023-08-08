@@ -12,7 +12,7 @@ from app.config import logger, settings
 from app.exceptions import OGR2OGRisRun
 from app.functions import client_minio, process_is_run_by_fileName
 from app.model.creat_geofile import CreatGeoFile
-from app.model.functions import get_format_valid, is_valid_query
+from app.model.functions import get_format_valid, is_valid_query, remove_accents
 from app.model.models import GeoFile
 from app.model.payload import (
     DowloadUrl,
@@ -123,10 +123,10 @@ def url_geofile(
 ):
     headers = {
         'X-Download-Region-Type': '',
-        'X-Download-Region-Value': regionValue,
-        'X-Download-Type-File': fileType,
-        'X-Download-Layer': valueType,
-        'X-Download-Filter': valueFilter,
+        'X-Download-Region-Value': remove_accents(regionValue),
+        'X-Download-Type-File': remove_accents(fileType),
+        'X-Download-Layer': remove_accents(valueType),
+        'X-Download-Filter': remove_accents(valueFilter),
     }
     layerTypeName = None
     filterLabel = None
@@ -237,11 +237,11 @@ def start_dowload(payload: Payload, update: str, direct: bool):
     valueFilter = ''
     region = payload.region
     headers = {
-        'X-Download-Region-Type': region.type,
-        'X-Download-Region-Value': region.value,
-        'X-Download-Type-File': payload.typeDownload,
-        'X-Download-Layer': payload.layer.valueType,
-        'X-Download-Filter': valueFilter,
+        'X-Download-Region-Type': remove_accents(region.type),
+        'X-Download-Region-Value': remove_accents(region.value),
+        'X-Download-Type-File': remove_accents(payload.typeDownload),
+        'X-Download-Layer': remove_accents(payload.layer.valueType),
+        'X-Download-Filter': remove_accents(valueFilter),
     }
     try:
         valueFilter = payload.filter.valueFilter
@@ -429,11 +429,11 @@ def creat_file_postgre(
     direct,
 ):
     headers = {
-        'X-Download-Region-Type': region.type,
-        'X-Download-Region-Value': region.value,
-        'X-Download-Type-File': payload.typeDownload,
-        'X-Download-Layer': payload.layer.valueType,
-        'X-Download-Filter': valueFilter,
+        'X-Download-Region-Type': remove_accents(region.type),
+        'X-Download-Region-Value': remove_accents(region.value),
+        'X-Download-Type-File': remove_accents(payload.typeDownload),
+        'X-Download-Layer': remove_accents(payload.layer.valueType),
+        'X-Download-Filter': remove_accents(valueFilter),
     }
     file_type = '.zip'
     if payload.typeDownload == 'csv':
