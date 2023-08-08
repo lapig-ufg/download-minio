@@ -2,7 +2,7 @@ import subprocess
 import tempfile
 from glob import glob
 from typing import Union
-from zipfile import ZIP_BZIP2, ZipFile
+from zipfile import ZIP_DEFLATED, ZipFile
 
 from fastapi import APIRouter, HTTPException, Path, Query
 from fastapi.responses import JSONResponse, RedirectResponse
@@ -236,6 +236,7 @@ def start_dowload(payload: Payload, update: str, direct: bool):
         file_type = '.csv'
     valueFilter = ''
     region = payload.region
+    region.value = remove_accents(region.value)
     headers = {
         'X-Download-Region-Type': remove_accents(region.type),
         'X-Download-Region-Value': remove_accents(region.value),
@@ -435,6 +436,7 @@ def creat_file_postgre(
         'X-Download-Layer': remove_accents(payload.layer.valueType),
         'X-Download-Filter': remove_accents(valueFilter),
     }
+    logger.debug(headers)
     file_type = '.zip'
     if payload.typeDownload == 'csv':
         file_type = '.csv'
@@ -443,7 +445,7 @@ def creat_file_postgre(
             fileType=payload.typeDownload,
             file=f'{pathFile}{file_type}',
             regiao=region.type,
-            value=region.value,
+            value=remove_accents(region.value),
             sql_layer=sql_layer,
             valueFilter=valueFilter,
             db=db,
@@ -518,7 +520,7 @@ def creat_file_postgre(
         file_paths = glob(f'{tmpdirname}/*')
         if file_type == '.zip':
             with ZipFile(
-                f'{tmpdirname}/{fileParam}.zip', 'w', ZIP_BZIP2
+                f'{tmpdirname}/{fileParam}.zip', 'w', ZIP_DEFLATED
             ) as zip:
                 # writing each file one by one
                 for file in file_paths:
