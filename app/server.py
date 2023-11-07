@@ -54,11 +54,18 @@ async def http_exception_handler(request, exc):
     logger.info(exc)
 
     if request.url.path.split('/')[1] == 'api':
-        return JSONResponse(
-            content={'status_code': start_code, 'message': exc.detail},
-            status_code=start_code,
-            headers=exc.headers,
-        )
+        try:
+            return JSONResponse(
+                content={'status_code': start_code, 'message': exc.detail},
+                status_code=start_code,
+                headers=exc.headers,
+            )
+        except:
+            return JSONResponse(
+                content={'status_code': start_code, 'message': exc.detail},
+                status_code=start_code
+            )
+            
     base_url = request.base_url
     if settings.HTTPS:
         base_url = f'{base_url}'.replace('http://', 'https://')

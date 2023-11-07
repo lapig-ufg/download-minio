@@ -38,6 +38,7 @@ class CreatGeoFile:
         self.db = db
         self.crs = crs
         dbConnection = geodb(self.db)
+        logger.debug(self.db)
         logger.debug(self.sql_layer)
         dataFrame = pd.read_sql(
             f"""
@@ -49,6 +50,7 @@ class CreatGeoFile:
             dbConnection,
         )
         dbConnection.close()
+        logger.debug(dataFrame)
         cols = list(dataFrame.column_name)
         self.cols = cols
         self.rename = False
@@ -163,16 +165,22 @@ class CreatGeoFile:
             raise Exception(e)
 
     def query(self):
+
         list_filter = []
         if not self.valueFilter == '':
             list_filter.append(self.valueFilter)
         tmp_region = self.region_type()
         if not tmp_region == '':
             list_filter.append(tmp_region)
+        logger.debug(f'list_filter:{list_filter}')
         if not self.query_personality is False:
+            _WHERE = ' WHERE '
+            if len(list_filter) == 0:
+                _WHERE = ' '
+
             return self.query_personality.replace(
                 '{{WHERE}}', self.where(list_filter)
-            )
+            ).replace(' WHERE ', _WHERE)
         if len(list_filter) == 0:
             return f'SELECT {self.column_name} FROM {self.sql_layer}'
         return f'SELECT {self.column_name} FROM {self.sql_layer} WHERE {self.where(list_filter)}'
