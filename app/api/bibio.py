@@ -71,7 +71,7 @@ async def getl_list_works(
     _where = ' AND '.join(list(filter(lambda x: True if x is not None else False, where)))
     if not '' == _where:
         _where = f' WHERE {_where}'
-    _range = 'offset {offset} limit {limit}'    
+    _range = f'offset {offset} limit {limit}'    
     sql = f"select id,doi,title,keywords,ismed_first,cluster from works {_where} {_range}"
     # logger.debug(sql)
     df = pd.read_sql(sql,engine)
