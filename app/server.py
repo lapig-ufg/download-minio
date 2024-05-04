@@ -10,6 +10,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from json import load as jload
+from unidecode import unidecode
 from app.config import logger, settings, start_logger
 from app.middleware.analytics import Analytics
 from app.middleware.TokenMiddleware import TokenMiddleware
@@ -83,14 +84,22 @@ async def http_exception_handler(request, exc):
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request, exc):
-    return JSONResponse(
-        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-        content=jsonable_encoder({'detail': exc.errors(), 'body': exc.body}),
-        headers={
-            'X-Download-Detail': f'{exc.errors()}',
-            'X-Download-Body': f'{exc.body}',
-        },
-    )
+    try:
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            
+            content=jsonable_encoder({'detail': unidecode(exc.errors()), 'body': unidecode(str(exc.body))}),
+            headers={
+                'X-Download-Detail': f'{unidecode(exc.errors())}',
+                'X-Download-Body': f'{unidecode(exc.body)}',
+            },
+        )
+    except Exception as e:
+        logger.exception(f'Validation exception: {e} {exc.errors()} {exc.body}')
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            content=jsonable_encoder({'detail': unidecode(str(exc.errors())), 'body': unidecode(str(exc.body))}),
+        )
 
 
 @app.on_event('startup')

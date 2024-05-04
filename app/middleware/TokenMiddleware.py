@@ -9,6 +9,7 @@ from starlette.types import ASGIApp
 from starlette.exceptions import HTTPException
 from app.config import settings
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from app.config import logger
 
 security = HTTPBearer()
 
@@ -29,9 +30,12 @@ class TokenMiddleware(BaseHTTPMiddleware):
             # Faça a verificação do token de acesso aqui
             if token != settings.TOKEN:
                 return Response(status_code=401, content="Token de acesso inválido")
-        
-        response = await call_next(request)
-        return response
+        try:
+            response = await call_next(request)
+            return response
+        except Exception as e:
+            logger.exception(f"Erro interno: {e}")
+            return Response(status_code=500, content="Error interno do servidor")
     
     def extract_token(self, request: Request) -> str:
         # Verifica o token no header 'Authorization'
