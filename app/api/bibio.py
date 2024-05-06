@@ -48,7 +48,7 @@ async def getl_list_works(id:str):
 async def getl_list_works(
     type_source:TypeSource, 
     page:int = 1,
-    serch: str = None,
+    search: str = None,
     cluster: int = None,
     limit: int = 100
     ):
@@ -62,8 +62,8 @@ async def getl_list_works(
     
     where.append(type_source.where())
     
-    if serch is not None:
-        where.append(f"to_tsquery('english', '{serch}') @@ works.search ")
+    if search is not None:
+        where.append(f"to_tsquery('english', '{search}') @@ works.search ")
         
     if cluster is not None:
         where.append(f'cluster = {cluster}')
