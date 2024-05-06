@@ -65,8 +65,8 @@ async def getl_list_works(
     if serch is not None:
         where.append(f"to_tsquery('english', '{serch}') @@ works.search ")
         
-    if cluseter is not None:
-        where.append(f'cluster = {cluseter}')
+    if cluster is not None:
+        where.append(f'cluster = {cluster}')
 
     _where = ' AND '.join(list(filter(lambda x: True if x is not None else False, where)))
     if not '' == _where:
