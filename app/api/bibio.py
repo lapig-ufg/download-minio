@@ -27,7 +27,7 @@ def get_img(row):
     response_description='List collections _id ',
     response_model=Source,
 )
-async def getl_list_works(id:str):
+async def getl_works(id:str):
 
     df = pd.read_sql(f"select * from works where id = '{id}'",engine)
     df['image'] = df.apply(get_img, axis=1)
@@ -85,7 +85,7 @@ async def getl_list_works(
         _where = f' WHERE {_where}'
     _range = f'offset {offset} limit {limit}'    
     sql = f"select id,doi,title,keywords,ismed_first,cluster from works {_where} {_sort} {_range}"
-    # logger.debug(sql)
+    logger.debug(sql)
     df = pd.read_sql(sql,engine)
     df['image'] = df.apply(get_img, axis=1)
     return df.to_dict('records')
