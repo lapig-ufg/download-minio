@@ -45,12 +45,18 @@ async def getl_list_works(id:str):
     response_description='List collections _id ',
     response_model=List[BaseSource],
 )
+
+#   active: string,
+#  direction: string,
 async def getl_list_works(
     type_source:TypeSource, 
     page:int = 1,
     search: str = None,
     cluster: int = None,
+    sort_active:str = None,
+    sort_direction:str = None,
     limit: int = 100
+    
     ):
 
     if limit > 500:
@@ -62,17 +68,23 @@ async def getl_list_works(
     
     where.append(type_source.where())
     
+    _sort = ''
     if search is not None:
         where.append(f"to_tsquery('english', '{search}') @@ works.search ")
         
     if cluster is not None:
         where.append(f'cluster = {cluster}')
+        
+        
+    if sort_active is not None and sort_direction in ['asc','desc']:
+        _sort = f' ORDER BY {sort_active} {sort_direction}'
+        
 
     _where = ' AND '.join(list(filter(lambda x: True if x is not None else False, where)))
     if not '' == _where:
         _where = f' WHERE {_where}'
     _range = f'offset {offset} limit {limit}'    
-    sql = f"select id,doi,title,keywords,ismed_first,cluster from works {_where} {_range}"
+    sql = f"select id,doi,title,keywords,ismed_first,cluster from works {_where} {_sort} {_range}"
     # logger.debug(sql)
     df = pd.read_sql(sql,engine)
     df['image'] = df.apply(get_img, axis=1)
