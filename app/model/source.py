@@ -5,13 +5,13 @@ from pydantic import BaseModel, HttpUrl
 
 class TypeSource(str, Enum):
     PASTURE = 'pasture'
-    MEDICINE = 'medecine'
+    MEDICINE = 'medicine'
     ALL = 'all'
     
     def where(self):
         if self.value == 'pasture':
             return 'ismed_first = FALSE'
-        if self.value == 'pasture':
+        if self.value == 'medicine':
             return 'ismed_first = TRUE'
         return None        
     
