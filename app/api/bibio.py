@@ -49,7 +49,7 @@ async def getl_list_works(
     type_source:TypeSource, 
     page:int = 1,
     serch: str = None,
-    cluseter: int = None,
+    cluster: int = None,
     limit: int = 100
     ):
 
