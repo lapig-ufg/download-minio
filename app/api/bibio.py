@@ -3,6 +3,7 @@ from typing import Dict, List
 from fastapi import APIRouter, HTTPException
 from app.model.source import BaseSource, TypeSource, Source
 from app.config import settings, logger
+from fastapi_cache.decorator import cache
 
 import pandas as pd
 
@@ -27,6 +28,7 @@ def get_img(row):
     response_description='List collections _id ',
     response_model=Source,
 )
+@cache(expire=86400)
 async def getl_works(id:str):
 
     df = pd.read_sql(f"select * from works where id = '{id}'",engine)
@@ -45,9 +47,7 @@ async def getl_works(id:str):
     response_description='List collections _id ',
     response_model=List[BaseSource],
 )
-
-#   active: string,
-#  direction: string,
+@cache(expire=86400)
 async def getl_list_works(
     type_source:TypeSource, 
     page:int = 1,
