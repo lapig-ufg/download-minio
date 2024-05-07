@@ -15,6 +15,13 @@ from app.config import logger, settings, start_logger
 from app.middleware.analytics import Analytics
 from app.middleware.TokenMiddleware import TokenMiddleware
 
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
+
+
+from redis import asyncio as aioredis
+ 
+
 from .routers import created_routes
 
 start_logger()
@@ -105,11 +112,11 @@ async def validation_exception_handler(request, exc):
 @app.on_event('startup')
 async def startup():
     logger.debug('startup')
-    """Perform startup activities."""
-    # If you have any startup activities that need to be defined,
-    # define them here.
-    pass
-
+    try:
+        redis = aioredis.from_url(f"redis://{settings.REDIS_URL}")
+        FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
+    except:
+        logger.exception('REDIS FALL')
 
 @app.on_event('shutdown')
 async def shutdown():
