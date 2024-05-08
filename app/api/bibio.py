@@ -1,13 +1,20 @@
-from typing import Dict, List
+from typing import Dict, List, Union
+from math import ceil
 
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
 from app.model.source import BaseSource, TypeSource, Source
 from app.config import settings, logger
 from fastapi_cache.decorator import cache
 
 import pandas as pd
+import numpy as np
 
 from sqlalchemy import create_engine
+
+class Status(BaseModel):
+    pages: int
+    total: int
 
 engine = create_engine(
     f'postgresql://{settings.PGUSER}:{settings.PGPASSWORD}@{settings.PGHOST}:{settings.PGPORT}/{settings.PGDATABASE}'
@@ -45,7 +52,7 @@ async def getl_works(id:str):
 @router.get(
     '/works/list/{type_source}',
     response_description='List collections _id ',
-    response_model=List[BaseSource],
+    response_model=Union[List[BaseSource],Status],
 )
 @cache(expire=86400)
 async def getl_list_works(
@@ -84,6 +91,18 @@ async def getl_list_works(
     if not '' == _where:
         _where = f' WHERE {_where}'
     _range = f'offset {offset} limit {limit}'    
+    if page == 0:
+        sql = sql = f"select count(*) from works {_where}"
+        logger.debug(sql)
+        df = pd.read_sql(sql,engine)
+        if len(df) > 0:
+            total = int(df['count'].iloc[0])
+            return {
+                
+                'pages': int(ceil((total/limit))),
+                'total': int(total)
+            }
+    
     sql = f"select id,doi,title,keywords,ismed_first,cluster from works {_where} {_sort} {_range}"
     logger.debug(sql)
     df = pd.read_sql(sql,engine)
