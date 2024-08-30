@@ -23,37 +23,41 @@ apt-get install -y apt-transport-https \
      libpq-dev \
      libgeos-dev \
      htop \
+     libcurl4-openssl-dev \
      postgis
 
 #-----------------------------
-# install proj-7
-ARG PROJ_VERSION=7.2.0
-RUN wget https://download.osgeo.org/proj/proj-7.2.0.tar.gz && \
-    tar xvzf proj-7.2.0.tar.gz && \
-    cd proj-7.2.0 && \
-    ./configure --without-curl && \
-    make clean &&  make -j48 &&  make install 
-
+# install proj-9
+ARG PROJ_VERSION=9.4.1
+RUN wget https://download.osgeo.org/proj/proj-9.4.1.tar.gz && \
+    tar xvzf proj-9.4.1.tar.gz && \
+    cd proj-9.4.1 && \
+    mkdir build && \
+    cd build && \
+    cmake .. && \
+    cmake --build . && \
+    cmake --build . --target install
+    
 #-----------------------------
-# Download GDAL v3.6.0 Source (ex. 3.6.0)
-ARG GDAL_VERSION=3.6.0
+# Download GDAL v3.9.2 Source (ex. 3.9.2)
+ARG GDAL_VERSION=3.9.2
 RUN cd /root && \
-    wget https://github.com/OSGeo/gdal/releases/download/v3.6.0/gdal-3.6.0.tar.gz && \
-    tar xfv gdal-3.6.0.tar.gz && \
-    cd gdal-3.6.0 && \
+    wget https://github.com/OSGeo/gdal/releases/download/v3.9.2/gdal-3.9.2.tar.gz && \
+    tar xfv gdal-3.9.2.tar.gz && \
+    cd gdal-3.9.2 && \
     mkdir build && \
     cd build && \
     cmake .. && \
     make -j48 install && \
     cd / && \
-    rm -rf proj-7.2.0* && \
+    rm -rf proj-9.4.1* && \
     cd /root && \
     rm -rf gdal* && \
     rm -rf /var/lib/apt/lists/* 
 
 #-----------------------------
-# Download Python 3.10.8 Source (ex. 3.10.8)
-RUN apt-get install -y  build-essential \
+# Download Python 3.10.14 Source (ex. 3.10.14)
+RUN apt-get update && apt-get install -y  build-essential \
                         zlib1g-dev \
                         libncurses5-dev \
                         libgdbm-dev \
@@ -63,10 +67,12 @@ RUN apt-get install -y  build-essential \
                         libffi-dev \ 
                         libsqlite3-dev \
                         wget \  
-                        libbz2-dev && \
-                        wget https://www.python.org/ftp/python/3.10.8/Python-3.10.8.tar.xz && \
-                        tar xfv Python-3.10.8.tar.xz && \
-                        cd Python-3.10.8 && \
+                        libbz2-dev \
+                        gcovr && \
+                        wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tar.xz && \
+                        tar xfv Python-3.10.14.tar.xz && \
+                        cd Python-3.10.14 && \
+                        ldconfig && \
                         ./configure --enable-optimizations && \
                         make -j48 install  
 

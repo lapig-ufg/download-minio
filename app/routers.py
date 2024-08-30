@@ -1,4 +1,4 @@
-from .api import download, layers, timeseries, status
+from .api import download, layers, timeseries, status, bibio
 
 
 def created_routes(app):
@@ -11,6 +11,9 @@ def created_routes(app):
 
     app.include_router(
         timeseries.router, prefix='/api/timeseries', tags=['Time Series']
+    )
+    app.include_router(
+        bibio.router, prefix='/api/bibio', tags=['Bibiografia Patagem']
     )
 
     app.include_router(

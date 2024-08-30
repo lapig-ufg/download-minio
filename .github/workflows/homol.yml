@@ -9,10 +9,9 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      REGISTRYSERVER: ${{secrets.REGISTRYHOMOL}}
-      SERVER_KNOWN: ${{secrets.SERVER_HOMOL_KNOWN}}
-      DOCKER_SERVER: ${{secrets.SERVER_HOMOL}}
-      SSH_SERVER: ${{secrets.SERVER_HOMOL_SSH}}
+      SERVER_KNOWN: ${{secrets.SERVER_LAMCAD_KNOWN}}
+      DOCKER_SERVER: ${{secrets.DOCKER_LAMCAD}}
+      SSH_SERVER: ${{secrets.SERVER_LAMCAD_SSH}}
       DOCKER_PATH: "homol"
       
 
@@ -27,7 +26,7 @@ jobs:
       LAPIG_COMMIT_DATE: ${{ steps.creat_env.outputs.LAPIG_COMMIT_DATE }}
 
       CREATE_STATUS: ${{steps.deploy_container.outputs.CREATE_STATUS}}
-      DELETE_STATUS: ${{steps.deploy_container.outputs.DELETE_STATUS}}
+      DELETE_STATUS: ${{steps.delete_container.outputs.DELETE_STATUS}}
       START_STATUS: ${{steps.start_container.outputs.START_STATUS}}
 
 
@@ -64,24 +63,23 @@ jobs:
         run: echo "{\"commitId\":\"$LAST_COMMIT_HASH\"}" > version.json
 
 
-
       - name: Build Docker
         run: |
-          docker build -t $REGISTRYSERVER/$application_name:${LAST_COMMIT_HASH} -t $REGISTRYSERVER/$application_name:latest  -f docker/$DOCKER_PATH/Dockerfile . --no-cache
+          docker build -t lapig/$application_name:${DOCKER_PATH}_${LAST_COMMIT_HASH} -t lapig/$application_name:${DOCKER_PATH}_latest  -f docker/$DOCKER_PATH/Dockerfile . --no-cache
 
 
       - name: Login to Docker Registry
-        run: echo "${{ secrets.HARBOR_PASS }}" | docker login -u "${{ secrets.HARBOR_USER }}" --password-stdin "${{ secrets.URL_PRIVATE_REGISTRY }}"
+        run: echo "${{ secrets.DOCKERHUB_PASS }}" | docker login -u "lapig" --password-stdin
 
       - name: Push Image to Registry
         run: |
-          docker push $REGISTRYSERVER/$application_name:${LAST_COMMIT_HASH}
-          docker push $REGISTRYSERVER/$application_name:latest
+          docker push lapig/$application_name:${DOCKER_PATH}_${LAST_COMMIT_HASH}
+          docker push lapig/$application_name:${DOCKER_PATH}_latest
 
       - name: Remove image locally
         run: |
-          docker rmi $REGISTRYSERVER/$application_name:${LAST_COMMIT_HASH}
-          docker rmi $REGISTRYSERVER/$application_name:latest
+          docker rmi lapig/$application_name:${DOCKER_PATH}_${LAST_COMMIT_HASH}
+          docker rmi lapig/$application_name:${DOCKER_PATH}_latest
 
 
       - name: Add SSH key to known_hosts
@@ -94,29 +92,33 @@ jobs:
 
       - name: Pull Image on Server
         run: |
-          ssh $SSH_SERVER "docker pull $REGISTRYSERVER/$application_name:latest"
+          ssh $SSH_SERVER "docker pull lapig/$application_name:${DOCKER_PATH}_latest"
 
 
-      - name: Deploy Container
-        id: deploy_container
+      - name: Delete Container
+        id: delete_container
+        continue-on-error: true
         run: |
           delete_status=$(ssh $SSH_SERVER "curl -v -X DELETE -w "%{http_code}"  http://$DOCKER_SERVER/containers/$application_name?force=true  2>/dev/null")  
-          create_status=$(ssh $SSH_SERVER "curl -v -X POST -H 'Content-Type: application/json' -d @${{secrets.CONFIG_FILES}}$application_name.json -s -o /dev/null -w "%{http_code}"  http://$DOCKER_SERVER/containers/create?name=$application_name  2>/dev/null")  
           case $delete_status in
             204) delete_status_text="OK";;
             *) delete_status_text="ERROR";;
           esac
+          echo "del $delete_status"
+          echo "DELETE_STATUS=$delete_status_text" >> "$GITHUB_OUTPUT"
+  
+            
+      - name: Deploy Container
+        id: deploy_container
+        run: |
+          create_status=$(ssh $SSH_SERVER "curl -v -X POST -H 'Content-Type: application/json' -d @${{secrets.LAMCAD_FILES}}$application_name.json -s -o /dev/null -w "%{http_code}"  http://$DOCKER_SERVER/containers/create?name=$application_name  2>/dev/null")  
           
           case $create_status in
             201) create_status_text="OK";;
             *) create_status_text="ERROR";;
           esac
-          
-          echo "del $delete_status"
           echo "creat $create_status"
-          
           echo "CREATE_STATUS=$create_status_text" >> "$GITHUB_OUTPUT"
-          echo "DELETE_STATUS=$delete_status_text" >> "$GITHUB_OUTPUT"
 
       - name: Start Container
         id: start_container
@@ -130,7 +132,6 @@ jobs:
           
           echo "START_STATUS=$start_status_text" >> "$GITHUB_OUTPUT"
   
-
   post-deploy:
     runs-on: ubuntu-latest
     needs: build-and-deploy

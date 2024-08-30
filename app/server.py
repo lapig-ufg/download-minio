@@ -10,9 +10,17 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from json import load as jload
+from unidecode import unidecode
 from app.config import logger, settings, start_logger
 from app.middleware.analytics import Analytics
 from app.middleware.TokenMiddleware import TokenMiddleware
+
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
+
+
+from redis import asyncio as aioredis
+ 
 
 from .routers import created_routes
 
@@ -54,11 +62,18 @@ async def http_exception_handler(request, exc):
     logger.info(exc)
 
     if request.url.path.split('/')[1] == 'api':
-        return JSONResponse(
-            content={'status_code': start_code, 'message': exc.detail},
-            status_code=start_code,
-            headers=exc.headers,
-        )
+        try:
+            return JSONResponse(
+                content={'status_code': start_code, 'message': exc.detail},
+                status_code=start_code,
+                headers=exc.headers,
+            )
+        except:
+            return JSONResponse(
+                content={'status_code': start_code, 'message': exc.detail},
+                status_code=start_code
+            )
+            
     base_url = request.base_url
     if settings.HTTPS:
         base_url = f'{base_url}'.replace('http://', 'https://')
@@ -76,24 +91,32 @@ async def http_exception_handler(request, exc):
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request, exc):
-    return JSONResponse(
-        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-        content=jsonable_encoder({'detail': exc.errors(), 'body': exc.body}),
-        headers={
-            'X-Download-Detail': f'{exc.errors()}',
-            'X-Download-Body': f'{exc.body}',
-        },
-    )
+    try:
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            
+            content=jsonable_encoder({'detail': unidecode(exc.errors()), 'body': unidecode(str(exc.body))}),
+            headers={
+                'X-Download-Detail': f'{unidecode(exc.errors())}',
+                'X-Download-Body': f'{unidecode(exc.body)}',
+            },
+        )
+    except Exception as e:
+        logger.exception(f'Validation exception: {e} {exc.errors()} {exc.body}')
+        return JSONResponse(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            content=jsonable_encoder({'detail': unidecode(str(exc.errors())), 'body': unidecode(str(exc.body))}),
+        )
 
 
 @app.on_event('startup')
 async def startup():
     logger.debug('startup')
-    """Perform startup activities."""
-    # If you have any startup activities that need to be defined,
-    # define them here.
-    pass
-
+    try:
+        redis = aioredis.from_url(f"redis://{settings.REDIS_URL}")
+        FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
+    except:
+        logger.exception('REDIS FALL')
 
 @app.on_event('shutdown')
 async def shutdown():
