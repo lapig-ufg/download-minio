@@ -48,7 +48,7 @@ COPY ./version.jso* /APP
 ENV URL_TO_APPLICATION_GITHUB="https://github.com/lapig-ufg/download-minio.git"
 ENV BRANCH="main"
 
-RUN add-apt-repository universe && apt-get update && \
+RUN apt-get update && apt-get install -y software-properties-common && add-apt-repository universe && apt-get update && \
     apt-get install -y git make libpq-dev libpq5 && \
     mkdir -p /APP && cd /APP && \
     git clone -b ${BRANCH} ${URL_TO_APPLICATION_GITHUB} && \
