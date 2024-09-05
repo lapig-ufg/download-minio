@@ -324,7 +324,7 @@ def start_dowload(payload: Payload, update: str, direct: bool):
     else:
         # ows/city/1200401/gpkg/pasture_col6_s100
 
-        pathFile = f'{region.type}/{region.value.enum_name}/{payload.typeDownload}/{payload.layer.valueType}/{fileParam}'
+        pathFile = f'{region.type}/{region.value}/{payload.typeDownload}/{payload.layer.valueType}/{fileParam}'
         objects = client.list_objects(
             settings.BUCKET,
             prefix=f'{pathFile}{file_type}',
