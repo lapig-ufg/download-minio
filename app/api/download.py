@@ -235,7 +235,7 @@ def start_dowload(payload: Payload, update: str, direct: bool):
     if payload.typeDownload == 'csv':
         file_type = '.csv'
     valueFilter = ''
-    region = payload.region.enum_name
+    region = payload.region
     region.value = remove_accents(region.value)
     headers = {
         'X-Download-Region-Type': remove_accents(region.type),
@@ -402,6 +402,7 @@ def start_dowload(payload: Payload, update: str, direct: bool):
             db = ''
             logger.debug('eu acho que é sql')
         logger.info(f'Processando map_layer:{name_layer}')
+        logger.info(db)
         if isinstance(map_conect, dict):
             return creat_file_postgre(
                 payload,
