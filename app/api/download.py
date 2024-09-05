@@ -235,7 +235,7 @@ def start_dowload(payload: Payload, update: str, direct: bool):
     if payload.typeDownload == 'csv':
         file_type = '.csv'
     valueFilter = ''
-    region = payload.region
+    region = payload.region.enum_name
     region.value = remove_accents(region.value)
     headers = {
         'X-Download-Region-Type': remove_accents(region.type),
@@ -324,7 +324,7 @@ def start_dowload(payload: Payload, update: str, direct: bool):
     else:
         # ows/city/1200401/gpkg/pasture_col6_s100
 
-        pathFile = f'{region.type}/{region.value}/{payload.typeDownload}/{payload.layer.valueType}/{fileParam}'
+        pathFile = f'{region.type}/{region.value.enum_name}/{payload.typeDownload}/{payload.layer.valueType}/{fileParam}'
         objects = client.list_objects(
             settings.BUCKET,
             prefix=f'{pathFile}{file_type}',
