@@ -1,7 +1,7 @@
 ###############################################
 # Base Image
 ###############################################
-FROM lapig/app_gdalpoetry:base as python-base
+FROM lapig/app_gdalpoetry:base AS python-base
 
 ENV LAPIG_ENV="production" \
     PYTHONUNBUFFERED=1 \
@@ -22,7 +22,7 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 ###############################################
 # Builder Image
 ###############################################
-FROM python-base as builder-base
+FROM python-base AS builder-base
 RUN apt-get update && apt-get install --no-install-recommends -y curl build-essential libpq-dev libpq5
 
 # install poetry - respects $POETRY_VERSION & $POETRY_HOME
@@ -38,7 +38,7 @@ RUN poetry install --only main --no-interaction --no-ansi
 ###############################################
 # Production Image
 ###############################################
-FROM python-base as production
+FROM python-base AS production
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
 WORKDIR /APP

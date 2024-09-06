@@ -229,6 +229,8 @@ class Region(BaseModel):
         EnumCity,
         str,
     ]
+    def get(self):
+        return str(self.value).split('.')[1]
 
 
 class Payload(BaseModel):
