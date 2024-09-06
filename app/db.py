@@ -15,9 +15,9 @@ from .config import settings
 
 
 def geodb(database=''):
-    user = settings.DB_USER
-    password = settings.DB_PASSWORD
-    host = settings.DB_HOST
+    user = settings.PGUSER
+    password = settings.PGPASSWORD
+    host = settings.PGHOST
     port = settings.DB_PORT
     db = settings.DB_DATABASE
     if isinstance(database, dict):

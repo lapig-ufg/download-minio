@@ -16,9 +16,9 @@ LISTL_LAYER_OWS = 'listl_layer_ows.lgobj'
 LAYER_METATA_OWS =  'layer_metata_ows.lgobj'
 
 
-DB_USER = 'user'
-DB_PASSWORD = '123456'
-DB_HOST = 'localhost'
+PGUSER = 'user'
+PGPASSWORD = '123456'
+PGHOST = 'localhost'
 DB_PORT = '5432'
 DB_DATABASE = 'gdb'
 

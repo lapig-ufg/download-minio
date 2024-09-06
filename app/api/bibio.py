@@ -17,7 +17,7 @@ class Status(BaseModel):
     total: int
 
 engine = create_engine(
-    f'postgresql://{settings.PGUSER}:{settings.PGPASSWORD}@{settings.PGHOST}:{settings.PGPORT}/{settings.PGDATABASE}'
+    f'postgresql://{settings.PGUSER}:{settings.PGPASSWORD}@{settings.PGHOST}:{settings.DB_PORT}/{settings.DB_DATABASE}'
     )
 
 router = APIRouter()

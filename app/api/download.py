@@ -475,19 +475,19 @@ def creat_file_postgre(
                 df.to_csv(f'{tmpdirname}/{fileParam}.csv')
             elif payload.typeDownload == 'gpkg':
                 logger.debug(f'{tmpdirname}/{fileParam}.gpkg')
-                DB_HOST = settings.DB_HOST
+                PGHOST = settings.PGHOST
                 if db == '':
                     DB_PORT = settings.DB_PORT
-                    DB_USER = settings.DB_USER
-                    DB_PASSWORD = settings.DB_PASSWORD
+                    PGUSER = settings.PGUSER
+                    PGPASSWORD = settings.PGPASSWORD
                     DB_NAME = settings.DB_DATABASE
                 else:
                     DB_PORT = db['port']
-                    DB_USER = db['user']
-                    DB_PASSWORD = db['password'].replace("'", '')
+                    PGUSER = db['user']
+                    PGPASSWORD = db['password'].replace("'", '')
                     DB_NAME = db['dbname']
                 FILE_STR = f'{tmpdirname}/{fileParam}.gpkg'
-                PG_STR = f"PG:\"dbname='{DB_NAME}' host='{DB_HOST}' port='{DB_PORT}' user='{DB_USER}' password='{DB_PASSWORD}'\" "
+                PG_STR = f"PG:\"dbname='{DB_NAME}' host='{PGHOST}' port='{DB_PORT}' user='{PGUSER}' password='{PGPASSWORD}'\" "
                 logger.info(f'OGR2OGR {FILE_STR}')
                 if not process_is_run_by_fileName(
                     'ogr2ogr', FILE_STR.split('/')[-1]
