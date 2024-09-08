@@ -29,15 +29,12 @@ async def get_geofile(
     region: Union[
         EnumCountry, EnumRegions, EnumStates, EnumFronteiras, EnumBiomes, int
     ] = Path(
-        default=None,
         description='Qual o nome da região  você quer baixar? No caso de cidade(city) use o codigo de municipio do [IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php)',
     ),
     fileType: FileTypes = Path(
-        default=None,
         description='Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]',
     ),
-    layer: str = Path(
-        default=None, description='Nome da camada que  você quer baixar?'
+    layer: str = Path( description='Nome da camada que  você quer baixar?'
     ),
     type: str = Query('txt', include_in_schema=False),
 ):

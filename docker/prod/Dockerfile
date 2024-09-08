@@ -46,7 +46,14 @@ COPY ./version.jso* /APP
 
 # Clone app and npm install on server
 ENV URL_TO_APPLICATION_GITHUB="https://github.com/lapig-ufg/download-minio.git"
-ENV BRANCH="main"
+ENV BRANCH="main" \
+    OTEL_SERVICE_NAME="download_minio_prod" \
+    OTEL_EXPORTER_OTLP_INSECURE=true \
+    OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true \
+    OTEL_LOGS_EXPORTER=otlp \
+    OTEL_METRICS_EXPORTER=otlp \
+    OTEL_TRACES_EXPORTER=otlp
+
 
 RUN apt-get update && \
     apt-get install -y git make libpq-dev libpq5 && \
@@ -54,4 +61,4 @@ RUN apt-get update && \
     git clone -b ${BRANCH} ${URL_TO_APPLICATION_GITHUB} && \
     rm -rf /var/lib/apt/lists/* && chmod +x /APP/download-minio/start.sh
 
-CMD sh -c "cd /APP/download-minio && python creat_cach_mapfile.py && gunicorn -k  uvicorn.workers.UvicornWorker --bind 0.0.0.0:8080 -w 32 -t 0 app.server:app"
+CMD sh -c "cd /APP/download-minio && python creat_cach_mapfile.py && opentelemetry-instrument gunicorn -k  uvicorn.workers.UvicornWorker --bind 0.0.0.0:8080 -w 32 -t 0 app.server:app"

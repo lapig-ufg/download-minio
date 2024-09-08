@@ -23,6 +23,11 @@ from redis import asyncio as aioredis
  
 
 from .routers import created_routes
+import os 
+
+from opentelemetry.trace import get_tracer
+
+tracer = get_tracer(f'download_minio_{os.environ.get("LAPIG_ENV")}' )
 
 start_logger()
 

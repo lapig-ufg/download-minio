@@ -2,7 +2,13 @@ import os
 import sys
 
 from dynaconf import Dynaconf
-from loguru import logger
+
+import logging
+
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+logger.addHandler(logging.StreamHandler())
 
 
 def start_logger():
@@ -12,36 +18,6 @@ def start_logger():
     logger.info(f'The system is operating in mode {type_logger}')
 
 
-confi_format = '[ {time} | process: {process.id} | {level: <8}] {module}.{function}:{line} {message}'
-rotation = '500 MB'
-
-
-if os.environ.get('LAPIG_ENV') == 'production':
-    logger.remove()
-    logger.add(sys.stderr, level='INFO', format=confi_format)
-
-try:
-    logger.add(
-        '/logs/downloadmino/downloadmino.log', rotation=rotation, level='INFO'
-    )
-except:
-    logger.add(
-        '../logs/downloadmino/downloadmino.log',
-        rotation=rotation,
-        level='INFO',
-    )
-try:
-    logger.add(
-        '/logs/downloadmino/downloadmino_WARNING.log',
-        level='WARNING',
-        rotation=rotation,
-    )
-except:
-    logger.add(
-        '../logs/downloadmino/downloadmino_WARNING.log',
-        level='WARNING',
-        rotation=rotation,
-    )
 
 settings = Dynaconf(
     envvar_prefix='MINIO',

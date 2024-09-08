@@ -58,15 +58,13 @@ async def get_geofile(
     region: Union[
         EnumCountry, EnumRegions, EnumStates, EnumFronteiras, EnumBiomes, int
     ] = Path(
-        default=None,
         description='Qual o nome da região  você quer baixar? No caso de cidade(city) use o codigo de municipio do [IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php)',
     ),
     fileType: FileTypes = Path(
-        default=None,
         description='Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]',
     ),
     layer: str = Path(
-        default=None, description='Nome da camada que  você quer baixar?'
+         description='Nome da camada que  você quer baixar?'
     ),
     update: str = Query('Lapig', include_in_schema=False),
     direct: bool = Query(False, include_in_schema=False),
@@ -91,18 +89,14 @@ async def get_geofile_filter(
     region: Union[
         EnumCountry, EnumRegions, EnumStates, EnumFronteiras, EnumBiomes, int
     ] = Path(
-        default=None,
         description='Qual o nome da região  você quer baixar? No caso de cidade(city) use o codigo de municipio do [IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php)',
     ),
     fileType: FileTypes = Path(
-        default=None,
         description='Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]',
     ),
-    layer: str = Path(
-        default=None, description='Nome da camada que  você quer baixar?'
+    layer: str = Path( description='Nome da camada que  você quer baixar?'
     ),
-    filter: str = Path(
-        default=None, description='Filtro que sera usa para baixar camada?'
+    filter: str = Path( description='Filtro que sera usa para baixar camada?'
     ),
     update: str = Query('Lapig', include_in_schema=False),
     direct: bool = Query(False, include_in_schema=False),

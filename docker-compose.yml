@@ -5,6 +5,7 @@ services:
           dockerfile: ./docker/homol/Dockerfile
         hostname: downloadmino-server-dev
         container_name: downloadmino-server-dev
+        env_file: .env
         privileged: true
         ports:
           - '8282:8080'
