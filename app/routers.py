@@ -13,7 +13,7 @@ def created_routes(app):
         timeseries.router, prefix='/api/timeseries', tags=['Time Series']
     )
     app.include_router(
-        biblio.router, prefix='/api/biblio', tags=['Bibliografia Patagem']
+        biblio.router, prefix='/api/biblio', tags=['Bibliografia da Pastagem']
     )
 
     app.include_router(
