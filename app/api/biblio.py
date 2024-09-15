@@ -26,7 +26,7 @@ def get_img(row):
     _type = 'pasture'
     if row['ismed_first']:
         _type = 'med'
-    return f'https://{settings.DOWNLOAD_URL}/public/bibiografia/{_type}/{row["cluster"]:03}_keywords.png'
+    return f'https://{settings.DOWNLOAD_URL}/public/bibliografia/{_type}/{row["cluster"]:03}_keywords.png'
 
 
 
