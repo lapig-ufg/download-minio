@@ -23,10 +23,7 @@ engine = create_engine(
 router = APIRouter()
 
 def get_img(row):
-    _type = 'pasture'
-    if row['ismed_first']:
-        _type = 'med'
-    return f'https://{settings.DOWNLOAD_URL}/public/bibliografia/{_type}/{row["cluster"]:03}_keywords.png'
+    return f'https://{settings.DOWNLOAD_URL}/public/bibliografia/{row["type_plataforma"]}/{row["cluster"]:03}_keywords.png'
 
 
 
@@ -103,7 +100,7 @@ async def getl_list_works(
                 'total': int(total)
             }
     
-    sql = f"select id,doi,title,keywords,ismed_first,cluster, cited_by_count, publication_date, referenced_works_count, relevance_score from works {_where} {_sort} {_range}"
+    sql = f"select id,doi,title,keywords,cluster, cited_by_count, publication_date, referenced_works_count, relevance_score from works {_where} {_sort} {_range}"
     logger.debug(sql)
     df = pd.read_sql(sql,engine)
     df['image'] = df.apply(get_img, axis=1)
