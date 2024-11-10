@@ -23,7 +23,7 @@ router = APIRouter()
 
 
 def get_img(row):
-    return f'https://{settings.DOWNLOAD_URL}/public/bibliografia/{row["type_plataforma"]}/{row["cluster"]:03}_keywords.png'
+    return f'https://{settings.DOWNLOAD_URL}/public/literatura/{row["type_plataforma"]}/cluster/{row["cluster"]:03}_keywords.png'
 
 
 @router.get(
