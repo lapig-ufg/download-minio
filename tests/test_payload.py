@@ -6,7 +6,7 @@ from requests import post
 
 HOMOL_URL = 'https://devdownload.lapig.iesa.ufg.br/api/download/'
 PROD_URL = 'https://devdownload.lapig.iesa.ufg.br/api/download/'
-#URL = 'http://localhost:8282/api/download/'
+# URL = 'http://localhost:8282/api/download/'
 FILES = glob('tests/payloads/*.json')
 headers = {'X-Download-Test': 'true'}
 TESTS = []
@@ -22,7 +22,9 @@ for file in FILES:
 
 @pytest.mark.parametrize('file, payload_name', TESTS)
 def test_payload_homolog(file, payload_name):
-    request = post(HOMOL_URL, json=PAYLOAD[file][payload_name], headers=headers)
+    request = post(
+        HOMOL_URL, json=PAYLOAD[file][payload_name], headers=headers
+    )
     if not request.status_code == 200 and not request.status_code == 415:
         try:
             text = request.json()['message']
@@ -43,6 +45,7 @@ def test_payload_homolog(file, payload_name):
 
     else:
         assert request.status_code == 200
+
 
 @pytest.mark.parametrize('file, payload_name', TESTS)
 def test_payload_prod(file, payload_name):

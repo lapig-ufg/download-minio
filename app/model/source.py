@@ -6,14 +6,14 @@ from pydantic import BaseModel, HttpUrl
 
 
 class TypeSource(str, Enum):
-    PASTURE = "pasture"
-    CERRADO = "cerrado"
-    ALL = "all"
+    PASTURE = 'pasture'
+    CERRADO = 'cerrado'
+    ALL = 'all'
 
     def where(self):
-        if self.value == "pasture":
+        if self.value == 'pasture':
             return "type_plataforma = 'pastagem'"
-        if self.value == "medicine":
+        if self.value == 'medicine':
             return "type_plataforma = 'cerrado'"
         return None
 

@@ -12,7 +12,7 @@ def get_id_by_lon_lat(lon, lat, epsg):
     return get_id(f'{lon:.5f}{lat:.5f}{epsg}')
 
 
-def remove_accents(input_str:str):
+def remove_accents(input_str: str):
     nfkd_form = unicodedata.normalize('NFKD', str(input_str))
     only_ascii = nfkd_form.encode('ASCII', 'ignore')
     return only_ascii.decode('utf-8')

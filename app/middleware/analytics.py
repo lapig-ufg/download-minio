@@ -4,8 +4,10 @@ from time import time
 
 import requests
 from pymongo import MongoClient
-from starlette.middleware.base import (BaseHTTPMiddleware,
-                                       RequestResponseEndpoint)
+from starlette.middleware.base import (
+    BaseHTTPMiddleware,
+    RequestResponseEndpoint,
+)
 from starlette.requests import Request
 from starlette.responses import Response
 from starlette.types import ASGIApp
@@ -58,7 +60,7 @@ class Analytics(BaseHTTPMiddleware):
     ) -> Response:
         start = time()
         response = await call_next(request)
-        
+
         try:
             is_teste = request.headers['x-download-test']
         except:
@@ -69,7 +71,7 @@ class Analytics(BaseHTTPMiddleware):
                 for key, value in dict(response.headers).items()
                 if 'x-download' in key.lower()
             }
-            
+
             try:
                 ip_address = request.headers['x-forwarded-for']
             except:

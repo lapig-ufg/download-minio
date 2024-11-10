@@ -14,15 +14,16 @@ class Status(BaseModel):
     pages: int
     total: int
 
+
 engine = create_engine(
     f'postgresql://{settings.PGUSER}:{settings.PGPASSWORD}@{settings.PGHOST}:{settings.DB_PORT}/{settings.DB_DATABASE}'
-    )
+)
 
 router = APIRouter()
 
+
 def get_img(row):
     return f'https://{settings.DOWNLOAD_URL}/public/bibliografia/{row["type_plataforma"]}/{row["cluster"]:03}_keywords.png'
-
 
 
 @router.get(
@@ -30,74 +31,67 @@ def get_img(row):
     response_description='List collections _id ',
     response_model=Source,
 )
-async def getl_works(
-    type_source:TypeSource,
-    _id:str
-    ):
-    df = pd.read_sql(f"select * from works where {type_source.where()} AND id = '{_id}'",engine)
+async def getl_works(type_source: TypeSource, _id: str):
+    df = pd.read_sql(
+        f"select * from works where {type_source.where()} AND id = '{_id}'",
+        engine,
+    )
     df['image'] = df.apply(get_img, axis=1)
-    if len(df) >0:
+    if len(df) > 0:
         # logger.debug(df.to_dict('records')[0])
         return df.to_dict('records')[0]
-    raise HTTPException(
-        404, 'not existe work'
-                )
-    
-        
+    raise HTTPException(404, 'not existe work')
+
 
 @router.get(
     '/works/list/{type_source}',
     response_description='List collections _id ',
-    response_model=Union[List[BaseSource],Status],
+    response_model=Union[List[BaseSource], Status],
 )
 async def getl_list_works(
-    type_source:TypeSource, 
-    page:int = 1,
+    type_source: TypeSource,
+    page: int = 1,
     search: str = None,
     cluster: int = None,
-    sort_active:str = None,
-    sort_direction:str = None,
-    limit: int = 100
-    
-    ):
+    sort_active: str = None,
+    sort_direction: str = None,
+    limit: int = 100,
+):
+    logger.info((type_source, page, search, cluster, sort_active, sort_direction, limit))
     logger.info('getl_list_works')
     if limit > 500:
         limit = 500
-        
-    offset = (page-1)*limit
-    
+
+    offset = (page - 1) * limit
+
     where = []
-    
+
     where.append(type_source.where())
-    
+
     _sort = ''
     if search is not None:
         where.append(f"to_tsquery('english', '{search}') @@ works.search ")
-        
+
     if cluster is not None:
         where.append(f'cluster = {cluster}')
-        
-        
-    if sort_active is not None and sort_direction in ['asc','desc']:
-        _sort = f' ORDER BY {sort_active} {sort_direction}'
-        
 
-    _where = ' AND '.join(list(filter(lambda x: True if x is not None else False, where)))
+    if sort_active is not None and sort_direction in ['asc', 'desc']:
+        _sort = f' ORDER BY {sort_active} {sort_direction}'
+
+    _where = ' AND '.join(
+        list(filter(lambda x: True if x is not None else False, where))
+    )
     if '' != _where:
         _where = f' WHERE {_where}'
-    _range = f'offset {offset} limit {limit}'    
+    _range = f'offset {offset} limit {limit}'
     if page == 0:
-        sql = sql = f"select count(*) from works {_where}"
+        sql = sql = f'select count(*) from works {_where}'
         logger.debug(sql)
-        df = pd.read_sql(sql,engine)
+        df = pd.read_sql(sql, engine)
         if len(df) > 0:
             total = int(df['count'].iloc[0])
-            return {
-                
-                'pages': int(ceil((total/limit))),
-                'total': int(total)
-            }
-    
+            return {'pages': int(ceil((total / limit))), 'total': int(total)}
+
     sql = f"""--sql
     select type_plataforma, id,
         doi,
@@ -112,9 +106,9 @@ async def getl_list_works(
         {_where} {_sort} {_range}"""
     logger.info(sql)
     try:
-        df = pd.read_sql(sql,engine)
+        df = pd.read_sql(sql, engine)
         df['image'] = df.apply(get_img, axis=1)
         return df.to_dict('records')
     except Exception as e:
-        logger.exception(f'Error: {e}')
+        logger.exception('Error: %s', e)
         raise HTTPException(status_code=500, detail='Error processing request')

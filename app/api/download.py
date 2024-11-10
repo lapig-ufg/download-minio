@@ -12,13 +12,27 @@ from app.config import logger, settings
 from app.exceptions import OGR2OGRisRun
 from app.functions import client_minio, process_is_run_by_fileName
 from app.model.creat_geofile import CreatGeoFile
-from app.model.functions import (get_format_valid, is_valid_query,
-                                 remove_accents)
+from app.model.functions import (
+    get_format_valid,
+    is_valid_query,
+    remove_accents,
+)
 from app.model.models import GeoFile
-from app.model.payload import (DowloadUrl, Download, EnumBiomes, EnumCity,
-                               EnumCountry, EnumFronteiras, EnumRegions,
-                               EnumStates, FileTypes, Filter, Layer, Payload,
-                               Region)
+from app.model.payload import (
+    DowloadUrl,
+    Download,
+    EnumBiomes,
+    EnumCity,
+    EnumCountry,
+    EnumFronteiras,
+    EnumRegions,
+    EnumStates,
+    FileTypes,
+    Filter,
+    Layer,
+    Payload,
+    Region,
+)
 from app.util.exceptions import FilterException
 from app.util.mapfile import get_layer
 
@@ -53,9 +67,7 @@ async def get_geofile(
     fileType: FileTypes = Path(
         description='Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]',
     ),
-    layer: str = Path(
-         description='Nome da camada que  você quer baixar?'
-    ),
+    layer: str = Path(description='Nome da camada que  você quer baixar?'),
     update: str = Query('Lapig', include_in_schema=False),
     direct: bool = Query(False, include_in_schema=False),
 ):
@@ -84,10 +96,8 @@ async def get_geofile_filter(
     fileType: FileTypes = Path(
         description='Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]',
     ),
-    layer: str = Path( description='Nome da camada que  você quer baixar?'
-    ),
-    filter: str = Path( description='Filtro que sera usa para baixar camada?'
-    ),
+    layer: str = Path(description='Nome da camada que  você quer baixar?'),
+    filter: str = Path(description='Filtro que sera usa para baixar camada?'),
     update: str = Query('Lapig', include_in_schema=False),
     direct: bool = Query(False, include_in_schema=False),
 ):
@@ -150,7 +160,7 @@ def url_geofile(
                 layerTypeName = tmp_descriptor['download']['layerTypeName']
             except:
                 layerTypeName = valueType
-        except Exception as e:
+        except:
             logger.exception('ERROR COM MONGO')
     if valueFilter == 'year=all' and fileType == 'csv':
         valueFilter = ''
@@ -214,7 +224,7 @@ def url_geofile(
 
 
 def start_dowload(payload: Payload, update: str, direct: bool):
-
+    db =''
     file_type = '.zip'
     if payload.typeDownload == 'csv':
         file_type = '.csv'
@@ -273,7 +283,9 @@ def start_dowload(payload: Payload, update: str, direct: bool):
                 logger.exception('eu acho que é sql')
 
     logger.debug(f'name_layer:{name_layer} map_type:{map_type}')
-    if not is_valid_query(payload.typeDownload, map_type)  and isinstance(payload.layer.download.raster,bool):
+    if not is_valid_query(payload.typeDownload, map_type) and isinstance(
+        payload.layer.download.raster, bool
+    ):
         raise HTTPException(
             415,
             f'Incongruity in the type of data entered, please enter valid data for this layer\n Valid formats {get_format_valid(map_type)}',
@@ -281,21 +293,24 @@ def start_dowload(payload: Payload, update: str, direct: bool):
         )
 
     if payload.typeDownload == 'raster':
-        
-        if isinstance(payload.layer.download.raster,str):
+
+        if isinstance(payload.layer.download.raster, str):
             pathFile = payload.layer.download.raster
-            
+
             BUCKET = pathFile.split('/')[0]
-            pathFile = pathFile.replace(f'{BUCKET}/','')
-            valueFilter_dict = {x[0] : x[1] for x in [x.split("=") for x in valueFilter.split("&") ]}
+            pathFile = pathFile.replace(f'{BUCKET}/', '')
+            valueFilter_dict = {
+                x[0]: x[1]
+                for x in [x.split('=') for x in valueFilter.split('&')]
+            }
             for k, v in valueFilter_dict.items():
-                pathFile = pathFile.replace(f"%{k.lower()}%",v) 
-            
+                pathFile = pathFile.replace(f'%{k.lower()}%', v)
+
             objects = client.list_objects(
                 BUCKET,
                 prefix=pathFile,
                 recursive=True,
-            )           
+            )
         else:
             name_layer = name_layer.replace('/STORAGE/catalog/', '')
             pathFile = f'raster/{name_layer}'
@@ -336,7 +351,10 @@ def start_dowload(payload: Payload, update: str, direct: bool):
     elif len(objects_list) > 1:
         logger.exception('ERROR TEM MAIS DE UM OBJECT')
         raise HTTPException(500, 'Falha ao carregar o dados', headers=headers)
-    elif isinstance(payload.layer.download.raster,str) and payload.typeDownload == 'raster' :
+    elif (
+        isinstance(payload.layer.download.raster, str)
+        and payload.typeDownload == 'raster'
+    ):
         raise HTTPException(404, 'Arquivo não existe', headers=headers)
     if payload.typeDownload == 'raster':
         client = client_minio()
@@ -386,7 +404,6 @@ def start_dowload(payload: Payload, update: str, direct: bool):
             db = ''
             logger.debug('eu acho que é sql')
         logger.info(f'Processando map_layer:{name_layer}')
-        logger.info(db)
         if isinstance(map_conect, dict):
             return creat_file_postgre(
                 payload,
@@ -552,7 +569,9 @@ def creat_file_postgre(
 
 def responce_dowload(obj, direct, headers):
     tmp_dowloadUrl = DowloadUrl(
-        object_name=obj[0].object_name, size=obj[0].size,buckt=obj[0].bucket_name
+        object_name=obj[0].object_name,
+        size=obj[0].size,
+        buckt=obj[0].bucket_name,
     )
     if direct:
         return RedirectResponse(tmp_dowloadUrl.url, 307)

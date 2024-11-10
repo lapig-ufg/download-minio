@@ -16,7 +16,6 @@ def start_logger():
     logger.info(f'The system is operating in mode {type_logger}')
 
 
-
 settings = Dynaconf(
     envvar_prefix='MINIO',
     settings_files=[

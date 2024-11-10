@@ -166,7 +166,7 @@ class Download(BaseModel):
     csv: Optional[bool]
     shp: Optional[bool]
     gpkg: Optional[bool]
-    raster: Optional[bool|str]
+    raster: Optional[bool | str]
     layerTypeName: str
     loading: Optional[bool]
 
@@ -229,6 +229,7 @@ class Region(BaseModel):
         EnumCity,
         str,
     ]
+
     def get(self):
         return str(self.value).split('.')[1]
 

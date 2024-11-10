@@ -17,6 +17,9 @@ def created_routes(app):
     )
 
     app.include_router(
-        status.router, prefix='/status', tags=['Lapig Status'], include_in_schema=False
+        status.router,
+        prefix='/status',
+        tags=['Lapig Status'],
+        include_in_schema=False,
     )
     return app

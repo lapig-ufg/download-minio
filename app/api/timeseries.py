@@ -6,9 +6,15 @@ from fastapi.encoders import jsonable_encoder
 from pymongo import MongoClient
 
 from app.config import logger, settings
-from app.model.payload import (EnumBiomes, EnumCity, EnumCountry,
-                               EnumFronteiras, EnumRegions, EnumStates,
-                               FileTypes)
+from app.model.payload import (
+    EnumBiomes,
+    EnumCity,
+    EnumCountry,
+    EnumFronteiras,
+    EnumRegions,
+    EnumStates,
+    FileTypes,
+)
 
 router = APIRouter()
 
@@ -28,8 +34,7 @@ async def get_geofile(
     fileType: FileTypes = Path(
         description='Tipo de arquivo que  você quer baixar? [csv, shp, gpkg, raster]',
     ),
-    layer: str = Path( description='Nome da camada que  você quer baixar?'
-    ),
+    layer: str = Path(description='Nome da camada que  você quer baixar?'),
     type: str = Query('txt', include_in_schema=False),
 ):
     """

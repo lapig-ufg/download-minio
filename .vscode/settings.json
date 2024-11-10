@@ -1,5 +1,5 @@
 {
-    "pylint.args": ["--disable=C0303,C0304","--extension-pkg-allow-list=pydantic", "--max-line-length=120"],
+    "pylint.args": ["--disable=C0303,C0304,W0707,W1203,W0702","--extension-pkg-allow-list=pydantic", "--max-line-length=120"],
     "todo-tree.regex.regex": "(--|//|#|<!--|;|/\\*|^|^[ \\t]*(-|\\d+.))\\s*($TAGS)",
     "todo-tree.highlights.customHighlight": {
       
