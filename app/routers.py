@@ -1,4 +1,4 @@
-from .api import download, layers, timeseries, status, biblio
+from .api import biblio, download, layers, status, timeseries
 
 
 def created_routes(app):

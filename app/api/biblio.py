@@ -1,16 +1,14 @@
-from typing import Dict, List, Union
 from math import ceil
-
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from app.model.source import BaseSource, TypeSource, Source
-from app.config import settings, logger
-from fastapi_cache.decorator import cache
+from typing import List, Union
 
 import pandas as pd
-import numpy as np
-
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
 from sqlalchemy import create_engine
+
+from app.config import logger, settings
+from app.model.source import BaseSource, Source, TypeSource
+
 
 class Status(BaseModel):
     pages: int
@@ -28,14 +26,15 @@ def get_img(row):
 
 
 @router.get(
-    '/works/id/{id}',
+    '/works/{type_source}/id/{id}',
     response_description='List collections _id ',
     response_model=Source,
 )
-@cache(expire=86400)
-async def getl_works(id:str):
-
-    df = pd.read_sql(f"select * from works where id = '{id}'",engine)
+async def getl_works(
+    type_source:TypeSource,
+    _id:str
+    ):
+    df = pd.read_sql(f"select * from works where {type_source.where()} AND id = '{_id}'",engine)
     df['image'] = df.apply(get_img, axis=1)
     if len(df) >0:
         # logger.debug(df.to_dict('records')[0])
@@ -51,7 +50,6 @@ async def getl_works(id:str):
     response_description='List collections _id ',
     response_model=Union[List[BaseSource],Status],
 )
-@cache(expire=86400)
 async def getl_list_works(
     type_source:TypeSource, 
     page:int = 1,
@@ -62,7 +60,7 @@ async def getl_list_works(
     limit: int = 100
     
     ):
-
+    logger.info('getl_list_works')
     if limit > 500:
         limit = 500
         
@@ -85,7 +83,7 @@ async def getl_list_works(
         
 
     _where = ' AND '.join(list(filter(lambda x: True if x is not None else False, where)))
-    if not '' == _where:
+    if '' != _where:
         _where = f' WHERE {_where}'
     _range = f'offset {offset} limit {limit}'    
     if page == 0:
@@ -100,8 +98,23 @@ async def getl_list_works(
                 'total': int(total)
             }
     
-    sql = f"select id,doi,title,keywords,cluster, cited_by_count, publication_date, referenced_works_count, relevance_score from works {_where} {_sort} {_range}"
-    logger.debug(sql)
-    df = pd.read_sql(sql,engine)
-    df['image'] = df.apply(get_img, axis=1)
-    return df.to_dict('records')
+    sql = f"""--sql
+    select type_plataforma, id,
+        doi,
+        title,
+        keywords,
+        cluster, 
+        cited_by_count, 
+        publication_date, 
+        referenced_works_count, 
+        relevance_score 
+        from works 
+        {_where} {_sort} {_range}"""
+    logger.info(sql)
+    try:
+        df = pd.read_sql(sql,engine)
+        df['image'] = df.apply(get_img, axis=1)
+        return df.to_dict('records')
+    except Exception as e:
+        logger.exception(f'Error: {e}')
+        raise HTTPException(status_code=500, detail='Error processing request')

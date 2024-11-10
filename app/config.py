@@ -1,10 +1,8 @@
+import logging
 import os
 import sys
 
 from dynaconf import Dynaconf
-
-import logging
-
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)

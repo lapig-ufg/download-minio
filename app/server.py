@@ -1,3 +1,5 @@
+import os
+from json import load as jload
 from pathlib import Path
 
 from fastapi import FastAPI, status
@@ -8,24 +10,18 @@ from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
+from opentelemetry.trace import get_tracer
+from redis import asyncio as aioredis
 from starlette.exceptions import HTTPException as StarletteHTTPException
-from json import load as jload
 from unidecode import unidecode
+
 from app.config import logger, settings, start_logger
 from app.middleware.analytics import Analytics
 from app.middleware.TokenMiddleware import TokenMiddleware
 
-from fastapi_cache import FastAPICache
-from fastapi_cache.backends.redis import RedisBackend
-
-
-from redis import asyncio as aioredis
- 
-
 from .routers import created_routes
-import os 
-
-from opentelemetry.trace import get_tracer
 
 tracer = get_tracer(f'download_minio_{os.environ.get("LAPIG_ENV")}' )
 

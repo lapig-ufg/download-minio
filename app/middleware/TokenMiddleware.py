@@ -1,15 +1,12 @@
-from starlette.middleware.base import (
-    BaseHTTPMiddleware,
-    RequestResponseEndpoint,
-)
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from starlette.exceptions import HTTPException
+from starlette.middleware.base import (BaseHTTPMiddleware,
+                                       RequestResponseEndpoint)
 from starlette.requests import Request
 from starlette.responses import Response
 from starlette.types import ASGIApp
 
-from starlette.exceptions import HTTPException
-from app.config import settings
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from app.config import logger
+from app.config import logger, settings
 
 security = HTTPBearer()
 

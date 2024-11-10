@@ -8,7 +8,7 @@
 __pycache__/
 version.json
 version.txt
-.vscode
+
 *.py[cod]
 *$py.class
 .secrets.toml

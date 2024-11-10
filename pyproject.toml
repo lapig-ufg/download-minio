@@ -8,7 +8,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.10"
 fastapi = "^0.114.0"
-dynaconf = {extras = ["vault"], version = "^3.1.11"}
+dynaconf = "^3.1.11"
 gunicorn = "^20.1.0"
 uvicorn = "^0.17.6"
 geopandas = "^0.10.2"
@@ -31,7 +31,8 @@ opentelemetry-distro = "^0.45b0"
 opentelemetry-exporter-otlp = "^1.24.0"
 
 
-
+[tool.pylint.'MESSAGES CONTROL']
+extension-pkg-whitelist = "pydantic"
 
 [tool.poetry.dev-dependencies]
 ipdb = "^0.13.9"
