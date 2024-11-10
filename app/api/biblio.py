@@ -57,7 +57,17 @@ async def getl_list_works(
     sort_direction: str = None,
     limit: int = 100,
 ):
-    logger.info((type_source, page, search, cluster, sort_active, sort_direction, limit))
+    logger.info(
+        (
+            type_source,
+            page,
+            search,
+            cluster,
+            sort_active,
+            sort_direction,
+            limit,
+        )
+    )
     logger.info('getl_list_works')
     if limit > 500:
         limit = 500

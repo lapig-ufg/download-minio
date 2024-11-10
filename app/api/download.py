@@ -224,7 +224,7 @@ def url_geofile(
 
 
 def start_dowload(payload: Payload, update: str, direct: bool):
-    db =''
+    db = ''
     file_type = '.zip'
     if payload.typeDownload == 'csv':
         file_type = '.csv'
