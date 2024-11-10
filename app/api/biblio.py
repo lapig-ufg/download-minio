@@ -27,8 +27,8 @@ def get_img(row):
 
 
 @router.get(
-    '/works/{type_source}/id/{id}',
-    response_description='List collections _id ',
+    '/works/{type_source}/id/{_id}',
+    response_description='List collections id ',
     response_model=Source,
 )
 async def getl_works(type_source: TypeSource, _id: str):
