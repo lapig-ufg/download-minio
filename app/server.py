@@ -97,13 +97,13 @@ async def validation_exception_handler(request, exc):
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             content=jsonable_encoder(
                 {
-                    'detail': unidecode(exc.errors()),
+                    'detail': unidecode(str(exc.errors())),
                     'body': unidecode(str(exc.body)),
                 }
             ),
             headers={
-                'X-Download-Detail': f'{unidecode(exc.errors())}',
-                'X-Download-Body': f'{unidecode(exc.body)}',
+                'X-Download-Detail': f'{unidecode(str(exc.errors()))}',
+                'X-Download-Body': f'{unidecode(str(exc.body))}',
             },
         )
     except Exception as e:
