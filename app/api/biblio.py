@@ -6,8 +6,10 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from sqlalchemy import create_engine
 
-from app.config import logger, settings
+from app.config import settings
 from app.model.source import BaseSource, Source, TypeSource
+
+from loguru import logger
 
 
 class Status(BaseModel):
@@ -23,7 +25,7 @@ router = APIRouter()
 
 
 def get_img(row):
-    return f'https://{settings.DOWNLOAD_URL}/public/literatura/{TypeSource(row["type_plataforma"]).value}/cluster/{row["cluster"]:03}_keywords.png'
+    return f'https://{settings.DOWNLOAD_URL}/public/literatura/{row["type_plataforma"]}/cluster/{row["cluster"]:03}_keywords.png'
 
 
 @router.get(
@@ -93,6 +95,8 @@ async def getl_list_works(
     )
     if '' != _where:
         _where = f' WHERE {_where}'
+    logger.info(_where)
+    logger.info(where)
     _range = f'offset {offset} limit {limit}'
     if page == 0:
         sql = sql = f'select count(*) from works {_where}'

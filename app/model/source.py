@@ -13,7 +13,7 @@ class TypeSource(str, Enum):
     def where(self):
         if self.value == 'pasture':
             return "type_plataforma = 'pastagem'"
-        if self.value == 'medicine':
+        if self.value == 'cerrado':
             return "type_plataforma = 'cerrado'"
         return None
 
@@ -23,7 +23,7 @@ class BaseSource(BaseModel):
     id: str
     doi: Optional[str]
     title: Optional[str]
-    keywords: str
+    keywords: str|None
     cluster: int
     cited_by_count: int
     publication_date: date
@@ -41,7 +41,7 @@ class Source(BaseModel):
     type_crossref: str
     id_sourcer: Optional[str]
     abstract: Optional[str]
-    keywords: str
+    keywords: str|None
     image: Optional[HttpUrl]
     cluster: int
     cited_by_count: int
