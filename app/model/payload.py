@@ -159,7 +159,7 @@ class Attribute(BaseModel):
 class WfsMapCard(BaseModel):
     show: Optional[bool]
     displayMapCardAttributes: Optional[DisplayMapCardAttributes]
-    attributes: Optional[List[Attribute]]
+    attributes: Optional[List[Optional[Attribute]]]
 
 
 class Download(BaseModel):
