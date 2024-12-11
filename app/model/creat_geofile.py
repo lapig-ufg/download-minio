@@ -11,7 +11,7 @@ def normalize_col(col):
     SQL = ['group']
     if col in SQL or ' ' in col:
         return f"'{col}'"
-    if col.isdigit():
+    if col[0].isdigit():
         return f'"{col}"'
     return col
 
@@ -92,7 +92,7 @@ class CreatGeoFile:
         if not self.rename is False:
             if self.fileType == 'csv':
                 logger.debug(self.rename)
-                self.column_name = ', '.join(self.rename)
+                self.column_name = ', '.join([self.rename])
             else:
                 self.column_name = ', '.join([*self.rename, self.geom])
 
