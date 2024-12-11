@@ -11,6 +11,8 @@ def normalize_col(col):
     SQL = ['group']
     if col in SQL or ' ' in col:
         return f"'{col}'"
+    if col.isdigit():
+        return f'"{col}"'
     return col
 
 
