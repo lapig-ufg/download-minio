@@ -25,6 +25,10 @@ router = APIRouter()
 
 
 def get_img(row):
+    if '-' in row["type_plataforma"]:
+        local, year, _, modo = row['type_plataforma'].split('-')
+        # public/literatura/cerrado/2025/amplo/000_keywords.png
+        return f'https://{settings.DOWNLOAD_URL}/public/literatura/{local}/{year}/{modo}/{row["cluster"]:03}_keywords.png'
     return f'https://{settings.DOWNLOAD_URL}/public/literatura/{row["type_plataforma"]}/cluster/{row["cluster"]:03}_keywords.png'
 
 
