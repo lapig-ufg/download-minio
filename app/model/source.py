@@ -8,13 +8,22 @@ from pydantic import BaseModel, HttpUrl
 class TypeSource(str, Enum):
     PASTURE = 'pasture'
     CERRADO = 'cerrado'
+    AMPLO = 'cerrado-2025-02-amplo'
+    RESTRITO = 'cerrado-2025-02-restrito'
+
+
     ALL = 'all'
 
     def where(self):
-        if self.value == 'pasture':
-            return "type_plataforma = 'pastagem'"
-        if self.value == 'cerrado':
-            return "type_plataforma = 'cerrado'"
+        match self.value:
+            case 'pasture':
+                return "type_plataforma = 'pastagem'"
+            case 'cerrado':
+                return "type_plataforma = 'cerrado'"
+            case 'cerrado-2025-02-amplo':
+                return "type_plataforma = 'cerrado-2025-02-amplo'"
+            case 'cerrado-2025-02-restrito':
+                return "type_plataforma = 'cerrado-2025-02-restrito'"
         return None
 
 
