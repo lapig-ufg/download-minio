@@ -127,8 +127,10 @@ async def getl_list_works(
     logger.info(sql)
     try:
         df = pd.read_sql(sql, engine)
-        df['image'] = df.apply(get_img, axis=1)
-        return df.to_dict('records')
+        if len(df) >0:
+            df['image'] = df.apply(get_img, axis=1)
+            return df.to_dict('records')
+        return []
     except Exception as e:
         logger.exception('Error: %s', e)
         raise HTTPException(status_code=500, detail='Error processing request')
