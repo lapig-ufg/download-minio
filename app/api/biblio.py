@@ -107,7 +107,7 @@ async def getl_list_works(
         sql = sql = f'select count(*) from works {_where}'
         logger.debug(sql)
         df = pd.read_sql(sql, engine)
-        max_cluster = pd.read_sql(f"select max(cluster) as max_cluster from works where type_plataforma={type_source}", engine).iloc[0]['max_cluster']
+        max_cluster = pd.read_sql(f"select max(cluster) as max_cluster from works where type_plataforma='{type_source}'", engine).iloc[0]['max_cluster']
         if len(df) > 0:
             total = int(df['count'].iloc[0])
             return {'pages': int(ceil((total / limit))), 'total': int(total), 'max_cluster':max_cluster}
