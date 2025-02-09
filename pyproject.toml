@@ -5,6 +5,10 @@ description = ""
 authors = ["Jairo Matos da Rocha <jairo@discente.ufg.br>"]
 license = "MIT"
 
+# Add this section to specify the package location
+[tool.poetry.packages]
+include = [{ include = "DownloadMinio", from = "." }]
+
 [tool.poetry.dependencies]
 python = "^3.10"
 fastapi = "^0.115.4"
