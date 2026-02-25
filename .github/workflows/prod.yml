@@ -58,7 +58,7 @@ jobs:
           docker push lapig/$APPLICATION_NAME:${DOCKER_PATH}_${LAST_COMMIT_HASH}
           docker push lapig/$APPLICATION_NAME:${DOCKER_PATH}_latest
 
-deploy:
+  deploy:
     needs: build
     runs-on: vm1
 
