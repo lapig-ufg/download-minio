@@ -27,12 +27,9 @@ jobs:
       DELETE_STATUS: ${{steps.delete_container.outputs.DELETE_STATUS}}
       START_STATUS: ${{steps.start_container.outputs.START_STATUS}}
 
-
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
 
       - name: Define a variável application_name
         id: creat_env
@@ -60,10 +57,12 @@ jobs:
       - name: Create version.json
         run: echo "{\"commitId\":\"$LAST_COMMIT_HASH\"}" > version.json
 
-
       - name: Build Docker
         run: |
-          docker build -t lapig/$application_name:${DOCKER_PATH}_${LAST_COMMIT_HASH} -t lapig/$application_name:${DOCKER_PATH}_latest  -f docker/$DOCKER_PATH/Dockerfile . --no-cache
+          docker build \
+          -t lapig/$application_name:${DOCKER_PATH}_${LAST_COMMIT_HASH} \
+          -t lapig/$application_name:${DOCKER_PATH}_latest \
+          -f docker/$DOCKER_PATH/Dockerfile . --no-cache
 
       - name: Login to Docker Registry
         run: echo "${{ secrets.DOCKERHUB_PASS }}" | docker login -u "lapig" --password-stdin
